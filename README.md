@@ -1,6 +1,6 @@
 <!-- output: html_document -->
 
-statebins is an alternative to choropleth maps for US States
+statebins is an alternative to choropleth maps for USA States
 
 The following functions are implemented:
 
@@ -24,7 +24,7 @@ devtools::install_github("hrbrmstr/statebins")
 
 ### Usage
 
-All of the following examples use the [WaPo data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1). It looks like the colums they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).
+All of the following examples use the [WaPo data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1). It looks like the columns they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).
 
 ``` {.r}
 library(statebins)
@@ -49,7 +49,7 @@ gg <- statebins(dat, "state", "avgshare94_00", breaks=4,
 gg
 ```
 
-![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-31.png)
+![plot of chunk unnamed-chunk-3](./README_files/figure-markdown_github/unnamed-chunk-31.png)
 
 ``` {.r}
 # continuous scale, legend on top
@@ -62,7 +62,7 @@ gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
 gg2
 ```
 
-![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-32.png)
+![plot of chunk unnamed-chunk-3](./README_files/figure-markdown_github/unnamed-chunk-32.png)
 
 ``` {.r}
 # continuous scale, no legend
@@ -75,7 +75,7 @@ gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
 gg3
 ```
 
-![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-33.png)
+![plot of chunk unnamed-chunk-3](./README_files/figure-markdown_github/unnamed-chunk-33.png)
 
 ``` {.r}
 # or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
@@ -175,7 +175,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 17:39:41 2014"
+    ## [1] "Tue Aug 26 17:53:56 2014"
 
 ``` {.r}
 test_dir("tests/")
