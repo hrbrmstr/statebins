@@ -3,15 +3,46 @@
 \name{statebins}
 \alias{statebins}
 \alias{statebins-package}
-\title{A package to ...}
+\title{statebins is an alternative to choropleth maps for US States}
 \usage{
 statebins(state_data, state_col = "state", value_col = "value",
-  text_color = "white", state_border_col = "white", breaks = 5,
-  labels = 1:4, legend_title = "Legend", legend_position = "top",
-  brewer_pal = "PuBu", plot_title = "", title_position = "bottom")
+  text_color = "white", font_size = 2, state_border_col = "white",
+  breaks = 5, labels = 1:4, legend_title = "Legend",
+  legend_position = "top", brewer_pal = "PuBu", plot_title = "",
+  title_position = "bottom")
+}
+\arguments{
+\item{state_data}{data frame of states and values to plot}
+
+\item{state_col}{column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "Maine") or abbreviatons (e.g. "ME")}
+
+\item{value_col}{column name in \code{state_data} that holds the values to be plotted}
+
+\item{text_color}{default "white"}
+
+\item{font_size}{font size (default = 2)}
+
+\item{state_border_col}{default "white" - this creates the "spaces" between boxes}
+
+\item{breaks}{a single number (greater than or equal to 2) giving the number of intervals into which data values are to be cut.}
+
+\item{labels}{labels for the levels \code{breaks}}
+
+\item{legend_title}{title for the legend}
+
+\item{legend_position}{"none", "top" or "bottom" (defaults to "top")}
+
+\item{brewer_pal}{which named RColorBrewer palette to use}
+
+\item{plot_title}{title for the plot}
+
+\item{title_position}{where to put the title ("bottom" or "top" or " " for none); if "bottom", you get back a grob vs a ggplot object}
+}
+\value{
+ggplot2 object or grob
 }
 \description{
-A package to ...
+statebins is an alternative to choropleth maps for US States
 
 This version uses a discrete scale, binned by the "breaks" parameter
 }

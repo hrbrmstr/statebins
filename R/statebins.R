@@ -2,19 +2,20 @@
 #' Create ggplot-based "statebin" charts in the style of \url{http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/}
 #'
 #' This version uses a discrete scale, binned by the "breaks" parameter
-#' @param state_data
-#' @param state_col
-#' @param value_col
-#' @param text_color
-#' @param font_size
-#' @param state_border_col
-#' @param breaks
-#' @param labels
-#' @param legend_title
-#' @param legend_position
-#' @param brewer_pal
-#' @param plot_title
-#' @param title_position
+#'
+#' @param state_data data frame of states and values to plot
+#' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "Maine") or abbreviatons (e.g. "ME")
+#' @param value_col column name in \code{state_data} that holds the values to be plotted
+#' @param text_color default "white"
+#' @param font_size font size (default = 2)
+#' @param state_border_col default "white" - this creates the "spaces" between boxes
+#' @param breaks a single number (greater than or equal to 2) giving the number of intervals into which data values are to be cut.
+#' @param labels labels for the levels \code{breaks}
+#' @param legend_title title for the legend
+#' @param legend_position "none", "top" or "bottom" (defaults to "top")
+#' @param brewer_pal which named RColorBrewer palette to use
+#' @param plot_title title for the plot
+#' @param title_position where to put the title ("bottom" or "top" or " " for none); if "bottom", you get back a grob vs a ggplot object
 #' @return ggplot2 object or grob
 #' @export
 statebins <- function(state_data, state_col="state", value_col="value",
@@ -40,9 +41,9 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   st.dat$fill_color <- cut(st.dat[, value_col], breaks=breaks, labels=labels)
 
-  gg <- ggplot(st.dat, aes(x=col, y=row, label=abbrev))
-  gg <- gg + geom_tile(aes(fill=fill_color))
-  gg <- gg + geom_tile(color=state_border_col, aes(fill=fill_color), size=3, show_guide=FALSE)
+  gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
+  gg <- gg + geom_tile(aes_string(fill="fill_color"))
+  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"), size=3, show_guide=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
@@ -76,18 +77,19 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
 #' Create ggplot-based "statebin" charts in the style of \url{http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/}
 #'
-#' This version uses a discrete scale, binned by the "breaks" parameter
-#' @param state_data
-#' @param state_col
-#' @param value_col
-#' @param text_color
-#' @param font_size
-#' @param state_border_col
-#' @param legend_title
-#' @param legend_position
-#' @param brewer_pal
-#' @param plot_title
-#' @param title_position
+#' This version uses a continuous scale akin to \link{scale_fill_distiller}
+#'
+#' @param state_data data frame of states and values to plot
+#' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "Maine") or abbreviatons (e.g. "ME")
+#' @param value_col column name in \code{state_data} that holds the values to be plotted
+#' @param text_color default "white"
+#' @param font_size font size (default = 2)
+#' @param state_border_col default "white" - this creates the "spaces" between boxes
+#' @param legend_title title for the legend
+#' @param legend_position "none", "top" or "bottom" (defaults to "top")
+#' @param brewer_pal which named RColorBrewer palette to use
+#' @param plot_title title for the plot
+#' @param title_position where to put the title ("bottom" or "top" or " " for none); if "bottom", you get back a grob vs a ggplot object
 #' @return ggplot2 object or grob
 #' @export
 statebins_continuous <- function(state_data, state_col="state", value_col="value",
@@ -110,14 +112,14 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
 
   st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col)
 
-  gg <- ggplot(st.dat, aes(x=col, y=row, label=abbrev))
+  gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill=value_col))
   gg <- gg + geom_tile(color=state_border_col,
                        aes_string(fill=value_col), size=3, show_guide=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + continuous_scale("fill", "distiller",
-                   gradient_n_pal(brewer_pal(type, brewer_pal)(6), NULL, "Lab"), na.value = "grey50", name=legend_title)
+                   gradient_n_pal(brewer_pal("seq", brewer_pal)(6), NULL, "Lab"), na.value = "grey50", name=legend_title)
   gg <- gg + coord_equal()
   gg <- gg + labs(x="", y="", title="")
   gg <- gg + theme_bw()

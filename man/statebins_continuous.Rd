@@ -4,11 +4,37 @@
 \title{Create ggplot-based "statebin" charts in the style of \url{http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/}}
 \usage{
 statebins_continuous(state_data, state_col = "state", value_col = "value",
-  text_color = "white", state_border_col = "white",
+  text_color = "white", font_size = 2, state_border_col = "white",
   legend_title = "Legend", legend_position = "top", brewer_pal = "PuBu",
   plot_title = "", title_position = "bottom")
 }
+\arguments{
+\item{state_data}{data frame of states and values to plot}
+
+\item{state_col}{column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "Maine") or abbreviatons (e.g. "ME")}
+
+\item{value_col}{column name in \code{state_data} that holds the values to be plotted}
+
+\item{text_color}{default "white"}
+
+\item{font_size}{font size (default = 2)}
+
+\item{state_border_col}{default "white" - this creates the "spaces" between boxes}
+
+\item{legend_title}{title for the legend}
+
+\item{legend_position}{"none", "top" or "bottom" (defaults to "top")}
+
+\item{brewer_pal}{which named RColorBrewer palette to use}
+
+\item{plot_title}{title for the plot}
+
+\item{title_position}{where to put the title ("bottom" or "top" or " " for none); if "bottom", you get back a grob vs a ggplot object}
+}
+\value{
+ggplot2 object or grob
+}
 \description{
-This version uses a discrete scale, binned by the "breaks" parameter
+This version uses a continuous scale akin to \link{scale_fill_distiller}
 }
 
