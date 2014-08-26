@@ -49,16 +49,16 @@ gg <- statebins(dat, "state", "avgshare94_00", breaks=4,
 gg
 
 gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
-                legend_title="States", legend_position="none",
-                brewer_pal="OrRd", text_color="black", font_size=3, 
-                plot_title="2001-2007", title_position="bottom")
+                            legend_title="State Data", legend_position="top",
+                            brewer_pal="OrRd", text_color="black", font_size=3, 
+                            plot_title="2001-2007", title_position="bottom")
 
 gg2
 
 gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
-                legend_title="States", legend_position="none",
-                brewer_pal="Purples", text_color="black", font_size=3, 
-                plot_title="2008-2012", title_position="bottom")
+                            legend_title="States", legend_position="none",
+                            brewer_pal="Purples", text_color="black", font_size=3, 
+                            plot_title="2008-2012", title_position="bottom")
 
 gg3
 
