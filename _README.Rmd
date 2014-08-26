@@ -123,7 +123,7 @@ sb("avgshare08_12", "2008-2012")
 
 -->
 
-<center>![img](./tmp/statebins-compisite.png)</embed></center>
+<center>![img](./tmp/statebins-composite.png)</center>
 
 And, we'll throw in a gratuitous animation for good measure:
 
