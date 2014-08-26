@@ -6,6 +6,7 @@
 #' @param state_col
 #' @param value_col
 #' @param text_color
+#' @param font_size
 #' @param state_border_col
 #' @param breaks
 #' @param labels
@@ -17,7 +18,7 @@
 #' @return ggplot2 object or grob
 #' @export
 statebins <- function(state_data, state_col="state", value_col="value",
-                     text_color="white",
+                     text_color="white", font_size=2,
                      state_border_col="white", breaks=5, labels=1:4,
                      legend_title="Legend", legend_position="top",
                      brewer_pal="PuBu", plot_title="", title_position="bottom") {
@@ -42,7 +43,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
   gg <- ggplot(st.dat, aes(x=col, y=row, label=abbrev))
   gg <- gg + geom_tile(aes(fill=fill_color))
   gg <- gg + geom_tile(color=state_border_col, aes(fill=fill_color), size=3, show_guide=FALSE)
-  gg <- gg + geom_text(color=text_color, size=2)
+  gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
   gg <- gg + coord_equal()
@@ -80,6 +81,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
 #' @param state_col
 #' @param value_col
 #' @param text_color
+#' @param font_size
 #' @param state_border_col
 #' @param legend_title
 #' @param legend_position
@@ -89,7 +91,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
 #' @return ggplot2 object or grob
 #' @export
 statebins_continuous <- function(state_data, state_col="state", value_col="value",
-                      text_color="white",
+                      text_color="white", font_size=2,
                       state_border_col="white",
                       legend_title="Legend", legend_position="top",
                       brewer_pal="PuBu", plot_title="", title_position="bottom") {
@@ -112,7 +114,7 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
   gg <- gg + geom_tile(aes_string(fill=value_col))
   gg <- gg + geom_tile(color=state_border_col,
                        aes_string(fill=value_col), size=3, show_guide=FALSE)
-  gg <- gg + geom_text(color=text_color, size=2)
+  gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + continuous_scale("fill", "distiller",
                    gradient_n_pal(brewer_pal(type, brewer_pal)(6), NULL, "Lab"), na.value = "grey50", name=legend_title)
