@@ -2,10 +2,16 @@ Package: statebins
 Type: Package
 Title: statebins is an alternative to choropleth maps for US States
 Version: 1.0
-Date: 2014-08-25
+Date: 2014-08-26
 Author: Bob Rudis (@hrbrmstr)
 Maintainer: Bob Rudis <bob@rudis.net>
-Description: statebins is an alternative to choropleth maps for US States
+Description: statebins is an alternative to choropleth maps for US States and
+    is based on work by the Washington Post graphics department in their report
+    on "The states most threatened by trade". statebins preserves as much of
+    the geographic placment of the states as possible but has the look and
+    feel of a traditional heatmap. Functions are provided that allow for use
+    of both a binned, discrete scale and continuous scale depending on what
+    is needed for the underlying data.
 URL: http://github.com/hrbrmstr/statebins
 BugReports: https://github.com/hrbrmstr/statebins/issues
 License: MIT + file LICENSE

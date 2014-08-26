@@ -5,7 +5,7 @@
 \usage{
 statebins(state_data, state_col = "state", value_col = "value",
   text_color = "white", font_size = 2, state_border_col = "white",
-  breaks = 5, labels = 1:4, legend_title = "Legend",
+  breaks = 5, labels = 1:5, legend_title = "Legend",
   legend_position = "top", brewer_pal = "PuBu", plot_title = "",
   title_position = "bottom")
 }
