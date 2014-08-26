@@ -90,7 +90,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 13:21:05 2014"
+    ## [1] "Tue Aug 26 13:23:54 2014"
 
 ``` {.r}
 test_dir("tests/")
