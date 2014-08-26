@@ -2,8 +2,8 @@ statebins is an alternative to choropleth maps for US States
 
 The following functions are implemented:
 
--   `statebins` -
--   `statebins_continuous` -
+-   `statebins` - creates "statebin" charts in the style of <http://bit.ly/statebins> - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
+-   `statebins_continuous` - creates "statebin" charts in the style of <http://bit.ly/statebins> - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
 
 ### News
 
@@ -43,10 +43,12 @@ gg
 ![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-31.png)
 
 ``` {.r}
+# continuous scale, legend on top
+
 gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
-                legend_title="States", legend_position="none",
-                brewer_pal="OrRd", text_color="black", font_size=3, 
-                plot_title="2001-2007", title_position="bottom")
+                            legend_title="State Data", legend_position="top",
+                            brewer_pal="OrRd", text_color="black", font_size=3, 
+                            plot_title="2001-2007", title_position="bottom")
 
 gg2
 ```
@@ -54,15 +56,36 @@ gg2
 ![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-32.png)
 
 ``` {.r}
+# continuous scale, no legend
+
 gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
-                legend_title="States", legend_position="none",
-                brewer_pal="Purples", text_color="black", font_size=3, 
-                plot_title="2008-2012", title_position="bottom")
+                            legend_title="States", legend_position="none",
+                            brewer_pal="Purples", text_color="black", font_size=3, 
+                            plot_title="2008-2012", title_position="bottom")
 
 gg3
 ```
 
 ![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-33.png)
+
+``` {.r}
+# or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
+
+sb <- function(col, title) {
+  statebins(dat, "state",col, brewer_pal="Blues", text_color="black", legend_position="none", font_size=3, plot_title=title, breaks=4, labels=1:4)
+}
+
+image(1:4, 1, as.matrix(1:4), col = brewer.pal(4, name="Blues"), xlab = "", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+```
+
+![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-34.png)
+
+``` {.r}
+grid.arrange(sb("avgshare94_00", "1994-2000"), sb("avgshare01_07", "2001-2007"), 
+             sb("avgshare08_12", "2008-2012"), ncol=2)
+```
+
+![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-35.png)
 
 ### Test Results
 
@@ -73,7 +96,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Mon Aug 25 22:36:21 2014"
+    ## [1] "Tue Aug 26 13:18:47 2014"
 
 ``` {.r}
 test_dir("tests/")
