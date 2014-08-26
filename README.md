@@ -75,17 +75,11 @@ sb <- function(col, title) {
   statebins(dat, "state",col, brewer_pal="Blues", text_color="black", legend_position="none", font_size=3, plot_title=title, breaks=4, labels=1:4)
 }
 
-image(1:4, 1, as.matrix(1:4), col = brewer.pal(4, name="Blues"), xlab = "", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
-```
-
-![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-34.png)
-
-``` {.r}
 grid.arrange(sb("avgshare94_00", "1994-2000"), sb("avgshare01_07", "2001-2007"), 
              sb("avgshare08_12", "2008-2012"), ncol=2)
 ```
 
-![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-35.png)
+![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-34.png)
 
 ### Test Results
 
@@ -96,7 +90,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 13:18:47 2014"
+    ## [1] "Tue Aug 26 13:21:05 2014"
 
 ``` {.r}
 test_dir("tests/")
