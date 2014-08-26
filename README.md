@@ -127,8 +127,6 @@ sb("avgshare08_12", "2008-2012")
 
 -->
 
-![img](./tmp/household.gif)
-
 And, we'll throw in a gratuitous animation for good measure:
 
 ``` {.r}
@@ -173,7 +171,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 15:34:24 2014"
+    ## [1] "Tue Aug 26 15:36:49 2014"
 
 ``` {.r}
 test_dir("tests/")
