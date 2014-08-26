@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^_README.Rmd$
+^NEWS.md$
+^\.travis\.yml$
+^README.md$
+^_README_files/*
