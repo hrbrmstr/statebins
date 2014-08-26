@@ -128,9 +128,7 @@ sb("avgshare08_12", "2008-2012")
 -->
 
 <center>
-
 ![img](./tmp/statebins-composite.png)
-
 </center>
 
 And, we'll throw in a gratuitous animation for good measure:
@@ -177,7 +175,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 15:38:13 2014"
+    ## [1] "Tue Aug 26 17:39:41 2014"
 
 ``` {.r}
 test_dir("tests/")
