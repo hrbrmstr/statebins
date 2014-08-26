@@ -32,13 +32,7 @@ invert <- function(hexColor, darkColor="black", lightColor="white") {
   G <- as.integer(paste("0x", substr(hexColor,3,4), sep=""))
   B <- as.integer(paste("0x", substr(hexColor,5,6), sep=""))
 
-  cat("R ") ; print(R)
-  cat("G ") ; print(G)
-  cat("B ") ; print(B)
-
   YIQ <- ((R*299) + (G*587) + (B*114)) / 1000
-
-  cat("YIQ ") ; print(YIQ)
 
   return(ifelse(YIQ >= 128, darkColor, lightColor))
 
