@@ -94,46 +94,40 @@ sb("avgshare01_07", "2001-2007")
 sb("avgshare08_12", "2008-2012")
 ```
 
+<!-- uncomment the following and add backticks where appropriate and remove the reference to -->
+<!-- the static image when the rmarkdown output is HTML and this will work fine. github does not render the markdown properly -->
+<!-- 
 <span style="font-size:17px; color:#333;">Share of workforce with jobs lost or threatened by trade</span><br/>
 
-<!-- ok, so this is rly cheating, but it works :-) -->
-
 <table style="width:200px" cellpadding=0, cellspacing=0><tr style="line-height:10px">
-<td width="25%" style="background:#EFF3FF;">
- 
-</td>
-<td width="25%" style="background:#BDD7E7;">
- 
-</td>
-<td width="25%" style="background:#6BAED6;">
- 
-</td>
-<td width="25%" style="background:#2171B5;">
- 
-</td></tr>
-<tr><td colspan=2 align="left" style="font-size:14px">
-Smallest share
-</td><td colspan=2 align="right" style="font-size:14px">
-Largest
-</td></tr>
+<td width="25%" style="background:#EFF3FF;">&nbsp;</td>
+<td width="25%" style="background:#BDD7E7;">&nbsp;</td>
+<td width="25%" style="background:#6BAED6;">&nbsp;</td>
+<td width="25%" style="background:#2171B5;">&nbsp;</td></tr>
+<tr><td colspan=2 align="left" style="font-size:14px">Smallest share</td><td colspan=2 align="right" style="font-size:14px">Largest</td></tr>
 </table>
 
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr><td width="50%">
 
-![plot of chunk f1994](./_README_files/figure-markdown_github/f1994.png)
+{r f1994, echo=FALSE, fig.width=6, fig.height=5}
+sb("avgshare94_00", "1994-2000")
 
 </td><td width="50%">
 
-![plot of chunk f2001](./_README_files/figure-markdown_github/f2001.png)
+{r f2001, echo=FALSE, fig.width=6, fig.height=5, results='asis'}
+sb("avgshare01_07", "2001-2007")
 
 </td></tr><tr><td width="50%">
 
-![plot of chunk f2008](./_README_files/figure-markdown_github/f2008.png)
+{r f2008, echo=FALSE, fig.width=6, fig.height=5, results='asis'}
+sb("avgshare08_12", "2008-2012")
 
-</td><td width="50%"> 
- 
-</td></tr></table>
+</td><td width="50%"> &nbsp; </td></tr></table>
+
+-->
+
+![img](./tmp/household.gif)
 
 And, we'll throw in a gratuitous animation for good measure:
 
@@ -179,7 +173,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 15:26:43 2014"
+    ## [1] "Tue Aug 26 15:34:24 2014"
 
 ``` {.r}
 test_dir("tests/")
