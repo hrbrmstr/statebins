@@ -74,12 +74,14 @@ gg3
 sb <- function(col, title) {
   statebins(dat, "state",col, brewer_pal="Blues", text_color="black", legend_position="none", font_size=3, plot_title=title, breaks=4, labels=1:4)
 }
+```
 
+``` {.r}
 grid.arrange(sb("avgshare94_00", "1994-2000"), sb("avgshare01_07", "2001-2007"), 
              sb("avgshare08_12", "2008-2012"), ncol=2)
 ```
 
-![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-34.png)
+![plot of chunk unnamed-chunk-4](./_README_files/figure-markdown_github/unnamed-chunk-4.png)
 
 ### Test Results
 
@@ -90,7 +92,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 13:23:54 2014"
+    ## [1] "Tue Aug 26 13:28:06 2014"
 
 ``` {.r}
 test_dir("tests/")

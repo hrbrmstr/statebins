@@ -71,6 +71,9 @@ gg3
 sb <- function(col, title) {
   statebins(dat, "state",col, brewer_pal="Blues", text_color="black", legend_position="none", font_size=3, plot_title=title, breaks=4, labels=1:4)
 }
+```
+
+```{r fig.width=12, fig.height=10}
 
 grid.arrange(sb("avgshare94_00", "1994-2000"), sb("avgshare01_07", "2001-2007"), 
              sb("avgshare08_12", "2008-2012"), ncol=2)
