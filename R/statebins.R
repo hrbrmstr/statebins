@@ -1,3 +1,23 @@
+invert <- function(hexColor, darkColor="black", lightColor="white") {
+
+  hexColor <- gsub("#", "", hexColor)
+
+  R <- as.integer(paste("0x", substr(hexColor,1,2), sep=""))
+  G <- as.integer(paste("0x", substr(hexColor,3,4), sep=""))
+  B <- as.integer(paste("0x", substr(hexColor,5,6), sep=""))
+
+  cat("R ") ; print(R)
+  cat("G ") ; print(G)
+  cat("B ") ; print(B)
+
+  YIQ <- ((R*299) + (G*587) + (B*114)) / 1000
+
+  cat("YIQ ") ; print(YIQ)
+
+  return(ifelse(YIQ >= 128, darkColor, lightColor))
+
+}
+
 #' Create a new ggplot-based "statebin" chart
 #'
 #' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
@@ -38,7 +58,7 @@
 #' @export
 statebins <- function(state_data, state_col="state", value_col="value",
                      text_color="white", font_size=2,
-                     state_border_col="white", breaks=5, labels=1:4,
+                     state_border_col="white", breaks=5, labels=1:5,
                      legend_title="Legend", legend_position="top",
                      brewer_pal="PuBu", plot_title="", title_position="bottom") {
 
@@ -61,16 +81,15 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill="fill_color"))
-  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"), size=3, show_guide=FALSE)
+  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"), size=2, show_guide=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
   gg <- gg + coord_equal()
-  gg <- gg + labs(x="", y="", title="")
+  gg <- gg + labs(x=NULL, y=NULL, title="")
   gg <- gg + theme_bw()
+  gg <- gg + theme(plot.margin=unit(c(-0.5,-0.5,-0.5,-0.5), "cm"))
   gg <- gg + theme(legend.position=legend_position)
-  gg <- gg + theme(plot.margin=unit(c(0,0,0,0), "lines"))
-  gg <- gg + theme(panel.margin=unit(0, "lines"))
   gg <- gg + theme(panel.border=element_blank())
   gg <- gg + theme(panel.grid=element_blank())
   gg <- gg + theme(panel.background=element_blank())
@@ -157,11 +176,10 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_gradientn(colours = brewer.pal(6, brewer_pal), name=legend_title)
   gg <- gg + coord_equal()
-  gg <- gg + labs(x="", y="", title="")
+  gg <- gg + labs(x=NULL, y=NULL, title="")
   gg <- gg + theme_bw()
   gg <- gg + theme(legend.position=legend_position)
-  gg <- gg + theme(plot.margin=unit(c(0,0,0,0), "lines"))
-  gg <- gg + theme(panel.margin=unit(0, "lines"))
+  gg <- gg + theme(plot.margin=unit(c(-0.5,-0.5,-0.5,-0.5), "cm"))
   gg <- gg + theme(panel.border=element_blank())
   gg <- gg + theme(panel.grid=element_blank())
   gg <- gg + theme(panel.background=element_blank())
