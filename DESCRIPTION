@@ -17,4 +17,5 @@ Depends:
     ggplot2,
     grid,
     scales,
-    gridExtra
+    gridExtra,
+    RColorBrewer
