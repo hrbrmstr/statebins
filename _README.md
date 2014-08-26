@@ -1,49 +1,41 @@
----
-title: "README"
-author: "Bob Rudis"
-date: August 26, 2014
-output:
-  md_document:
-    variant: markdown_github
----
 <!-- output: html_document -->
 
 statebins is an alternative to choropleth maps for US States
 
 The following functions are implemented:
 
-- `statebins` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
-- `statebins_continuous` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
+-   `statebins` - creates "statebin" charts in the style of <http://bit.ly/statebins> - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
+-   `statebins_continuous` - creates "statebin" charts in the style of <http://bit.ly/statebins> - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
 
 ### TODO
 
-- The current version is usable, but I think the plot margins and the legends need work
-- Apply algorithm to switch to light-on-dark depending on the background tile color 
+-   The current version is usable, but I think the plot margins and the legends need work
+-   Apply algorithm to switch to light-on-dark depending on the background tile color
 
 ### News
 
-- Version `1.0.0` released
+-   Version `1.0.0` released
 
 ### Installation
 
-```{r eval=FALSE}
+``` {.r}
 devtools::install_github("hrbrmstr/statebins")
-```
-
-```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
-options(width=120)
 ```
 
 ### Usage
 
 All of the following examples use the [WaPo data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1). It looks like the colums they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).
 
-```{r message=FALSE}
+``` {.r}
 library(statebins)
 
 # current verison
 packageVersion("statebins")
+```
 
+    ## [1] '1.0'
+
+``` {.r}
 # the original wapo data
 
 dat <- read.csv("http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1", stringsAsFactors=FALSE)
@@ -55,7 +47,11 @@ gg <- statebins(dat, "state", "avgshare94_00", breaks=4,
                 plot_title="1994-2000", title_position="bottom")
 
 gg
+```
 
+![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-31.png)
+
+``` {.r}
 # continuous scale, legend on top
 
 gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
@@ -64,7 +60,11 @@ gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
                             plot_title="2001-2007", title_position="bottom")
 
 gg2
+```
 
+![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-32.png)
+
+``` {.r}
 # continuous scale, no legend
 
 gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
@@ -73,7 +73,11 @@ gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
                             plot_title="2008-2012", title_position="bottom")
 
 gg3
+```
 
+![plot of chunk unnamed-chunk-3](./_README_files/figure-markdown_github/unnamed-chunk-33.png)
+
+``` {.r}
 # or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
 
 sb <- function(col, title) {
@@ -81,7 +85,7 @@ sb <- function(col, title) {
 }
 ```
 
-```{r eval=FALSE}
+``` {.r}
 # cheating and using <table> to arrange them below and also making a WaPo-like legend, 
 # since mucking with grid graphics margins/padding was not an option time-wise at the moment
 
@@ -127,7 +131,7 @@ sb("avgshare08_12", "2008-2012")
 
 And, we'll throw in a gratuitous animation for good measure:
 
-```{r eval=FALSE}
+``` {.r}
 # data set from StatsAmerica - http://www.statsamerica.org/profiles/sip_index.html
 
 # median household income from the ACS survey
@@ -156,16 +160,23 @@ sapply(unique(miacs$year), function(year) {
 system("convert -background white -alpha remove -layers OptimizePlus -delay 150 tmp/*.png -loop 1 tmp/household.gif")
 ```
 
-<center>![img](./tmp/household.gif)</embed></center>
+<center>
+![img](./tmp/household.gif)
+</embed></center>
 
 ### Test Results
 
-```{r}
+``` {.r}
 library(statebins)
 library(testthat)
 
 date()
+```
 
+    ## [1] "Tue Aug 26 15:34:24 2014"
+
+``` {.r}
 test_dir("tests/")
 ```
 
+    ## basic functionality :
