@@ -42,7 +42,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
   gg <- ggplot(st.dat, aes(x=col, y=row, label=abbrev))
   gg <- gg + geom_tile(aes(fill=fill_color))
   gg <- gg + geom_tile(color=state_border_col, aes(fill=fill_color), size=3, show_guide=FALSE)
-  gg <- gg + geom_text(color=text_color, size=2)
+  gg <- gg + geom_text(color=text_color, size=1)
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
   gg <- gg + coord_equal()
@@ -112,7 +112,7 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
   gg <- gg + geom_tile(aes_string(fill=value_col))
   gg <- gg + geom_tile(color=state_border_col,
                        aes_string(fill=value_col), size=3, show_guide=FALSE)
-  gg <- gg + geom_text(color=text_color, size=2)
+  gg <- gg + geom_text(color=text_color, size=1)
   gg <- gg + scale_y_reverse()
   gg <- gg + continuous_scale("fill", "distiller",
                    gradient_n_pal(brewer_pal(type, brewer_pal)(6), NULL, "Lab"), na.value = "grey50", name=legend_title)
