@@ -6,3 +6,4 @@
 ^\.travis\.yml$
 ^README.md$
 ^_README_files/*
+^tmp/*$
