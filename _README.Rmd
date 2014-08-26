@@ -123,8 +123,6 @@ sb("avgshare08_12", "2008-2012")
 
 -->
 
-![img](./tmp/household.gif)
-
 And, we'll throw in a gratuitous animation for good measure:
 
 ```{r eval=FALSE}
