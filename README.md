@@ -163,10 +163,12 @@ sapply(unique(miacs$year), function(year) {
 })
 
 # animate them with ImageMagick
-system("convert -delay 100 -loop 1 tmp/house*.png tmp/household.mov")
+system("convert -background white -alpha remove -layers OptimizePlus -delay 150 tmp/*.png -loop 1 tmp/household.gif")
 ```
 
-<center><embed src="http://datadrivensecurity.info/dl/household.mov" width="800" height="600"></embed></center>
+<center>
+![img](./tmp/household.gif)
+</embed></center>
 
 ### Test Results
 
@@ -177,7 +179,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 15:21:25 2014"
+    ## [1] "Tue Aug 26 15:26:43 2014"
 
 ``` {.r}
 test_dir("tests/")
