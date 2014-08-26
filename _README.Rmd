@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Bob Rudis"
-date: August 25, 2014
+date: August 26, 2014
 output:
   md_document:
     variant: markdown_github
@@ -11,8 +11,8 @@ statebins is an alternative to choropleth maps for US States
 
 The following functions are implemented:
 
-- `statebins` -
-- `statebins_continuous` -
+- `statebins` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
+- `statebins_continuous` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
 
 ### News
 
@@ -48,6 +48,8 @@ gg <- statebins(dat, "state", "avgshare94_00", breaks=4,
 
 gg
 
+# continuous scale, legend on top
+
 gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
                             legend_title="State Data", legend_position="top",
                             brewer_pal="OrRd", text_color="black", font_size=3, 
@@ -55,12 +57,25 @@ gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
 
 gg2
 
+# continuous scale, no legend
+
 gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
                             legend_title="States", legend_position="none",
                             brewer_pal="Purples", text_color="black", font_size=3, 
                             plot_title="2008-2012", title_position="bottom")
 
 gg3
+
+# or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
+
+sb <- function(col, title) {
+  statebins(dat, "state",col, brewer_pal="Blues", text_color="black", legend_position="none", font_size=3, plot_title=title, breaks=4, labels=1:4)
+}
+
+image(1:4, 1, as.matrix(1:4), col = brewer.pal(4, name="Blues"), xlab = "", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+
+grid.arrange(sb("avgshare94_00", "1994-2000"), sb("avgshare01_07", "2001-2007"), 
+             sb("avgshare08_12", "2008-2012"), ncol=2)
 
 ```
 
