@@ -66,7 +66,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Mon Aug 25 22:24:40 2014"
+    ## [1] "Mon Aug 25 22:25:49 2014"
 
 ``` {.r}
 test_dir("tests/")
