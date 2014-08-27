@@ -4,7 +4,7 @@
 \title{Create a new ggplot-based "statebin" chart for USA states (discrete scale)}
 \usage{
 statebins(state_data, state_col = "state", value_col = "value",
-  text_color = "white", font_size = 3, state_border_col = "white",
+  text_color = "black", font_size = 3, state_border_col = "white",
   breaks = 5, labels = 1:5, legend_title = "Legend",
   legend_position = "top", brewer_pal = "PuBu", plot_title = "",
   title_position = "bottom")
@@ -16,7 +16,7 @@ statebins(state_data, state_col = "state", value_col = "value",
 
 \item{value_col}{column name in \code{state_data} that holds the values to be plotted}
 
-\item{text_color}{default "\code{white}"}
+\item{text_color}{default "\code{black}"}
 
 \item{font_size}{font size (default = \code{3})}
 

@@ -64,7 +64,7 @@ invert <- function(hexColor, darkColor="black", lightColor="white") {
 #' @param state_data data frame of states and values to plot
 #' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
-#' @param text_color default "\code{white}"
+#' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
 #' @param breaks a single number (greater than or equal to 2) giving the number of intervals into which data values are to be cut.
@@ -84,7 +84,7 @@ invert <- function(hexColor, darkColor="black", lightColor="white") {
 #'           legend_title = "Assault", legend_position="bottom")
 #' }
 statebins <- function(state_data, state_col="state", value_col="value",
-                     text_color="white", font_size=3,
+                     text_color="black", font_size=3,
                      state_border_col="white", breaks=5, labels=1:5,
                      legend_title="Legend", legend_position="top",
                      brewer_pal="PuBu", plot_title="", title_position="bottom") {
@@ -164,7 +164,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
 #' @param state_data data frame of states and values to plot
 #' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
-#' @param text_color default "\code{white}"
+#' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
 #' @param legend_title title for the legend
@@ -182,7 +182,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
 #'                      legend_title = "Murder", legend_position="bottom")
 #' }
 statebins_continuous <- function(state_data, state_col="state", value_col="value",
-                      text_color="white", font_size=3,
+                      text_color="black", font_size=3,
                       state_border_col="white",
                       legend_title="Legend", legend_position="top",
                       brewer_pal="PuBu", plot_title="", title_position="bottom") {
