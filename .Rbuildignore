@@ -1,9 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^_README.Rmd$
-^_README.md$
-^NEWS.md$
+^.*md$
 ^\.travis\.yml$
-^README.md$
-^_README_files/*
-^tmp/*$
+^.*README_files$
+^.*README_files/$
+^.*README_files/.*$
+^tmp$
+^tmp/$
+^tmp/.*$
