@@ -1,11 +1,12 @@
 <!-- output: html_document -->
 
-statebins is an alternative to choropleth maps for USA States
+statebins - U.S. State Cartogram Heatmaps in R; an alternative to choropleth maps for USA States
 
 The following functions are implemented:
 
 -   `statebins` - creates "statebin" charts in the style of <http://bit.ly/statebins> - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
 -   `statebins_continuous` - creates "statebin" charts in the style of <http://bit.ly/statebins> - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
+-   `statebins_manual` - creates "statebin" charts using manually specified colors in a column
 
 ### TODO
 
@@ -14,6 +15,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version `1.1.0` released - `statebins_manual()` for manual placement of colors and moving of AK in support of a [pull request](https://github.com/hrbrmstr/statebins/pull/1) by [hansthompson](https://github.com/hansthompson)
 -   Version `1.0.0` released
 
 ### Installation
@@ -76,6 +78,19 @@ gg3
 ```
 
 ![plot of chunk unnamed-chunk-3](./README_files/figure-markdown_github/unnamed-chunk-33.png)
+
+``` {.r}
+# manual - perhaps good for elections?
+
+library(httr)
+library(dplyr)
+election_2012 <- GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
+results <- read.csv(textConnection(content(election_2012, as="text")), header=TRUE, stringsAsFactors=FALSE)
+results <- results %>% mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>% select(state, color)
+results %>% statebins_manual(font_size=4, text_color = "white", labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner")
+```
+
+![plot of chunk unnamed-chunk-3](./README_files/figure-markdown_github/unnamed-chunk-34.png)
 
 ``` {.r}
 # or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
@@ -175,7 +190,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Tue Aug 26 17:53:56 2014"
+    ## [1] "Fri Aug 29 12:38:53 2014"
 
 ``` {.r}
 test_dir("tests/")

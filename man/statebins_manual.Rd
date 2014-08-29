@@ -59,7 +59,12 @@ return a frame grob instead of a ggplot2 object.
 }
 \examples{
 \dontrun{
-statebins_manual(U)
+library(httr)
+library(dplyr)
+election_2012 <- GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
+results <- read.csv(textConnection(content(election_2012, as="text")), header=TRUE, stringsAsFactors=FALSE)
+results <- results \%>\% mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) \%>\% select(state, color)
+results \%>\% statebins_manual(font_size=4, text_color = "white", labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner")
 }
 }
 
