@@ -2,6 +2,7 @@
 
 export(statebins)
 export(statebins_continuous)
+export(statebins_manual)
 import(RColorBrewer)
 import(ggplot2)
 import(grid)
