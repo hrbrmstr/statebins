@@ -271,22 +271,12 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
 #' @export
 #' @examples
 #' \dontrun{
-#' election_2012 <- structure(list(state = c("AL", "AK", "AZ", "AR", "CA", "CO",
-#'  "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
-#'  "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE",
-#'  "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA",
-#'  "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI",
-#'  "WY"), color = c("#2166ac", "#2166ac", "#2166ac", "#2166ac",
-#'  "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#b2182b",
-#'  "#2166ac", "#b2182b", "#2166ac", "#b2182b", "#2166ac", "#b2182b",
-#'  "#2166ac", "#2166ac", "#2166ac", "#b2182b", "#b2182b", "#b2182b",
-#'  "#b2182b", "#b2182b", "#2166ac", "#2166ac", "#2166ac", "#2166ac",
-#'  "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#2166ac",
-#'  "#2166ac", "#b2182b", "#2166ac", "#b2182b", "#b2182b", "#b2182b",
-#'  "#2166ac", "#2166ac", "#2166ac", "#2166ac", "#2166ac", "#b2182b",
-#'  "#b2182b", "#b2182b", "#2166ac", "#b2182b", "#2166ac")), class = "data.frame", row.names = c(NA,
-#'  -51L), .Names = c("state", "color"))
-#'  statebins_manual(election_2012, font_size=4, text_color = "white", labels=c("Romney", "Obama", "Hrm?"), legend_position="right", legend_title="Winner")
+#' library(httr)
+#' library(dplyr)
+#' election_2012 <- GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
+#' results <- read.csv(textConnection(content(election_2012, as="text")), header=TRUE, stringsAsFactors=FALSE)
+#' results <- results %>% mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>% select(state, color)
+#' results %>% statebins_manual(font_size=4, text_color = "white", labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner")
 #' }
 statebins_manual <- function(state_data, state_col="state", color_col="color",
                              text_color="black", font_size=3,
