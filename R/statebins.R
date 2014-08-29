@@ -231,3 +231,115 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
   return(gg)
 
 }
+
+
+#' Create a new ggplot-based "statebin" chart for USA states (manually colored)
+#'
+#' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
+#'
+#' This version uses manual colors (i.e. pass in a column that defines the color per-state)
+#'
+#' The function minimally expects the caller to pass in a data frame that:
+#'
+#' \itemize{
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} or a column of state names (standard capitalization) named \code{state}
+#'   \item has another column of colors named \code{color}
+#' }
+#'
+#' Doing so will create a "statebin" chart with the colors specified as a \link{ggplot2} object.
+#'
+#' You can use a different column for the state names and colors by changing \code{state_col}
+#' and \code{color_col} accordingly.
+#'
+#' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
+#' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
+#' will cause \code{statebins} to use \link{arrangeGrob} to position the title via \code{sub} and
+#' return a frame grob instead of a ggplot2 object.
+#'
+#' @param state_data data frame of states and values to plot
+#' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
+#' @param color_col column name in \code{state_data} that holds the colors to be used
+#' @param text_color default "\code{black}"
+#' @param font_size font size (default = \code{3})
+#' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
+#' @param labels labels for the legend (should be the same number as distinct colors in \code{color_col}); \code{NULL} == no labels/legend
+#' @param legend_title title for the legend
+#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or "\code{bottom}" (defaults to "\code{top}")
+#' @param plot_title title for the plot
+#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or "" for none); if "\code{bottom}", you get back a grob vs a ggplot object
+#' @return ggplot2 object or grob
+#' @export
+#' @examples
+#' \dontrun{
+#' election_2012 <- structure(list(state = c("AL", "AK", "AZ", "AR", "CA", "CO",
+#'  "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
+#'  "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE",
+#'  "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA",
+#'  "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI",
+#'  "WY"), color = c("#2166ac", "#2166ac", "#2166ac", "#2166ac",
+#'  "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#b2182b",
+#'  "#2166ac", "#b2182b", "#2166ac", "#b2182b", "#2166ac", "#b2182b",
+#'  "#2166ac", "#2166ac", "#2166ac", "#b2182b", "#b2182b", "#b2182b",
+#'  "#b2182b", "#b2182b", "#2166ac", "#2166ac", "#2166ac", "#2166ac",
+#'  "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#b2182b", "#2166ac",
+#'  "#2166ac", "#b2182b", "#2166ac", "#b2182b", "#b2182b", "#b2182b",
+#'  "#2166ac", "#2166ac", "#2166ac", "#2166ac", "#2166ac", "#b2182b",
+#'  "#b2182b", "#b2182b", "#2166ac", "#b2182b", "#2166ac")), class = "data.frame", row.names = c(NA,
+#'  -51L), .Names = c("state", "color"))
+#'  statebins_manual(election_2012, font_size=4, text_color = "white", labels=c("Romney", "Obama", "Hrm?"), legend_position="right", legend_title="Winner")
+#' }
+statebins_manual <- function(state_data, state_col="state", color_col="color",
+                             text_color="black", font_size=3,
+                             state_border_col="white", labels=NULL,
+                             legend_title="Legend", legend_position="top",
+                             plot_title="", title_position="bottom") {
+
+  stopifnot(title_position %in% c("", "top", "bottom"))
+
+  if (max(nchar(state_data[,state_col])) == 2) {
+    merge.x <- "abbrev"
+  } else {
+    merge.x <- "state"
+  }
+
+  stopifnot(state_data[,state_col] %in% state_coords[,merge.x])
+  stopifnot(!any(duplicated(state_data[,state_col])))
+
+  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col)
+
+  gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
+  gg <- gg + geom_tile(aes_string(fill="color"))
+  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="color"), size=2, show_guide=FALSE)
+  gg <- gg + geom_text(color=text_color, size=font_size)
+  gg <- gg + scale_y_reverse()
+  if (is.null(labels)) {
+    gg <- gg + scale_fill_manual(values=unique(st.dat[,color_col]))
+    legend_position = "none"
+  } else {
+    gg <- gg + scale_fill_manual(values=unique(st.dat[,color_col]), labels=labels, name=legend_title)
+  }
+  gg <- gg + coord_equal()
+  gg <- gg + labs(x=NULL, y=NULL, title=NULL)
+  gg <- gg + theme_bw()
+  gg <- gg + theme(legend.position=legend_position)
+  gg <- gg + theme(panel.border=element_blank())
+  gg <- gg + theme(panel.grid=element_blank())
+  gg <- gg + theme(panel.background=element_blank())
+  gg <- gg + theme(axis.ticks=element_blank())
+  gg <- gg + theme(axis.text=element_blank())
+
+  if (plot_title != "") {
+
+    if (title_position == "bottom") {
+      gg <- arrangeGrob(gg, sub=textGrob(plot_title, gp=gpar(cex=1)))
+    } else {
+      gg <- gg + ggtitle(plot_title)
+    }
+
+  }
+
+  return(gg)
+
+}
+
+
