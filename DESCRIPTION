@@ -1,8 +1,9 @@
 Package: statebins
 Type: Package
-Title: statebins is an alternative to choropleth maps for USA States
-Version: 1.0
-Date: 2014-08-26
+Title: statebins - U.S. State Cartogram Heatmaps in R; an alternative to
+    choropleth maps for USA States
+Version: 1.1
+Date: 2014-08-29
 Author: Bob Rudis (@hrbrmstr)
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: statebins is an alternative to choropleth maps for USA States and
@@ -10,8 +11,8 @@ Description: statebins is an alternative to choropleth maps for USA States and
     on "The states most threatened by trade". statebins preserves as much of
     the geographic placement of the states as possible but has the look and
     feel of a traditional heatmap. Functions are provided that allow for use
-    of both a binned, discrete scale and continuous scale depending on what
-    is needed for the underlying data.
+    of a binned, discrete scale, a continuous scale or manually specified
+    colors depending on what is needed for the underlying data.
 URL: http://github.com/hrbrmstr/statebins
 BugReports: https://github.com/hrbrmstr/statebins/issues
 License: MIT + file LICENSE
