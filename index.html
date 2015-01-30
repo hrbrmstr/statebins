@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -16,18 +17,14 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">statebins</h1>
-        <p class="header">U.S. State Cartogram Heatmaps in R; an alternative to choropleths of US States ala http://bit.ly/statebins</p>
-
+        <h1>statebins</h1>
+        <p>U.S. State Cartogram Heatmaps in R; an alternative to choropleths of US States ala http://bit.ly/statebins</p>
+        <p class="view"><a href="https://github.com/hrbrmstr/statebins">View the Project on GitHub <small>hrbrmstr/statebins</small></a></p>
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/hrbrmstr/statebins/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/hrbrmstr/statebins/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/hrbrmstr/statebins">View On GitHub</a></li>
+          <li><a href="https://github.com/hrbrmstr/statebins/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/hrbrmstr/statebins/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/hrbrmstr/statebins">View On <strong>GitHub</strong></a></li>
         </ul>
-
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/hrbrmstr">hrbrmstr</a></p>
-
-
       </header>
       <section>
         <p>statebins is an alternative to choropleth maps for USA States</p>
@@ -37,90 +34,89 @@
 <ul>
 <li>  <code>statebins</code> - creates "statebin" charts in the style of <a href="http://bit.ly/statebins">http://bit.ly/statebins</a> - This version uses discrete <code>RColorBrewer</code> scales, binned by the "breaks" parameter.</li>
 <li>  <code>statebins_continuous</code> - creates "statebin" charts in the style of <a href="http://bit.ly/statebins">http://bit.ly/statebins</a> - This version uses a continuous scale based on <code>RColorBrewer</code> scales (passing in a 6 element <code>RColorBrewer</code> palette to <code>scale_fill_gradientn</code>).</li>
-</ul><h3>
-<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h3>
+</ul>
+
+<h3>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h3>
 
 <ul>
 <li>  The current version is usable, but I think the plot margins and the legends need work</li>
 <li>  Apply algorithm to switch to light-on-dark depending on the background tile color</li>
-</ul><h3>
-<a name="news" class="anchor" href="#news"><span class="octicon octicon-link"></span></a>News</h3>
+</ul>
+
+<h3>
+<a id="news" class="anchor" href="#news" aria-hidden="true"><span class="octicon octicon-link"></span></a>News</h3>
 
 <ul>
 <li>  Version <code>1.0.0</code> released</li>
-</ul><h3>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
-
-<div class="highlight highlight-r"><pre>devtools<span class="o">::</span>install_github<span class="p">(</span><span class="s">"hrbrmstr/statebins"</span><span class="p">)</span>
-</pre></div>
+</ul>
 
 <h3>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<div class="highlight highlight-r"><pre><span class="pl-e">devtools</span><span class="pl-k">::</span>install_github(<span class="pl-s1"><span class="pl-pds">"</span>hrbrmstr/statebins<span class="pl-pds">"</span></span>)</pre></div>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
 
 <p>All of the following examples use the <a href="http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1">WaPo data</a>. It looks like the columns they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).</p>
 
-<div class="highlight highlight-r"><pre><span class="kn">library</span><span class="p">(</span>statebins<span class="p">)</span>
+<div class="highlight highlight-r"><pre>library(<span class="pl-vo">statebins</span>)
 
-<span class="c1"># current verison</span>
-packageVersion<span class="p">(</span><span class="s">"statebins"</span><span class="p">)</span>
-</pre></div>
+<span class="pl-c"># current verison</span>
+packageVersion(<span class="pl-s1"><span class="pl-pds">"</span>statebins<span class="pl-pds">"</span></span>)</pre></div>
 
 <pre><code>## [1] '1.0'
 </code></pre>
 
-<div class="highlight highlight-r"><pre><span class="c1"># the original wapo data</span>
+<div class="highlight highlight-r"><pre><span class="pl-c"># the original wapo data</span>
 
-dat <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">"http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1"</span><span class="p">,</span> stringsAsFactors<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="pl-vo">dat</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s1"><span class="pl-pds">"</span>http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1<span class="pl-pds">"</span></span>, <span class="pl-v">stringsAsFactors</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
 
-gg <span class="o">&lt;-</span> statebins<span class="p">(</span>dat<span class="p">,</span> <span class="s">"state"</span><span class="p">,</span> <span class="s">"avgshare94_00"</span><span class="p">,</span> breaks<span class="o">=</span><span class="m">4</span><span class="p">,</span> 
-                labels<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">"0-1"</span><span class="p">,</span> <span class="s">"1-2"</span><span class="p">,</span> <span class="s">"2-3"</span><span class="p">,</span> <span class="s">"3-4"</span><span class="p">),</span>
-                legend_title<span class="o">=</span><span class="s">"Share of workforce with jobs lost or threatened by trade"</span><span class="p">,</span> font_size<span class="o">=</span><span class="m">3</span><span class="p">,</span> 
-                brewer_pal<span class="o">=</span><span class="s">"Blues"</span><span class="p">,</span> text_color<span class="o">=</span><span class="s">"black"</span><span class="p">,</span> 
-                plot_title<span class="o">=</span><span class="s">"1994-2000"</span><span class="p">,</span> title_position<span class="o">=</span><span class="s">"bottom"</span><span class="p">)</span>
+<span class="pl-vo">gg</span> <span class="pl-k">&lt;-</span> statebins(<span class="pl-vo">dat</span>, <span class="pl-s1"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>avgshare94_00<span class="pl-pds">"</span></span>, <span class="pl-v">breaks</span><span class="pl-k">=</span><span class="pl-c1">4</span>, 
+                <span class="pl-v">labels</span><span class="pl-k">=</span>c(<span class="pl-s1"><span class="pl-pds">"</span>0-1<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>1-2<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>2-3<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>3-4<span class="pl-pds">"</span></span>),
+                <span class="pl-v">legend_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Share of workforce with jobs lost or threatened by trade<span class="pl-pds">"</span></span>, <span class="pl-v">font_size</span><span class="pl-k">=</span><span class="pl-c1">3</span>, 
+                <span class="pl-v">brewer_pal</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Blues<span class="pl-pds">"</span></span>, <span class="pl-v">text_color</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>black<span class="pl-pds">"</span></span>, 
+                <span class="pl-v">plot_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>1994-2000<span class="pl-pds">"</span></span>, <span class="pl-v">title_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>bottom<span class="pl-pds">"</span></span>)
 
-gg
-</pre></div>
+<span class="pl-vo">gg</span></pre></div>
 
-<p><img src="https://raw.githubusercontent.com/hrbrmstr/statebins/master/README_files/figure-markdown_github/unnamed-chunk-31.png" alt="plot of chunk unnamed-chunk-3"></p>
+<p><img src="./README_files/figure-markdown_github/unnamed-chunk-31.png" alt="plot of chunk unnamed-chunk-3"></p>
 
-<div class="highlight highlight-r"><pre><span class="c1"># continuous scale, legend on top</span>
+<div class="highlight highlight-r"><pre><span class="pl-c"># continuous scale, legend on top</span>
 
-gg2 <span class="o">&lt;-</span> statebins_continuous<span class="p">(</span>dat<span class="p">,</span> <span class="s">"state"</span><span class="p">,</span> <span class="s">"avgshare01_07"</span><span class="p">,</span>
-                            legend_title<span class="o">=</span><span class="s">"Share of workforce with jobs lost or threatened by trade"</span><span class="p">,</span> legend_position<span class="o">=</span><span class="s">"top"</span><span class="p">,</span>
-                            brewer_pal<span class="o">=</span><span class="s">"OrRd"</span><span class="p">,</span> text_color<span class="o">=</span><span class="s">"black"</span><span class="p">,</span> font_size<span class="o">=</span><span class="m">3</span><span class="p">,</span> 
-                            plot_title<span class="o">=</span><span class="s">"2001-2007"</span><span class="p">,</span> title_position<span class="o">=</span><span class="s">"bottom"</span><span class="p">)</span>
+<span class="pl-vo">gg2</span> <span class="pl-k">&lt;-</span> statebins_continuous(<span class="pl-vo">dat</span>, <span class="pl-s1"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>avgshare01_07<span class="pl-pds">"</span></span>,
+                            <span class="pl-v">legend_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Share of workforce with jobs lost or threatened by trade<span class="pl-pds">"</span></span>, <span class="pl-v">legend_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>top<span class="pl-pds">"</span></span>,
+                            <span class="pl-v">brewer_pal</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>OrRd<span class="pl-pds">"</span></span>, <span class="pl-v">text_color</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>black<span class="pl-pds">"</span></span>, <span class="pl-v">font_size</span><span class="pl-k">=</span><span class="pl-c1">3</span>, 
+                            <span class="pl-v">plot_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>2001-2007<span class="pl-pds">"</span></span>, <span class="pl-v">title_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>bottom<span class="pl-pds">"</span></span>)
 
-gg2
-</pre></div>
+<span class="pl-vo">gg2</span></pre></div>
 
-<p><img src="https://raw.githubusercontent.com/hrbrmstr/statebins/master/README_files/figure-markdown_github/unnamed-chunk-32.png" alt="plot of chunk unnamed-chunk-3"></p>
+<p><img src="./README_files/figure-markdown_github/unnamed-chunk-32.png" alt="plot of chunk unnamed-chunk-3"></p>
 
-<div class="highlight highlight-r"><pre><span class="c1"># continuous scale, no legend</span>
+<div class="highlight highlight-r"><pre><span class="pl-c"># continuous scale, no legend</span>
 
-gg3 <span class="o">&lt;-</span> statebins_continuous<span class="p">(</span>dat<span class="p">,</span> <span class="s">"state"</span><span class="p">,</span> <span class="s">"avgshare08_12"</span><span class="p">,</span>
-                            legend_title<span class="o">=</span><span class="s">"States"</span><span class="p">,</span> legend_position<span class="o">=</span><span class="s">"none"</span><span class="p">,</span>
-                            brewer_pal<span class="o">=</span><span class="s">"Purples"</span><span class="p">,</span> text_color<span class="o">=</span><span class="s">"black"</span><span class="p">,</span> font_size<span class="o">=</span><span class="m">3</span><span class="p">,</span> 
-                            plot_title<span class="o">=</span><span class="s">"2008-2012"</span><span class="p">,</span> title_position<span class="o">=</span><span class="s">"bottom"</span><span class="p">)</span>
+<span class="pl-vo">gg3</span> <span class="pl-k">&lt;-</span> statebins_continuous(<span class="pl-vo">dat</span>, <span class="pl-s1"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>avgshare08_12<span class="pl-pds">"</span></span>,
+                            <span class="pl-v">legend_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>States<span class="pl-pds">"</span></span>, <span class="pl-v">legend_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>none<span class="pl-pds">"</span></span>,
+                            <span class="pl-v">brewer_pal</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Purples<span class="pl-pds">"</span></span>, <span class="pl-v">text_color</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>black<span class="pl-pds">"</span></span>, <span class="pl-v">font_size</span><span class="pl-k">=</span><span class="pl-c1">3</span>, 
+                            <span class="pl-v">plot_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>2008-2012<span class="pl-pds">"</span></span>, <span class="pl-v">title_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>bottom<span class="pl-pds">"</span></span>)
 
-gg3
-</pre></div>
+<span class="pl-vo">gg3</span></pre></div>
 
-<p><img src="https://raw.githubusercontent.com/hrbrmstr/statebins/master/README_files/figure-markdown_github/unnamed-chunk-33.png" alt="plot of chunk unnamed-chunk-3"></p>
+<p><img src="./README_files/figure-markdown_github/unnamed-chunk-33.png" alt="plot of chunk unnamed-chunk-3"></p>
 
-<div class="highlight highlight-r"><pre><span class="c1"># or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example</span>
+<div class="highlight highlight-r"><pre><span class="pl-c"># or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example</span>
 
-sb <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="kp">col</span><span class="p">,</span> title<span class="p">)</span> <span class="p">{</span>
-  statebins<span class="p">(</span>dat<span class="p">,</span> <span class="s">"state"</span><span class="p">,</span><span class="kp">col</span><span class="p">,</span> brewer_pal<span class="o">=</span><span class="s">"Blues"</span><span class="p">,</span> text_color<span class="o">=</span><span class="s">"black"</span><span class="p">,</span> legend_position<span class="o">=</span><span class="s">"none"</span><span class="p">,</span> font_size<span class="o">=</span><span class="m">3</span><span class="p">,</span> plot_title<span class="o">=</span>title<span class="p">,</span> breaks<span class="o">=</span><span class="m">4</span><span class="p">,</span> labels<span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">)</span>
-<span class="p">}</span>
-</pre></div>
+<span class="pl-en">sb</span> <span class="pl-k">&lt;-</span> <span class="pl-k">function</span>(<span class="pl-vo">col</span>, <span class="pl-vo">title</span>) {
+  statebins(<span class="pl-vo">dat</span>, <span class="pl-s1"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>,<span class="pl-vo">col</span>, <span class="pl-v">brewer_pal</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Blues<span class="pl-pds">"</span></span>, <span class="pl-v">text_color</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>black<span class="pl-pds">"</span></span>, <span class="pl-v">legend_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>none<span class="pl-pds">"</span></span>, <span class="pl-v">font_size</span><span class="pl-k">=</span><span class="pl-c1">3</span>, <span class="pl-v">plot_title</span><span class="pl-k">=</span><span class="pl-vo">title</span>, <span class="pl-v">breaks</span><span class="pl-k">=</span><span class="pl-c1">4</span>, <span class="pl-v">labels</span><span class="pl-k">=</span><span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">4</span>)
+}</pre></div>
 
-<div class="highlight highlight-r"><pre><span class="c1"># cheating and using &lt;table&gt; to arrange them below and also making a WaPo-like legend, </span>
-<span class="c1"># since mucking with grid graphics margins/padding was not an option time-wise at the moment</span>
+<div class="highlight highlight-r"><pre><span class="pl-c"># cheating and using &lt;table&gt; to arrange them below and also making a WaPo-like legend, </span>
+<span class="pl-c"># since mucking with grid graphics margins/padding was not an option time-wise at the moment</span>
 
-sb<span class="p">(</span><span class="s">"avgshare94_00"</span><span class="p">,</span> <span class="s">"1994-2000"</span><span class="p">)</span>
-sb<span class="p">(</span><span class="s">"avgshare01_07"</span><span class="p">,</span> <span class="s">"2001-2007"</span><span class="p">)</span>
-sb<span class="p">(</span><span class="s">"avgshare08_12"</span><span class="p">,</span> <span class="s">"2008-2012"</span><span class="p">)</span>
-</pre></div>
+sb(<span class="pl-s1"><span class="pl-pds">"</span>avgshare94_00<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>1994-2000<span class="pl-pds">"</span></span>)
+sb(<span class="pl-s1"><span class="pl-pds">"</span>avgshare01_07<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>2001-2007<span class="pl-pds">"</span></span>)
+sb(<span class="pl-s1"><span class="pl-pds">"</span>avgshare08_12<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>2008-2012<span class="pl-pds">"</span></span>)</pre></div>
 
 
 
@@ -129,60 +125,64 @@ sb<span class="p">(</span><span class="s">"avgshare08_12"</span><span class="p">
 
 
 <p></p>
-<img src="https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/statebins-composite.png" alt="img"><p>And, we'll throw in a gratuitous animation for good measure:</p>
+<img src="./tmp/statebins-composite.png" alt="img">
 
-<div class="highlight highlight-r"><pre><span class="c1"># data set from StatsAmerica - http://www.statsamerica.org/profiles/sip_index.html</span>
 
-<span class="c1"># median household income from the ACS survey</span>
-miacs <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">"http://dds.ec/data/median-income-acs.csv"</span><span class="p">,</span> header<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> stringsAsFactors<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<p>And, we'll throw in a gratuitous animation for good measure:</p>
 
-<span class="c1"># generate frames based on year</span>
-<span class="kp">sapply</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>miacs<span class="o">$</span>year<span class="p">),</span> <span class="kr">function</span><span class="p">(</span>year<span class="p">)</span> <span class="p">{</span>
+<div class="highlight highlight-r"><pre><span class="pl-c"># data set from StatsAmerica - http://www.statsamerica.org/profiles/sip_index.html</span>
 
-  png<span class="p">(</span>file<span class="o">=</span><span class="kp">sprintf</span><span class="p">(</span><span class="s">"tmp/household%d.png"</span><span class="p">,</span> year<span class="p">),</span>
-      type<span class="o">=</span><span class="s">"quartz"</span><span class="p">,</span> antialias<span class="o">=</span><span class="s">"subpixel"</span><span class="p">,</span> width<span class="o">=</span><span class="m">800</span><span class="p">,</span> height<span class="o">=</span><span class="m">600</span><span class="p">)</span>
+<span class="pl-c"># median household income from the ACS survey</span>
+<span class="pl-vo">miacs</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s1"><span class="pl-pds">"</span>http://dds.ec/data/median-income-acs.csv<span class="pl-pds">"</span></span>, <span class="pl-v">header</span><span class="pl-k">=</span><span class="pl-c1">TRUE</span>, <span class="pl-v">stringsAsFactors</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
 
-  rng <span class="o">&lt;-</span> <span class="kp">floor</span><span class="p">(</span><span class="kp">range</span><span class="p">(</span>miacs<span class="p">[</span>miacs<span class="o">$</span>year<span class="o">==</span>year<span class="p">,]</span><span class="o">$</span>mh_inc<span class="p">))</span>
+<span class="pl-c"># generate frames based on year</span>
+sapply(unique(<span class="pl-vo">miacs</span><span class="pl-k">$</span><span class="pl-vo">year</span>), <span class="pl-k">function</span>(<span class="pl-vo">year</span>) {
 
-  ggtmp <span class="o">&lt;-</span> statebins<span class="p">(</span>miacs<span class="p">[</span>miacs<span class="o">$</span>year<span class="o">==</span>year<span class="p">,],</span> <span class="s">"state"</span><span class="p">,</span> <span class="s">"mh_inc"</span><span class="p">,</span>
-                   legend_title<span class="o">=</span><span class="s">"States"</span><span class="p">,</span> legend_position<span class="o">=</span><span class="s">"none"</span><span class="p">,</span>
-                   brewer_pal<span class="o">=</span><span class="s">"Greens"</span><span class="p">,</span> text_color<span class="o">=</span><span class="s">"black"</span><span class="p">,</span> font_size<span class="o">=</span><span class="m">3</span><span class="p">,</span>
-                   plot_title<span class="o">=</span><span class="kp">sprintf</span><span class="p">(</span><span class="s">"Median Household Income (ACS) %d\n$%s - $%s"</span><span class="p">,</span> year<span class="p">,</span> comma<span class="p">(</span>rng<span class="p">[</span><span class="m">1</span><span class="p">]),</span> comma<span class="p">(</span>rng<span class="p">[</span><span class="m">2</span><span class="p">])),</span> title_position<span class="o">=</span><span class="s">"top"</span><span class="p">)</span>
+  png(<span class="pl-v">file</span><span class="pl-k">=</span>sprintf(<span class="pl-s1"><span class="pl-pds">"</span>tmp/household%d.png<span class="pl-pds">"</span></span>, <span class="pl-vo">year</span>),
+      <span class="pl-v">type</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>quartz<span class="pl-pds">"</span></span>, <span class="pl-v">antialias</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>subpixel<span class="pl-pds">"</span></span>, <span class="pl-v">width</span><span class="pl-k">=</span><span class="pl-c1">800</span>, <span class="pl-v">height</span><span class="pl-k">=</span><span class="pl-c1">600</span>)
 
-  <span class="kp">print</span><span class="p">(</span>ggtmp<span class="p">)</span>
+  <span class="pl-vo">rng</span> <span class="pl-k">&lt;-</span> floor(range(<span class="pl-vo">miacs</span>[<span class="pl-vo">miacs</span><span class="pl-k">$</span><span class="pl-vo">year</span><span class="pl-k">==</span><span class="pl-vo">year</span>,]<span class="pl-k">$</span><span class="pl-vo">mh_inc</span>))
 
-  dev.off<span class="p">()</span>
+  <span class="pl-vo">ggtmp</span> <span class="pl-k">&lt;-</span> statebins(<span class="pl-vo">miacs</span>[<span class="pl-vo">miacs</span><span class="pl-k">$</span><span class="pl-vo">year</span><span class="pl-k">==</span><span class="pl-vo">year</span>,], <span class="pl-s1"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>mh_inc<span class="pl-pds">"</span></span>,
+                   <span class="pl-v">legend_title</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>States<span class="pl-pds">"</span></span>, <span class="pl-v">legend_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>none<span class="pl-pds">"</span></span>,
+                   <span class="pl-v">brewer_pal</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Greens<span class="pl-pds">"</span></span>, <span class="pl-v">text_color</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>black<span class="pl-pds">"</span></span>, <span class="pl-v">font_size</span><span class="pl-k">=</span><span class="pl-c1">3</span>,
+                   <span class="pl-v">plot_title</span><span class="pl-k">=</span>sprintf(<span class="pl-s1"><span class="pl-pds">"</span>Median Household Income (ACS) %d<span class="pl-cce">\n</span>$%s - $%s<span class="pl-pds">"</span></span>, <span class="pl-vo">year</span>, comma(<span class="pl-vo">rng</span>[<span class="pl-c1">1</span>]), comma(<span class="pl-vo">rng</span>[<span class="pl-c1">2</span>])), <span class="pl-v">title_position</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>top<span class="pl-pds">"</span></span>)
 
-<span class="p">})</span>
+  print(<span class="pl-vo">ggtmp</span>)
 
-<span class="c1"># animate them with ImageMagick</span>
-<span class="kp">system</span><span class="p">(</span><span class="s">"convert -background white -alpha remove -layers OptimizePlus -delay 150 tmp/*.png -loop 1 tmp/household.gif"</span><span class="p">)</span>
-</pre></div>
+  dev.off()
+
+})
+
+<span class="pl-c"># animate them with ImageMagick</span>
+system(<span class="pl-s1"><span class="pl-pds">"</span>convert -background white -alpha remove -layers OptimizePlus -delay 150 tmp/*.png -loop 1 tmp/household.gif<span class="pl-pds">"</span></span>)</pre></div>
 
 <p></p>
-<img src="https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/household.gif" alt="img"><h3>
-<a name="test-results" class="anchor" href="#test-results"><span class="octicon octicon-link"></span></a>Test Results</h3>
+<img src="./tmp/household.gif" alt="img">
 
-<div class="highlight highlight-r"><pre><span class="kn">library</span><span class="p">(</span>statebins<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>testthat<span class="p">)</span>
 
-<span class="kp">date</span><span class="p">()</span>
-</pre></div>
+<h3>
+<a id="test-results" class="anchor" href="#test-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test Results</h3>
+
+<div class="highlight highlight-r"><pre>library(<span class="pl-vo">statebins</span>)
+library(<span class="pl-vo">testthat</span>)
+
+date()</pre></div>
 
 <pre><code>## [1] "Tue Aug 26 17:53:56 2014"
 </code></pre>
 
-<div class="highlight highlight-r"><pre>test_dir<span class="p">(</span><span class="s">"tests/"</span><span class="p">)</span>
-</pre></div>
+<div class="highlight highlight-r"><pre>test_dir(<span class="pl-s1"><span class="pl-pds">"</span>tests/<span class="pl-pds">"</span></span>)</pre></div>
 
 <pre><code>## basic functionality :
 </code></pre>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
-      </footer>
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/hrbrmstr">hrbrmstr</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+    
   </body>
 </html>
