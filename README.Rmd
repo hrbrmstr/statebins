@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Bob Rudis"
-date: August 29, 2014
+date: January 30, 2015
 output:
   md_document:
     variant: markdown_github
@@ -23,6 +23,7 @@ The following functions are implemented:
 
 ### News
 
+- Version `1.2.1` released - Added support for `PR`/`Puerto Rico`[[1](https://github.com/hrbrmstr/statebins/issues/2)] and fixed a bug[[2](https://github.com/hrbrmstr/statebins/issues/3)] when using anything but a `data.frame` as input
 - Version `1.1.0` released - `statebins_manual()` for manual placement of colors and moving of AK in support of a [pull request](https://github.com/hrbrmstr/statebins/pull/1) by [hansthompson](https://github.com/hansthompson)
 - Version `1.0.0` released
 
@@ -75,6 +76,19 @@ gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
                             plot_title="2008-2012", title_position="bottom")
 
 gg3
+
+# mortality (only to show PR and using a data.table)
+# from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
+
+dat <- data.table::fread("http://dds.ec/data/deaths.csv")
+statebins_continuous(dat, "state", "death_rate", legend_title="Per 100K pop",
+                    plot_title="Mortality Rate (2010)")
+
+# fertility (only to show tbl_dt)
+
+dat <- dplyr::tbl_dt(dat)
+statebins_continuous(dat, "state", "fertility_rate", legend_title="Per 100K pop", 
+                     plot_title="Fertility Rate (2010)", brewer_pal="PuBuGn")
 
 # manual - perhaps good for elections?
 
