@@ -14,7 +14,7 @@ The following functions are implemented:
 
 ### News
 
--   Version `1.2.1` released - Added support for `PR`/`Puerto Rico`[[1](https://github.com/hrbrmstr/statebins/issues/2)] and fixed a bug[[2](https://github.com/hrbrmstr/statebins/issues/3)] when using anything but a `data.frame` as input
+-   Version `1.2.1` released - Added support for `PR`/`Puerto Rico`[[1](https://github.com/hrbrmstr/statebins/issues/2)] and fixed a bug[[2](https://github.com/hrbrmstr/statebins/issues/3)] when using anything but a `data.frame` as input. Also no longer fails (deals with the following but with a warning) when duplicate states are in the input data or invalid states are in the input data.
 -   Version `1.1.0` released - `statebins_manual()` for manual placement of colors and moving of AK in support of a [pull request](https://github.com/hrbrmstr/statebins/pull/1) by [hansthompson](https://github.com/hansthompson)
 -   Version `1.0.0` released
 
@@ -209,7 +209,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Fri Jan 30 05:55:25 2015"
+    ## [1] "Fri Jan 30 06:10:21 2015"
 
 ``` r
 test_dir("tests/")
