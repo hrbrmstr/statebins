@@ -2,7 +2,8 @@ state_coords <- structure(list(abbrev = c("AL", "AK", "AZ", "AR", "CA", "CO",
                                           "CT", "DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
                                           "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE",
                                           "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA",
-                                          "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"),
+                                          "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
+                                          "PR"),
                                state = c("Alabama", "Alaska", "Arizona", "Arkansas",
                                          "California", "Colorado", "Connecticut", "District of Columbia",
                                          "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois",
@@ -12,16 +13,17 @@ state_coords <- structure(list(abbrev = c("AL", "AK", "AZ", "AR", "CA", "CO",
                                          "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota",
                                          "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
                                          "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah",
-                                         "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"),
+                                         "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+                                         "Puerto Rico"),
                                col = c(8L, 1L, 3L, 6L, 2L, 4L, 11L, 10L, 11L, 10L,
                                        9L, 1L, 3L, 7L, 7L, 6L, 5L, 7L, 6L, 12L, 10L, 11L, 8L, 6L, 7L,
                                        6L, 4L, 5L, 3L, 12L, 10L, 4L, 10L, 8L, 5L, 8L, 5L, 2L, 9L, 12L,
-                                       9L, 5L, 7L, 5L, 3L, 11L, 9L, 2L, 8L, 7L, 4L),
+                                       9L, 5L, 7L, 5L, 3L, 11L, 9L, 2L, 8L, 7L, 4L, 12L),
                                row = c(7L, 7L,
                                        6L, 6L, 5L, 5L, 4L, 6L, 5L, 8L, 7L, 8L, 3L, 3L, 4L, 4L, 6L, 5L,
                                        7L, 1L, 5L, 3L, 3L, 3L, 7L, 5L, 3L, 5L, 4L, 2L, 4L, 6L, 3L, 6L,
-                                       3L, 4L, 7L, 4L, 4L, 4L, 6L, 4L, 6L, 8L, 5L, 2L, 5L, 3L, 5L, 2L, 4L)),
-                          .Names = c("abbrev", "state", "col", "row"), class = "data.frame", row.names = c(NA, -51L))
+                                       3L, 4L, 7L, 4L, 4L, 4L, 6L, 4L, 6L, 8L, 5L, 2L, 5L, 3L, 5L, 2L, 4L, 8L)),
+                          .Names = c("abbrev", "state", "col", "row"), class = "data.frame", row.names = c(NA, -52L))
 
 
 invert <- function(hexColor, darkColor="black", lightColor="white") {
@@ -47,7 +49,7 @@ invert <- function(hexColor, darkColor="black", lightColor="white") {
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC} or a column of state names (standard capitalization) named \code{state}
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} & \code{PR} or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of values named \code{value}
 #' }
 #'
@@ -89,9 +91,15 @@ statebins <- function(state_data, state_col="state", value_col="value",
                      legend_title="Legend", legend_position="top",
                      brewer_pal="PuBu", plot_title="", title_position="bottom") {
 
-  stopifnot(breaks > 0 && breaks < 10)
-  stopifnot(title_position %in% c("", "top", "bottom"))
-  stopifnot(legend_position %in% c("", "none", "left", "right", "top", "bottom"))
+  if (breaks <= 0 | breaks >= 10) {
+    stop("'breaks' must be between 0 & 10")
+  }
+
+  if (!title_position %in% c("", "top", "bottom")) {
+    stop("'title_position' must be either blank, 'top' or 'bottom'")
+  }
+
+  state_data <- data.frame(state_data, stringsAsFactors=FALSE)
 
   if (max(nchar(state_data[,state_col])) == 2) {
     merge.x <- "abbrev"
@@ -99,10 +107,9 @@ statebins <- function(state_data, state_col="state", value_col="value",
     merge.x <- "state"
   }
 
-  stopifnot(state_data[,state_col] %in% state_coords[,merge.x])
-  stopifnot(!any(duplicated(state_data[,state_col])))
+  state_data <- validate_states(state_data, state_col, merge.x)
 
-  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col)
+  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
 
   st.dat$fill_color <- cut(st.dat[, value_col], breaks=breaks, labels=labels)
 
@@ -147,7 +154,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC}) or a column of state names (standard capitalization) named \code{state}
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} & \code{PR} ) or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of values named \code{value}
 #' }
 #'
@@ -187,8 +194,15 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
                       legend_title="Legend", legend_position="top",
                       brewer_pal="PuBu", plot_title="", title_position="bottom") {
 
-  stopifnot(title_position %in% c("", "top", "bottom"))
-  stopifnot(legend_position %in% c("", "none", "top", "bottom"))
+  if (!title_position %in% c("", "top", "bottom")) {
+    stop("'title_position' must be either blank, 'top' or 'bottom'")
+  }
+
+  if (!legend_position %in% c("", "none", "top", "bottom")) {
+    stop("'legend_position' must be either blank, 'none', 'top' or 'bottom'")
+  }
+
+  state_data <- data.frame(state_data, stringsAsFactors=FALSE)
 
   if (max(nchar(state_data[,state_col])) == 2) {
     merge.x <- "abbrev"
@@ -196,10 +210,9 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
     merge.x <- "state"
   }
 
-  stopifnot(state_data[,state_col] %in% state_coords[,merge.x])
-  stopifnot(!any(duplicated(state_data[,state_col])))
+  state_data <- validate_states(state_data, state_col, merge.x)
 
-  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col)
+  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
 
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill=value_col))
@@ -242,7 +255,7 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC} or a column of state names (standard capitalization) named \code{state}
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} & \code{PR}  or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of colors named \code{color}
 #' }
 #'
@@ -284,7 +297,11 @@ statebins_manual <- function(state_data, state_col="state", color_col="color",
                              legend_title="Legend", legend_position="top",
                              plot_title="", title_position="bottom") {
 
-  stopifnot(title_position %in% c("", "top", "bottom"))
+  if (!title_position %in% c("", "top", "bottom")) {
+    stop("'title_position' must be either blank, 'top' or 'bottom'")
+  }
+
+  state_data <- data.frame(state_data, stringsAsFactors=FALSE)
 
   if (max(nchar(state_data[,state_col])) == 2) {
     merge.x <- "abbrev"
@@ -292,10 +309,9 @@ statebins_manual <- function(state_data, state_col="state", color_col="color",
     merge.x <- "state"
   }
 
-  stopifnot(state_data[,state_col] %in% state_coords[,merge.x])
-  stopifnot(!any(duplicated(state_data[,state_col])))
+  state_data <- validate_states(state_data, state_col, merge.x)
 
-  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col)
+  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
 
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill="color"))
@@ -331,5 +347,27 @@ statebins_manual <- function(state_data, state_col="state", color_col="color",
   return(gg)
 
 }
+
+# sanity checks for state values
+validate_states <- function(state_data, state_col, merge.x) {
+
+  good_states <- state_data[,state_col] %in% state_coords[,merge.x]
+  if (any(!good_states)) {
+    invalid <- state_data[,state_col][which(!good_states)]
+    state_data <- state_data[which(good_states),]
+    warning("Found invalid state values: ", invalid)
+  }
+
+  dups <- duplicated(state_data[,state_col])
+  if (any(dups)) {
+    state_data <- state_data[which(!dups),]
+    warning("Removing duplicate state rows")
+  }
+
+  return(state_data)
+
+}
+
+
 
 
