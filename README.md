@@ -35,7 +35,7 @@ library(statebins)
 packageVersion("statebins")
 ```
 
-    ## [1] '1.2'
+    ## [1] '1.2.1'
 
 ``` r
 # the original wapo data
@@ -209,7 +209,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Fri Jan 30 05:36:28 2015"
+    ## [1] "Fri Jan 30 05:55:25 2015"
 
 ``` r
 test_dir("tests/")
