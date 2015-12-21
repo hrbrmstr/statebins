@@ -44,38 +44,43 @@ invert <- function(hexColor, darkColor="black", lightColor="white") {
 #'
 #' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
 #'
-#' This version uses discrete \link{RColorBrewer} scales, binned by the "breaks" parameter.
+#' This version uses discrete \code{RColorBrewer} scales, binned by the "breaks" parameter.
 #'
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC} & \code{PR} or a column of state names (standard capitalization) named \code{state}
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} &
+#'     \code{PR} or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of values named \code{value}
 #' }
 #'
-#' Doing so will create a "statebin" chart with 5 breaks and return a \link{ggplot2} object.
+#' Doing so will create a "statebin" chart with 5 breaks and return a ggplot2 object.
 #'
 #' You can use a different column for the state names and values by changing \code{state_col}
 #' and \code{value_col} accordingly.
 #'
 #' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
 #' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-#' will cause \code{statebins} to use \link{arrangeGrob} to position the title via \code{sub} and
+#' will cause \code{statebins} to use \code{arrangeGrob} to position the title via \code{sub} and
 #' return a frame grob instead of a ggplot2 object.
 #'
 #' @param state_data data frame of states and values to plot
-#' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
+#' @param state_col column name in \code{state_data} that has the states. no duplicates
+#'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
 #' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
-#' @param breaks a single number (greater than or equal to 2) giving the number of intervals into which data values are to be cut.
+#' @param breaks a single number (greater than or equal to 2) giving the number of intervals
+#'        into which data values are to be cut.
 #' @param labels labels for the levels \code{breaks}
 #' @param legend_title title for the legend
-#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or "\code{bottom}" (defaults to "\code{top}")
-#' @param brewer_pal which named \link{RColorBrewer} palette to use (defaults to "PuBu")
+#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
+#'        "\code{bottom}" (defaults to "\code{top}")
+#' @param brewer_pal which named \code{RColorBrewer} palette to use (defaults to "PuBu")
 #' @param plot_title title for the plot
-#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or "" for none); if "\code{bottom}", you get back a grob vs a ggplot object
+#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or ""
+#'        for none); if "\code{bottom}", you get back a grob vs a ggplot object
 #' @return ggplot2 object or grob
 #' @export
 #' @examples
@@ -148,37 +153,41 @@ statebins <- function(state_data, state_col="state", value_col="value",
 #'
 #' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
 #'
-#' This version uses a continuous scale based on \link{RColorBrewer} scales
-#' (passing in a 6 element \code{RColorBrewer} palette to \link{scale_fill_gradientn}).
+#' This version uses a continuous scale based on \code{RColorBrewer} scales
+#' (passing in a 6 element \code{RColorBrewer} palette to \code{scale_fill_gradientn}).
 #'
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC} & \code{PR} ) or a column of state names (standard capitalization) named \code{state}
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} &
+#'     \code{PR} ) or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of values named \code{value}
 #' }
 #'
-#' Doing so will create a "statebin" chart with 5 breaks and return a \link{ggplot2} object.
+#' Doing so will create a "statebin" chart with 5 breaks and return a \code{ggplot2} object.
 #'
 #' You can use a different column for the state names and values by changing \code{state_col}
 #' and \code{value_col} accordingly.
 #'
 #' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
 #' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-#' will cause \code{statebins} to use \link{arrangeGrob} to position the title via \code{sub} and
+#' will cause \code{statebins} to use \code{arrangeGrob} to position the title via \code{sub} and
 #' return a frame grob instead of a ggplot2 object.
 #'
 #' @param state_data data frame of states and values to plot
-#' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
+#' @param state_col column name in \code{state_data} that has the states. no duplicates
+#'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
 #' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
 #' @param legend_title title for the legend
-#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or "\code{bottom}" (defaults to "\code{top}")
-#' @param brewer_pal which named \link{RColorBrewer} palette to use (defaults to "PuBu")
+#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
+#'        "\code{bottom}" (defaults to "\code{top}")
+#' @param brewer_pal which named \code{RColorBrewer} palette to use (defaults to "PuBu")
 #' @param plot_title title for the plot
-#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or "" for none); if "\code{bottom}", you get back a grob vs a ggplot object
+#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or ""
+#'        for none); if "\code{bottom}", you get back a grob vs a ggplot object
 #' @return ggplot2 object or grob
 #' @export
 #' @examples
@@ -255,41 +264,53 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC} & \code{PR}  or a column of state names (standard capitalization) named \code{state}
+#'   \item has one column of all state abbreviationis (all caps, including \code{DC} &
+#'     \code{PR}  or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of colors named \code{color}
 #' }
 #'
-#' Doing so will create a "statebin" chart with the colors specified as a \link{ggplot2} object.
+#' Doing so will create a "statebin" chart with the colors specified as a ggplot2 object.
 #'
 #' You can use a different column for the state names and colors by changing \code{state_col}
 #' and \code{color_col} accordingly.
 #'
 #' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
 #' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-#' will cause \code{statebins} to use \link{arrangeGrob} to position the title via \code{sub} and
+#' will cause \code{statebins} to use \code{arrangeGrob} to position the title via \code{sub} and
 #' return a frame grob instead of a ggplot2 object.
 #'
 #' @param state_data data frame of states and values to plot
-#' @param state_col column name in \code{state_data} that has the states. no duplicates and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
+#' @param state_col column name in \code{state_data} that has the states. no duplicates
+#'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param color_col column name in \code{state_data} that holds the colors to be used
 #' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
-#' @param labels labels for the legend (should be the same number as distinct colors in \code{color_col}); \code{NULL} == no labels/legend
+#' @param labels labels for the legend (should be the same number as distinct colors in
+#'        \code{color_col}); \code{NULL} == no labels/legend
 #' @param legend_title title for the legend
-#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or "\code{bottom}" (defaults to "\code{top}")
+#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
+#'        "\code{bottom}" (defaults to "\code{top}")
 #' @param plot_title title for the plot
-#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or "" for none); if "\code{bottom}", you get back a grob vs a ggplot object
+#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or ""
+#'        for none); if "\code{bottom}", you get back a grob vs a ggplot object
 #' @return ggplot2 object or grob
 #' @export
 #' @examples
 #' \dontrun{
 #' library(httr)
 #' library(dplyr)
-#' election_2012 <- GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
-#' results <- read.csv(textConnection(content(election_2012, as="text")), header=TRUE, stringsAsFactors=FALSE)
-#' results <- results %>% mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>% select(state, color)
-#' results %>% statebins_manual(font_size=4, text_color = "white", labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner")
+#' election_2012 <-
+#'   GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
+#' results <- read.csv(textConnection(content(election_2012, as="text")),
+#'                     header=TRUE, stringsAsFactors=FALSE)
+#' results <- results %>%
+#'   mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>%
+#'   select(state, color)
+#' results %>%
+#'   statebins_manual(font_size=4,
+#'       text_color = "white", labels=c("Romney", "Obama"),
+#'       legend_position="right", legend_title="Winner")
 #' }
 statebins_manual <- function(state_data, state_col="state", color_col="color",
                              text_color="black", font_size=3,
