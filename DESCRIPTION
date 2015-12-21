@@ -1,9 +1,9 @@
 Package: statebins
 Type: Package
-Title: statebins - U.S. State Cartogram Heatmaps in R; an alternative to
-    choropleth maps for USA States
-Version: 1.2.1
-Date: 2015-01-30
+Title: U.S. State Cartogram Heatmaps in R; an Alternative to
+    Choropleth Maps for USA States
+Version: 1.2.2
+Date: 2015-12-21
 Author: Bob Rudis (@hrbrmstr)
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: statebins is an alternative to choropleth maps for USA States and
@@ -25,3 +25,4 @@ Depends:
     gridExtra,
     scales,
     RColorBrewer
+RoxygenNote: 5.0.1
