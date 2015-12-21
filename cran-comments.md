@@ -2,6 +2,8 @@
 * fix issues identified by CRAN
 * compatibility with new ggplot2
 
+## FIXED the DESCRIPTION error noted by Kurt
+
 ## ALSO NOTE that these words are *not* mis-spelled.
 
   Cartogram (3:19)
