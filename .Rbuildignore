@@ -5,6 +5,7 @@
 ^.*README_files$
 ^.*README_files/$
 ^.*README_files/.*$
+^README\.html$
 ^tmp$
 ^tmp/$
 ^tmp/.*$
