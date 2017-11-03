@@ -120,7 +120,7 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill="fill_color"))
-  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"), size=2, show_guide=FALSE)
+  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"), size=2, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
@@ -226,7 +226,7 @@ statebins_continuous <- function(state_data, state_col="state", value_col="value
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill=value_col))
   gg <- gg + geom_tile(color=state_border_col,
-                       aes_string(fill=value_col), size=3, show_guide=FALSE)
+                       aes_string(fill=value_col), size=3, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   gg <- gg + scale_fill_gradientn(colours = brewer.pal(6, brewer_pal), name=legend_title)
@@ -336,7 +336,7 @@ statebins_manual <- function(state_data, state_col="state", color_col="color",
 
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
   gg <- gg + geom_tile(aes_string(fill="color"))
-  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="color"), size=2, show_guide=FALSE)
+  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="color"), size=2, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
   if (is.null(labels)) {
