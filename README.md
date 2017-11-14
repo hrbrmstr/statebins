@@ -1,191 +1,176 @@
-# statebins
-<!-- output: html_document -->
 
-statebins - U.S. State Cartogram Heatmaps in R; an alternative to choropleth maps for USA States
+# statebins
+
+Create ‘U.S.’ Uniform Square State Cartogram Heatmaps
+
+## What’s in the tin?
 
 The following functions are implemented:
 
-- `statebins` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
-- `statebins_continuous` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
-- `statebins_manual` - creates "statebin" charts using manually specified colors in a column
+  - `statebins` - creates “statebin” charts in the style of
+    <http://bit.ly/statebins> - This version uses discrete
+    `RColorBrewer` scales, binned by the “breaks” parameter.
+  - `statebins_continuous` - creates “statebin” charts in the style of
+    <http://bit.ly/statebins> - This version uses a continuous scale
+    based on `RColorBrewer` scales (passing in a 6 element
+    `RColorBrewer` palette to `scale_fill_gradientn`).
+  - `statebins_manual` - creates “statebin” charts using manually
+    specified colors in a column
 
-### TODO
+## TODO
 
-- The current version is usable, but I think the plot margins and the legends need work
-- Apply algorithm to switch to light-on-dark depending on the background tile color 
+  - The current version is usable, but I think the plot margins and the
+    legends need work
+  - Apply algorithm to switch to light-on-dark depending on the
+    background tile color
 
-### News
+## Installation
 
-- Version `1.2.1` released - Added support for `PR`/`Puerto Rico`[[1](https://github.com/hrbrmstr/statebins/issues/2)] and fixed a bug[[2](https://github.com/hrbrmstr/statebins/issues/3)] when using anything but a `data.frame` as input. Also no longer fails (deals with the following but with a warning) when duplicate states are in the input data or invalid states are in the input data.
-- Version `1.1.0` released - `statebins_manual()` for manual placement of colors and moving of AK in support of a [pull request](https://github.com/hrbrmstr/statebins/pull/1) by [hansthompson](https://github.com/hansthompson)
-- Version `1.0.0` released
-
-### Installation
-
-
-```r
+``` r
 devtools::install_github("hrbrmstr/statebins")
 ```
 
+## Usage
 
+All of the following examples use the [WaPo
+data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1).
+It looks like the columns they use are scaled data and I didn’t take the
+time to figure out what they did, so the final figure just mimics their
+output (including the non-annotated legend).
 
-### Usage
-
-All of the following examples use the [WaPo data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1). It looks like the columns they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).
-
-
-```r
+``` r
 library(statebins)
+library(tidyverse)
 
 # current verison
 packageVersion("statebins")
 ```
 
-```
-## [1] '1.2.2'
-```
+    ## [1] '1.3.0'
 
-```r
+``` r
 # the original wapo data
+cols(
+  fipst = col_character(), stab = col_character(), state = col_character(), workers1994 = col_integer(), workers1995 = col_integer(), workers1996 = col_integer(), workers1997 = col_integer(), workers1998 = col_integer(), workers1999 = col_integer(), workers2000 = col_integer(), workers2001 = col_integer(), workers2002 = col_integer(), workers2003 = col_integer(), workers2004 = col_integer(), workers2005 = col_integer(), workers2006 = col_integer(), workers2007 = col_integer(), workers2008 = col_integer(), workers2009 = col_integer(), workers2010 = col_integer(), workers2011 = col_integer(), workers2012 = col_integer(), workers2013 = col_integer(),
+  share_cut1994 = col_double(), share_cut1995 = col_double(), share_cut1996 = col_double(), share_cut1997 = col_double(), share_cut1998 = col_double(), share_cut1999 = col_double(), share_cut2000 = col_double(), share_cut2001 = col_double(), share_cut2002 = col_double(), share_cut2003 = col_double(), share_cut2004 = col_double(), share_cut2005 = col_double(), share_cut2006 = col_double(), share_cut2007 = col_double(), share_cut2008 = col_double(), share_cut2009 = col_double(), share_cut2010 = col_double(), share_cut2011 = col_double(), share_cut2012 = col_double(), share_cut2013 = col_double(),
+  avgshare = col_double(), avgshare94_00 = col_double(), avgshare01_07 = col_double(), avgshare08_12 = col_double()
+) -> wapo_cols
 
-dat <- read.csv("http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1", stringsAsFactors=FALSE)
+adat <- read_csv("http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1",
+                 col_types = wapo_cols)
 
-gg <- statebins(dat, "state", "avgshare94_00", breaks=4, 
-                labels=c("0-1", "1-2", "2-3", "3-4"),
-                legend_title="Share of workforce with jobs lost or threatened by trade", font_size=3, 
-                brewer_pal="Blues", text_color="black", 
-                plot_title="1994-2000", title_position="bottom")
-```
+gg <- statebins(
+  adat, "state", "avgshare94_00", 
+  breaks = 4, 
+  labels = c("0-1", "1-2", "2-3", "3-4"),
+  legend_title = "Share of workforce with jobs lost or threatened by trade", 
+  font_size = 3, 
+  brewer_pal = "Blues", 
+  text_color = "black", 
+  plot_title = "1994-2000", 
+  title_position = "bottom"
+)
 
-```
-## Warning: `show_guide` has been deprecated. Please use `show.legend` instead.
-```
-
-```r
 gg
 ```
 
-```
-## TableGrob (2 x 1) "arrange": 2 grobs
-##     z     cells    name              grob
-##     1 (1-1,1-1) arrange    gtable[layout]
-## sub 2 (2-2,1-1) arrange text[GRID.text.1]
-```
+<img src="README.gfm-ascii_identifiers_files/figure-gfm/unnamed-chunk-3-1.png" width="672" />
 
-```r
+``` r
 # continuous scale, legend on top
 
-gg2 <- statebins_continuous(dat, "state", "avgshare01_07",
-                            legend_title="Share of workforce with jobs lost or threatened by trade", legend_position="top",
-                            brewer_pal="OrRd", text_color="black", font_size=3, 
-                            plot_title="2001-2007", title_position="bottom")
-```
+gg2 <- statebins_continuous(
+  adat, "state", "avgshare01_07",
+  legend_title="Share of workforce with jobs lost or threatened by trade", legend_position="top",
+  brewer_pal="OrRd", text_color="black", font_size=3, 
+  plot_title="2001-2007", title_position="bottom"
+)
 
-```
-## Warning: `show_guide` has been deprecated. Please use `show.legend` instead.
-```
-
-```r
 gg2
 ```
 
-```
-## TableGrob (2 x 1) "arrange": 2 grobs
-##     z     cells    name               grob
-##     1 (1-1,1-1) arrange     gtable[layout]
-## sub 2 (2-2,1-1) arrange text[GRID.text.53]
-```
+<img src="README.gfm-ascii_identifiers_files/figure-gfm/unnamed-chunk-3-2.png" width="672" />
 
-```r
+``` r
 # continuous scale, no legend
 
-gg3 <- statebins_continuous(dat, "state", "avgshare08_12",
-                            legend_title="States", legend_position="none",
-                            brewer_pal="Purples", text_color="black", font_size=3, 
-                            plot_title="2008-2012", title_position="bottom")
-```
+gg3 <- statebins_continuous(
+  adat, "state", "avgshare08_12",
+  legend_title="States", legend_position="none",
+  brewer_pal="Purples", text_color="black", font_size=3, 
+  plot_title="2008-2012", title_position="bottom"
+)
 
-```
-## Warning: `show_guide` has been deprecated. Please use `show.legend` instead.
-```
-
-```r
 gg3
 ```
 
-```
-## TableGrob (2 x 1) "arrange": 2 grobs
-##     z     cells    name               grob
-##     1 (1-1,1-1) arrange     gtable[layout]
-## sub 2 (2-2,1-1) arrange text[GRID.text.89]
-```
+<img src="README.gfm-ascii_identifiers_files/figure-gfm/unnamed-chunk-3-3.png" width="672" />
 
-```r
+``` r
 # mortality (only to show PR and using a data.table)
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
-dat <- data.table::fread("http://dds.ec/data/deaths.csv")
+cols(
+  state = col_character(),
+  births = col_integer(),
+  fertility_rate = col_double(),
+  deaths = col_integer(),
+  death_rate = col_double()
+) -> deaths_cols
+
+dat <- read_csv("http://datadrivensecurity.info/data/deaths.csv", col_types=deaths_cols)
 statebins_continuous(dat, "state", "death_rate", legend_title="Per 100K pop",
-                    plot_title="Mortality Rate (2010)")
+                     plot_title="Mortality Rate (2010)")
 ```
 
-```
-## Warning: `show_guide` has been deprecated. Please use `show.legend` instead.
-```
+<img src="README.gfm-ascii_identifiers_files/figure-gfm/unnamed-chunk-3-4.png" width="672" />
 
-```
-## TableGrob (2 x 1) "arrange": 2 grobs
-##     z     cells    name                grob
-##     1 (1-1,1-1) arrange      gtable[layout]
-## sub 2 (2-2,1-1) arrange text[GRID.text.117]
-```
-
-```r
+``` r
 # fertility (only to show tbl_dt)
 
-dat <- dplyr::tbl_dt(dat)
 statebins_continuous(dat, "state", "fertility_rate", legend_title="Per 100K pop", 
                      plot_title="Fertility Rate (2010)", brewer_pal="PuBuGn")
 ```
 
-```
-## Warning: `show_guide` has been deprecated. Please use `show.legend` instead.
-```
+<img src="README.gfm-ascii_identifiers_files/figure-gfm/unnamed-chunk-3-5.png" width="672" />
 
-```
-## TableGrob (2 x 1) "arrange": 2 grobs
-##     z     cells    name                grob
-##     1 (1-1,1-1) arrange      gtable[layout]
-## sub 2 (2-2,1-1) arrange text[GRID.text.153]
-```
-
-```r
+``` r
 # manual - perhaps good for elections?
 
 library(httr)
 library(dplyr)
+
 election_2012 <- GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
-results <- read.csv(textConnection(content(election_2012, as="text")), header=TRUE, stringsAsFactors=FALSE)
-results <- results %>% mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>% select(state, color)
-results %>% statebins_manual(font_size=4, text_color = "white", labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner")
+
+read.csv(
+  textConnection(content(election_2012, as="text")), 
+  header=TRUE, stringsAsFactors=FALSE
+) %>% 
+  mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>% 
+  select(state, color) -> results
+
+statebins_manual(
+  results,
+  font_size=4, text_color = "white", 
+  labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner"
+)
 ```
 
-```
-## Warning: `show_guide` has been deprecated. Please use `show.legend` instead.
-```
+<img src="README.gfm-ascii_identifiers_files/figure-gfm/unnamed-chunk-3-6.png" width="672" />
 
-![](README_files/figure-html/unnamed-chunk-3-1.png) 
-
-```r
+``` r
 # or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
 
 sb <- function(col, title) {
-  statebins(dat, "state",col, brewer_pal="Blues", text_color="black", legend_position="none", font_size=3, plot_title=title, breaks=4, labels=1:4)
+  statebins(
+    adat, "state", col, brewer_pal="Blues", text_color="black",
+    legend_position="none", font_size=3, plot_title=title, 
+    breaks=4, labels=1:4
+  )
 }
 ```
 
-
-```r
+``` r
 # cheating and using <table> to arrange them below and also making a WaPo-like legend, 
 # since mucking with grid graphics margins/padding was not an option time-wise at the moment
 
@@ -195,7 +180,9 @@ sb("avgshare08_12", "2008-2012")
 ```
 
 <!-- uncomment the following and add backticks where appropriate and remove the reference to -->
+
 <!-- the static image when the rmarkdown output is HTML and this will work fine. github does not render the markdown properly -->
+
 <!-- 
 <span style="font-size:17px; color:#333;">Share of workforce with jobs lost or threatened by trade</span><br/>
 
@@ -227,62 +214,52 @@ sb("avgshare08_12", "2008-2012")
 
 -->
 
-<center>![img](./tmp/statebins-composite.png)</center>
+<center>
 
-And, we'll throw in a gratuitous animation for good measure:
+![img](./tmp/statebins-composite.png)
 
+</center>
 
-```r
+And, we’ll throw in a gratuitous animation for good measure:
+
+``` r
+library(magick)
 # data set from StatsAmerica - http://www.statsamerica.org/profiles/sip_index.html
 
 # median household income from the ACS survey
-miacs <- read.csv("http://dds.ec/data/median-income-acs.csv", header=TRUE, stringsAsFactors=FALSE)
+miacs <- read.csv("http://datadrivensecurity.info/data/median-income-acs.csv", 
+                  header=TRUE, stringsAsFactors=FALSE)
 
 # generate frames based on year
-sapply(unique(miacs$year), function(year) {
+purrr::map(unique(miacs$year), function(year) {
   
-  png(file=sprintf("tmp/household%d.png", year),
-      type="quartz", antialias="subpixel", width=800, height=600)
+  cat(".")
+  
+  fig <- magick::image_graph(res=144)
   
   rng <- floor(range(miacs[miacs$year==year,]$mh_inc))
   
-  ggtmp <- statebins(miacs[miacs$year==year,], "state", "mh_inc",
-                   legend_title="States", legend_position="none",
-                   brewer_pal="Greens", text_color="black", font_size=3,
-                   plot_title=sprintf("Median Household Income (ACS) %d\n$%s - $%s", year, comma(rng[1]), comma(rng[2])), title_position="top")
+  statebins(
+    miacs[miacs$year==year,], "state", "mh_inc",
+    legend_title="States", legend_position="none",
+    brewer_pal="Greens", text_color="black", font_size=3,
+    plot_title=sprintf("Median Household Income (ACS) %d\n$%s - $%s", year, 
+                       scales::comma(rng[1]), scales::comma(rng[2])), 
+    title_position="top"
+  ) -> ggtmp
   
   print(ggtmp)
   
   dev.off()
   
-})
-
-# animate them with ImageMagick
-system("convert -background white -alpha remove -layers OptimizePlus -delay 150 tmp/*.png -loop 1 tmp/household.gif")
+  fig
+  
+}) %>% image_join() %>% 
+  image_animate(fps=2, loop=1) 
 ```
 
-<center>![img](./tmp/household.gif)</embed></center>
+<center>
 
-### Test Results
+![img](./tmp/household.gif)</embed>
 
-
-```r
-library(statebins)
-library(testthat)
-
-date()
-```
-
-```
-## [1] "Mon Dec 21 08:21:03 2015"
-```
-
-```r
-test_dir("tests/")
-```
-
-```
-## testthat results ========================================================================================================
-## OK: 0 SKIPPED: 0 FAILED: 0
-```
-
+</center>
