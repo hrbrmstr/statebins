@@ -76,4 +76,3 @@ statebins(USArrests, value_col="Assault", text_color="black", font_size=3,
           legend_title = "Assault", legend_position="bottom")
 }
 }
-

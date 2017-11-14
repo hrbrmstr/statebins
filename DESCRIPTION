@@ -1,29 +1,27 @@
 Package: statebins
 Type: Package
-Title: U.S. State Cartogram Heatmaps in R; an Alternative to
-    Choropleth Maps for USA States
-Version: 1.2.2
-Date: 2015-12-21
-Author: Bob Rudis (@hrbrmstr)
-Maintainer: Bob Rudis <bob@rudis.net>
-Description: Cartogram heatmaps are an alternative to choropleth maps for USA States
-    and are based on work by the Washington Post graphics department in their report
-    on "The states most threatened by trade". "State bins" preserve as much of the
-    geographic placement of the states as possible but has the look and feel of a
-    traditional heatmap. Functions are provided that allow for use of a binned,
-    discrete scale, a continuous scale or manually specified colors depending on
-    what is needed for the underlying data.
-URL: http://github.com/hrbrmstr/statebins
+Title: Create 'U.S.' Uniform Square State Cartogram Heatmaps
+Version: 1.3.0
+Date: 2018-11-14
+Author: Bob Rudis (bob@rud.is)
+Maintainer: Bob Rudis <bob@rud.is>
+Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' States
+    and are based on work by the 'Washington Post' graphics department in their report
+    on "The states most threatened by trade" 
+    <http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/>.
+    "State bins" preserve as much of the geographic placement of the states as 
+    possible but has the look and feel of a traditional heatmap. Functions are 
+    provided that allow for use of a binned, discrete scale, a continuous scale 
+    or manually specified colors depending on what is needed for the underlying data.
+URL: https://github.com/hrbrmstr/statebins
 BugReports: https://github.com/hrbrmstr/statebins/issues
 License: MIT + file LICENSE
 Suggests:
     testthat
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.2.0),
 Imports:
-    ggplot2,
-    grid,
-    gridExtra,
-    scales,
-    RColorBrewer
-RoxygenNote: 5.0.1
+    ggplot2 (>= 2.2.0),
+    scales (>= 0.5.0),
+    RColorBrewer (>= 1.1-2)
+RoxygenNote: 6.0.1

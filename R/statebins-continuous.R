@@ -1,18 +1,19 @@
-#' Create a new ggplot-based "statebin" chart for USA states (discrete scale)
+#' Create a new ggplot-based "statebin" chart for USA states (continuous scale)
 #'
 #' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
 #'
-#' This version uses discrete \code{RColorBrewer} scales, binned by the "breaks" parameter.
+#' This version uses a continuous scale based on \code{RColorBrewer} scales
+#' (passing in a 6 element \code{RColorBrewer} palette to \code{scale_fill_gradientn}).
 #'
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
 #'   \item has one column of all state abbreviationis (all caps, including \code{DC} &
-#'     \code{PR} or a column of state names (standard capitalization) named \code{state}
+#'     \code{PR} ) or a column of state names (standard capitalization) named \code{state}
 #'   \item has another column of values named \code{value}
 #' }
 #'
-#' Doing so will create a "statebin" chart with 5 breaks and return a ggplot2 object.
+#' Doing so will create a "statebin" chart with 5 breaks and return a \code{ggplot2} object.
 #'
 #' You can use a different column for the state names and values by changing \code{state_col}
 #' and \code{value_col} accordingly.
@@ -29,9 +30,6 @@
 #' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
-#' @param breaks a single number (greater than or equal to 2) giving the number of intervals
-#'        into which data values are to be cut.
-#' @param labels labels for the levels \code{breaks}
 #' @param legend_title title for the legend
 #' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
 #'        "\code{bottom}" (defaults to "\code{top}")
@@ -45,21 +43,21 @@
 #' \dontrun{
 #' data(USArrests)
 #' USArrests$state <- rownames(USArrests)
-#' statebins(USArrests, value_col="Assault", text_color="black", font_size=3,
-#'           legend_title = "Assault", legend_position="bottom")
+#' statebins_continuous(USArrests, value_col="Murder", text_color="black", font_size=3,
+#'                      legend_title = "Murder", legend_position="bottom")
 #' }
-statebins <- function(state_data, state_col="state", value_col="value",
-                     text_color="black", font_size=3,
-                     state_border_col="white", breaks=5, labels=1:5,
-                     legend_title="Legend", legend_position="top",
-                     brewer_pal="PuBu", plot_title="", title_position="bottom") {
-
-  if (breaks <= 0 | breaks >= 10) {
-    stop("'breaks' must be between 0 & 10")
-  }
+statebins_continuous <- function(state_data, state_col="state", value_col="value",
+                      text_color="black", font_size=3,
+                      state_border_col="white",
+                      legend_title="Legend", legend_position="top",
+                      brewer_pal="PuBu", plot_title="", title_position="bottom") {
 
   if (!title_position %in% c("", "top", "bottom")) {
     stop("'title_position' must be either blank, 'top' or 'bottom'")
+  }
+
+  if (!legend_position %in% c("", "none", "top", "bottom")) {
+    stop("'legend_position' must be either blank, 'none', 'top' or 'bottom'")
   }
 
   state_data <- data.frame(state_data, stringsAsFactors=FALSE)
@@ -74,15 +72,13 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
 
-  st.dat$fill_color <- cut(st.dat[, value_col], breaks=breaks, labels=labels)
-
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
-  gg <- gg + geom_tile(aes_string(fill="fill_color"))
-  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"),
-                       size=2, show.legend=FALSE)
+  gg <- gg + geom_tile(aes_string(fill=value_col))
+  gg <- gg + geom_tile(color=state_border_col,
+                       aes_string(fill=value_col), size=3, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
-  gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
+  gg <- gg + scale_fill_gradientn(colours = brewer.pal(6, brewer_pal), name=legend_title)
   gg <- gg + coord_equal()
   gg <- gg + labs(x=NULL, y=NULL, title=NULL)
   gg <- gg + theme_bw()

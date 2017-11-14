@@ -10,3 +10,6 @@
 ^tmp/$
 ^tmp/.*$
 ^cran-comments\.md$
+^README.gfm-ascii_identifiers_files$
+^README.gfm-ascii_identifiers_files/$
+^README.gfm-ascii_identifiers_files/.*$
