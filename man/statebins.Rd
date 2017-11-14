@@ -7,7 +7,8 @@
 statebins(state_data, state_col = "state", value_col = "value",
   text_color = "black", font_size = 3, state_border_col = "white",
   breaks = 5, labels = 1:5, legend_title = "Legend",
-  legend_position = "top", brewer_pal = "PuBu", plot_title = "",
+  legend_position = "top", palette = c("brewer", "viridis"),
+  viridis_pal = NULL, brewer_pal = "palette", plot_title = "",
   title_position = "bottom")
 }
 \arguments{
@@ -18,7 +19,9 @@ and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")}
 
 \item{value_col}{column name in \code{state_data} that holds the values to be plotted}
 
-\item{text_color}{default "\code{black}"}
+\item{text_color}{default "\code{black}". Size 1 for global color across all tiles or
+a vector of colors the same length as the number of states you passed in.
+Use the sort order for the states as they are sorted before being plotted.}
 
 \item{font_size}{font size (default = \code{3})}
 
@@ -34,7 +37,15 @@ into which data values are to be cut.}
 \item{legend_position}{"\code{none}", "\code{top}", "\code{left}", "\code{right}" or
 "\code{bottom}" (defaults to "\code{top}")}
 
-\item{brewer_pal}{which named \code{RColorBrewer} palette to use (defaults to "PuBu")}
+\item{palette}{either "`brewer`" or "`viridis`". Choose `viridis` if you have
+10 or more levels (more than 10 is not recommended). You can choose which
+viridis palette option (e.g. "magma") with `viridis_pal`.}
+
+\item{viridis_pal}{which named \code{viridis} palette option to use (default if `NULL`);
+used when `palette` is `viridis`.}
+
+\item{brewer_pal}{which named \code{RColorBrewer} palette to use (defaults to "PuBu");
+used when `palette` is `brewer`.}
 
 \item{plot_title}{title for the plot}
 
@@ -65,8 +76,7 @@ and \code{value_col} accordingly.
 
 To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
 and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-will cause \code{statebins} to use \code{arrangeGrob} to position the title via \code{sub} and
-return a frame grob instead of a ggplot2 object.
+will cause \code{statebins} to use the X axis title as the title.
 }
 \examples{
 \dontrun{

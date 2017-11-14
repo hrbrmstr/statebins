@@ -4,7 +4,7 @@
 #' @name statebins-package
 #' @docType package
 #' @author Bob Rudis (bob@@rud.is)
-#' @import RColorBrewer
+#' @import RColorBrewer viridis
 #' @importFrom scales alpha
 #' @importFrom ggplot2 ggplot geom_tile scale_fill_manual guides geom_tile ggplotGrob
 #' @importFrom ggplot2 geom_point geom_text scale_color_manual guides theme labs

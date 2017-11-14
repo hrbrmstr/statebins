@@ -19,14 +19,15 @@
 #'
 #' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
 #' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-#' will cause \code{statebins} to use \code{arrangeGrob} to position the title via \code{sub} and
-#' return a frame grob instead of a ggplot2 object.
+#' will cause \code{statebins} to use the X axis title as the title.
 #'
 #' @param state_data data frame of states and values to plot
 #' @param state_col column name in \code{state_data} that has the states. no duplicates
 #'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
-#' @param text_color default "\code{black}"
+#' @param text_color default "\code{black}". Size 1 for global color across all tiles or
+#'        a vector of colors the same length as the number of states you passed in.
+#'        Use the sort order for the states as they are sorted before being plotted.
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
 #' @param breaks a single number (greater than or equal to 2) giving the number of intervals
@@ -35,7 +36,13 @@
 #' @param legend_title title for the legend
 #' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
 #'        "\code{bottom}" (defaults to "\code{top}")
-#' @param brewer_pal which named \code{RColorBrewer} palette to use (defaults to "PuBu")
+#' @param palette either "`brewer`" or "`viridis`". Choose `viridis` if you have
+#'        10 or more levels (more than 10 is not recommended). You can choose which
+#'        viridis palette option (e.g. "magma") with `viridis_pal`.
+#' @param brewer_pal which named \code{RColorBrewer} palette to use (defaults to "PuBu");
+#'        used when `palette` is `brewer`.
+#' @param viridis_pal which named \code{viridis} palette option to use (default if `NULL`);
+#'        used when `palette` is `viridis`.
 #' @param plot_title title for the plot
 #' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or ""
 #'        for none); if "\code{bottom}", you get back a grob vs a ggplot object
@@ -50,11 +57,16 @@
 #' }
 statebins <- function(state_data, state_col="state", value_col="value",
                      text_color="black", font_size=3,
-                     state_border_col="white", breaks=5, labels=1:5,
+                     state_border_col="white",
+                     breaks=5, labels=1:5,
                      legend_title="Legend", legend_position="top",
-                     brewer_pal="PuBu", plot_title="", title_position="bottom") {
+                     palette=c("brewer", "viridis"), viridis_pal=NULL,
+                     brewer_pal="palette",
+                     plot_title="", title_position="bottom") {
 
-  if (breaks <= 0 | breaks >= 10) {
+  palette <- match.arg(trimws(tolower(palette)), c("brewer", "viridis"))
+
+  if (breaks <= 0 | breaks > 10) {
     stop("'breaks' must be between 0 & 10")
   }
 
@@ -82,7 +94,14 @@ statebins <- function(state_data, state_col="state", value_col="value",
                        size=2, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
-  gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
+
+  if (palette == "brewer") {
+    gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title, drop=FALSE)
+  } else if (palette == "viridis") {
+    if (is.null(viridis_pal)) viridis_pal <- "D"
+    gg <- gg + scale_fill_viridis(discrete=TRUE, option=viridis_pal, name=legend_title, drop=FALSE)
+  }
+
   gg <- gg + coord_equal()
   gg <- gg + labs(x=NULL, y=NULL, title=NULL)
   gg <- gg + theme_bw()
