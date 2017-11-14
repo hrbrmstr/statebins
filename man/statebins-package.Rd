@@ -8,6 +8,5 @@
 statebins is an alternative to choropleth maps for US States
 }
 \author{
-Bob Rudis (@hrbrmstr)
+Bob Rudis (bob@rud.is)
 }
-

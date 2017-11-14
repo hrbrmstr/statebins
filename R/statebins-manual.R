@@ -1,21 +1,21 @@
-#' Create a new ggplot-based "statebin" chart for USA states (discrete scale)
+#' Create a new ggplot-based "statebin" chart for USA states (manually colored)
 #'
 #' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
 #'
-#' This version uses discrete \code{RColorBrewer} scales, binned by the "breaks" parameter.
+#' This version uses manual colors (i.e. pass in a column that defines the color per-state)
 #'
 #' The function minimally expects the caller to pass in a data frame that:
 #'
 #' \itemize{
 #'   \item has one column of all state abbreviationis (all caps, including \code{DC} &
-#'     \code{PR} or a column of state names (standard capitalization) named \code{state}
-#'   \item has another column of values named \code{value}
+#'     \code{PR}  or a column of state names (standard capitalization) named \code{state}
+#'   \item has another column of colors named \code{color}
 #' }
 #'
-#' Doing so will create a "statebin" chart with 5 breaks and return a ggplot2 object.
+#' Doing so will create a "statebin" chart with the colors specified as a ggplot2 object.
 #'
-#' You can use a different column for the state names and values by changing \code{state_col}
-#' and \code{value_col} accordingly.
+#' You can use a different column for the state names and colors by changing \code{state_col}
+#' and \code{color_col} accordingly.
 #'
 #' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
 #' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
@@ -25,17 +25,15 @@
 #' @param state_data data frame of states and values to plot
 #' @param state_col column name in \code{state_data} that has the states. no duplicates
 #'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
-#' @param value_col column name in \code{state_data} that holds the values to be plotted
+#' @param color_col column name in \code{state_data} that holds the colors to be used
 #' @param text_color default "\code{black}"
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
-#' @param breaks a single number (greater than or equal to 2) giving the number of intervals
-#'        into which data values are to be cut.
-#' @param labels labels for the levels \code{breaks}
+#' @param labels labels for the legend (should be the same number as distinct colors in
+#'        \code{color_col}); \code{NULL} == no labels/legend
 #' @param legend_title title for the legend
 #' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
 #'        "\code{bottom}" (defaults to "\code{top}")
-#' @param brewer_pal which named \code{RColorBrewer} palette to use (defaults to "PuBu")
 #' @param plot_title title for the plot
 #' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or ""
 #'        for none); if "\code{bottom}", you get back a grob vs a ggplot object
@@ -43,20 +41,25 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' data(USArrests)
-#' USArrests$state <- rownames(USArrests)
-#' statebins(USArrests, value_col="Assault", text_color="black", font_size=3,
-#'           legend_title = "Assault", legend_position="bottom")
+#' library(httr)
+#' library(dplyr)
+#' election_2012 <-
+#'   GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
+#' results <- read.csv(textConnection(content(election_2012, as="text")),
+#'                     header=TRUE, stringsAsFactors=FALSE)
+#' results <- results %>%
+#'   mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>%
+#'   select(state, color)
+#' results %>%
+#'   statebins_manual(font_size=4,
+#'       text_color = "white", labels=c("Romney", "Obama"),
+#'       legend_position="right", legend_title="Winner")
 #' }
-statebins <- function(state_data, state_col="state", value_col="value",
-                     text_color="black", font_size=3,
-                     state_border_col="white", breaks=5, labels=1:5,
-                     legend_title="Legend", legend_position="top",
-                     brewer_pal="PuBu", plot_title="", title_position="bottom") {
-
-  if (breaks <= 0 | breaks >= 10) {
-    stop("'breaks' must be between 0 & 10")
-  }
+statebins_manual <- function(state_data, state_col="state", color_col="color",
+                             text_color="black", font_size=3,
+                             state_border_col="white", labels=NULL,
+                             legend_title="Legend", legend_position="top",
+                             plot_title="", title_position="bottom") {
 
   if (!title_position %in% c("", "top", "bottom")) {
     stop("'title_position' must be either blank, 'top' or 'bottom'")
@@ -74,15 +77,19 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
 
-  st.dat$fill_color <- cut(st.dat[, value_col], breaks=breaks, labels=labels)
-
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
-  gg <- gg + geom_tile(aes_string(fill="fill_color"))
-  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"),
+  gg <- gg + geom_tile(aes_string(fill="color"))
+  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="color"),
                        size=2, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
-  gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title)
+  if (is.null(labels)) {
+    gg <- gg + scale_fill_manual(values=unique(st.dat[,color_col]))
+    legend_position = "none"
+  } else {
+    gg <- gg + scale_fill_manual(values=unique(st.dat[,color_col]),
+                                 labels=labels, name=legend_title)
+  }
   gg <- gg + coord_equal()
   gg <- gg + labs(x=NULL, y=NULL, title=NULL)
   gg <- gg + theme_bw()
