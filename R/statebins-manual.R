@@ -79,11 +79,12 @@ statebins_manual <- function(state_data, state_col="state", color_col="color",
   st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
 
   gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
-  gg <- gg + geom_tile(aes_string(fill="color"))
+  gg <- gg + geom_tile(aes_string(fill=color_col))
   gg <- gg + geom_tile(color=state_border_col, aes_string(fill="color"),
                        size=2, show.legend=FALSE)
   gg <- gg + geom_text(color=text_color, size=font_size)
   gg <- gg + scale_y_reverse()
+
   if (is.null(labels)) {
     gg <- gg + scale_fill_manual(values=unique(st.dat[,color_col]))
     legend_position = "none"
@@ -91,6 +92,7 @@ statebins_manual <- function(state_data, state_col="state", color_col="color",
     gg <- gg + scale_fill_manual(values=unique(st.dat[,color_col]),
                                  labels=labels, name=legend_title)
   }
+
   gg <- gg + coord_equal()
   gg <- gg + labs(x=NULL, y=NULL, title=NULL)
   gg <- gg + theme_bw()
