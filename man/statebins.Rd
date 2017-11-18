@@ -2,14 +2,12 @@
 % Please edit documentation in R/statebins.R
 \name{statebins}
 \alias{statebins}
-\title{Create a new ggplot-based "statebin" chart for USA states (discrete scale)}
+\title{Create a new ggplot-based "statebin" chart for USA states/territories}
 \usage{
 statebins(state_data, state_col = "state", value_col = "value",
-  text_color = "black", font_size = 3, state_border_col = "white",
-  breaks = 5, labels = 1:5, legend_title = "Legend",
-  legend_position = "top", palette = c("brewer", "viridis"),
-  viridis_pal = NULL, brewer_pal = "palette", plot_title = "",
-  title_position = "bottom")
+  dark_label = "black", light_label = "white", font_size = 3,
+  state_border_col = "white", state_border_size = 2,
+  ggplot2_scale_function = ggplot2::scale_fill_distiller, ...)
 }
 \arguments{
 \item{state_data}{data frame of states and values to plot}
@@ -19,70 +17,44 @@ and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")}
 
 \item{value_col}{column name in \code{state_data} that holds the values to be plotted}
 
-\item{text_color}{default "\code{black}". Size 1 for global color across all tiles or
-a vector of colors the same length as the number of states you passed in.
-Use the sort order for the states as they are sorted before being plotted.}
+\item{dark_label, light_label}{dark/light label colors. The specified color will be used
+when the algorithm determines labels should be inverted.}
 
 \item{font_size}{font size (default = \code{3})}
 
 \item{state_border_col}{default "\code{white}" - this creates the "spaces" between boxes}
 
-\item{breaks}{a single number (greater than or equal to 2) giving the number of intervals
-into which data values are to be cut.}
+\item{state_border_size}{border size}
 
-\item{labels}{labels for the levels \code{breaks}}
-
-\item{legend_title}{title for the legend}
-
-\item{legend_position}{"\code{none}", "\code{top}", "\code{left}", "\code{right}" or
-"\code{bottom}" (defaults to "\code{top}")}
-
-\item{palette}{either "`brewer`" or "`viridis`". Choose `viridis` if you have
-10 or more levels (more than 10 is not recommended). You can choose which
-viridis palette option (e.g. "magma") with `viridis_pal`.}
-
-\item{viridis_pal}{which named \code{viridis} palette option to use (default if `NULL`);
-used when `palette` is `viridis`.}
-
-\item{brewer_pal}{which named \code{RColorBrewer} palette to use (defaults to "PuBu");
-used when `palette` is `brewer`.}
-
-\item{plot_title}{title for the plot}
-
-\item{title_position}{where to put the title ("\code{bottom}" or "\code{top}" or ""
-for none); if "\code{bottom}", you get back a grob vs a ggplot object}
+\item{ggplot2_scale_function}{ggplot2 scale function to use. Defaults to \code{scale_fill_distiller}
+since you're likely passing in continuous data when you shouldn't be :-)}
 }
 \value{
-ggplot2 object or grob
+ggplot2 object
 }
 \description{
-\code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
+Pass in a data frame and get back a square choropleth.
 }
 \details{
-This version uses discrete \code{RColorBrewer} scales, binned by the "breaks" parameter.
+The \code{state_col} and \code{value_col} parameters default to \code{state} and \code{value}. That means
+if you name the columns you want to plot with those names, you can forego passing them
+in. Othersise, use \code{"strings"}.
 
-The function minimally expects the caller to pass in a data frame that:
+A \emph{handy} feature of this function is that you can specify a \code{dark_label} color
+and a \code{light_label} color. What does that mean? Well, you also pass in the
+color scale function you're going to use and \code{statebins} will apply it and use
+that information to determine what the tile color is and --- if it's "dark" it will
+use the \code{light_label} and if it's "light" it will use the \code{dark_label} color. That
+means the labels will never blend in to the background (as long as you specify
+decent label colors).
 
-\itemize{
-  \item has one column of all state abbreviationis (all caps, including \code{DC} &
-    \code{PR} or a column of state names (standard capitalization) named \code{state}
-  \item has another column of values named \code{value}
-}
-
-Doing so will create a "statebin" chart with 5 breaks and return a ggplot2 object.
-
-You can use a different column for the state names and values by changing \code{state_col}
-and \code{value_col} accordingly.
-
-To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
-and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-will cause \code{statebins} to use the X axis title as the title.
+You can customize the scale function you pass in by using name parameters. All named
+parameters not used by \code{statebins()} itself get passed to the scale function.
 }
 \examples{
-\dontrun{
 data(USArrests)
+
 USArrests$state <- rownames(USArrests)
-statebins(USArrests, value_col="Assault", text_color="black", font_size=3,
-          legend_title = "Assault", legend_position="bottom")
-}
+statebins(USArrests, value_col="Assault", name = "Assault") +
+  theme_statebins(legend_position="right")
 }

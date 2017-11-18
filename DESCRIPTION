@@ -2,7 +2,7 @@ Package: statebins
 Type: Package
 Title: Create 'U.S.' Uniform Square State Cartogram Heatmaps
 Version: 1.3.0
-Date: 2018-11-14
+Date: 2017-11-14
 Author: Bob Rudis (bob@rud.is)
 Maintainer: Bob Rudis <bob@rud.is>
 Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' States
@@ -17,12 +17,12 @@ URL: https://github.com/hrbrmstr/statebins
 BugReports: https://github.com/hrbrmstr/statebins/issues
 License: MIT + file LICENSE
 Suggests:
-    testthat
+    testthat,
+    viridis,
+    RColorBrewer
 Depends:
     R (>= 3.2.0),
 Imports:
     ggplot2 (>= 2.2.0),
-    scales (>= 0.5.0),
-    viridis,
-    RColorBrewer (>= 1.1-2)
+    scales (>= 0.5.0)
 RoxygenNote: 6.0.1
