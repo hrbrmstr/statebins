@@ -102,7 +102,6 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
 ### Rounded rects!
 
 ```{r}
-
 data(USArrests)
 
 USArrests$state <- rownames(USArrests)
