@@ -3,7 +3,7 @@ output: rmarkdown::github_document
 editor_options: 
   chunk_output_type: console
 ---
-```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
+```{r ugh, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
 knitr::opts_chunk$set(message=FALSE, warning=FALSE, fig.retina=2)
 options(width=120)
 ```
@@ -21,7 +21,7 @@ The following functions are implemented:
 
 ## Installation
 
-```{r eval=FALSE}
+```{r install, eval=FALSE}
 devtools::install_github("hrbrmstr/statebins")
 ```
 
@@ -29,15 +29,17 @@ devtools::install_github("hrbrmstr/statebins")
 
 All of the following examples use the [WaPo data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1). It looks like the columns they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).
 
-```{r}
+```{r setup}
 library(statebins)
 library(tidyverse)
 
 # current verison
 packageVersion("statebins")
+```
 
-# the original wapo data
+### The original wapo data
 
+```{r original}
 adat <- suppressMessages(read_csv(system.file("extdata", "wapostates.csv", package="statebins")))
 
 mutate(
@@ -51,9 +53,11 @@ mutate(
   ) +
   labs(title = "1994-2000") +
   theme_statebins()
+```
 
-# continuous scale, legend on top
+### Continuous scale, legend on top
 
+```{r continuous}
 statebins(
   adat, value_col = "avgshare01_07",
   name = "Share of workforce with jobs lost or threatened by trade",
@@ -61,16 +65,19 @@ statebins(
 ) +
   labs(x="2001-2007") +
   theme_statebins(legend_position="top")
+```
 
+### Continuous scale, no legend
 
-# continuous scale, no legend
-
+```{r continuous_noleg}
 statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
   labs(x="2008-2010") +
   theme_statebins(legend_position = "none") 
+```
 
+### Mortality data (has Puerto Rico)
 
-# mortality data (has Puerto Rico)
+```{r mort}
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
 dat <- suppressMessages(read_csv(system.file("extdata", "deaths.csv", package="statebins")))
@@ -78,15 +85,19 @@ dat <- suppressMessages(read_csv(system.file("extdata", "deaths.csv", package="s
 statebins(dat, value_col = "death_rate", name="Per 100K pop") +
   labs(title="Mortality Rate (2010)") +
   theme_statebins()
+```
 
-# fertility data
+### Fertility data
 
+```{r fert}
 statebins(dat, value_col="fertility_rate", name="Per 100K pop", palette="PuBuGn") +
   labs(title="Fertility Rate (2010)") +
   theme_statebins()
+```
 
-# manual - perhaps good for elections?
+### Manual - perhaps good for elections?
 
+```{r manual}
 election_2012 <- suppressMessages(read_csv(system.file("extdata", "election2012.csv", package="statebins")))
 
 mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>% 
@@ -101,7 +112,7 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
 
 ### Rounded rects!
 
-```{r}
+```{r rounded}
 data(USArrests)
 
 USArrests$state <- rownames(USArrests)
@@ -113,7 +124,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
 
 `statebins` now has PR, VI & NYC (by name or abbreviation) so you can use them, too:
 
-```{r}
+```{r all}
 library(statebins)
 library(tidyverse)
 library(viridis)

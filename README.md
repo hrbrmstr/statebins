@@ -35,9 +35,9 @@ packageVersion("statebins")
 
     ## [1] '1.3.0'
 
-``` r
-# the original wapo data
+### The original wapo data
 
+``` r
 adat <- suppressMessages(read_csv(system.file("extdata", "wapostates.csv", package="statebins")))
 
 mutate(
@@ -53,11 +53,11 @@ mutate(
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-1.png" width="672" />
+<img src="README_files/figure-gfm/original-1.png" width="672" />
+
+### Continuous scale, legend on top
 
 ``` r
-# continuous scale, legend on top
-
 statebins(
   adat, value_col = "avgshare01_07",
   name = "Share of workforce with jobs lost or threatened by trade",
@@ -67,20 +67,21 @@ statebins(
   theme_statebins(legend_position="top")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-2.png" width="672" />
+<img src="README_files/figure-gfm/continuous-1.png" width="672" />
+
+### Continuous scale, no legend
 
 ``` r
-# continuous scale, no legend
-
 statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
   labs(x="2008-2010") +
   theme_statebins(legend_position = "none") 
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-3.png" width="672" />
+<img src="README_files/figure-gfm/continuous_noleg-1.png" width="672" />
+
+### Mortality data (has Puerto Rico)
 
 ``` r
-# mortality data (has Puerto Rico)
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
 dat <- suppressMessages(read_csv(system.file("extdata", "deaths.csv", package="statebins")))
@@ -90,21 +91,21 @@ statebins(dat, value_col = "death_rate", name="Per 100K pop") +
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-4.png" width="672" />
+<img src="README_files/figure-gfm/mort-1.png" width="672" />
+
+### Fertility data
 
 ``` r
-# fertility data
-
 statebins(dat, value_col="fertility_rate", name="Per 100K pop", palette="PuBuGn") +
   labs(title="Fertility Rate (2010)") +
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-5.png" width="672" />
+<img src="README_files/figure-gfm/fert-1.png" width="672" />
+
+### Manual - perhaps good for elections?
 
 ``` r
-# manual - perhaps good for elections?
-
 election_2012 <- suppressMessages(read_csv(system.file("extdata", "election2012.csv", package="statebins")))
 
 mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>% 
@@ -117,7 +118,7 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-6.png" width="672" />
+<img src="README_files/figure-gfm/manual-1.png" width="672" />
 
 ### Rounded rects\!
 
@@ -129,7 +130,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
   theme_statebins(legend_position="right")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-4-1.png" width="672" />
+<img src="README_files/figure-gfm/rounded-1.png" width="672" />
 
 ### All the “states”
 
@@ -162,4 +163,4 @@ statebins(us_arrests, value_col="Assault",
   theme_statebins("right")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-5-1.png" width="672" />
+<img src="README_files/figure-gfm/all-1.png" width="672" />
