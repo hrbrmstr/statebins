@@ -66,9 +66,9 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   palette <- match.arg(trimws(tolower(palette)), c("brewer", "viridis"))
 
-  if (breaks <= 0 | breaks > 10) {
-    stop("'breaks' must be between 0 & 10")
-  }
+  # if (breaks <= 0 | breaks > 10) {
+  #   stop("'breaks' must be between 0 & 10")
+  # }
 
   if (!title_position %in% c("", "top", "bottom")) {
     stop("'title_position' must be either blank, 'top' or 'bottom'")
