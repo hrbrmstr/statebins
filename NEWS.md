@@ -2,6 +2,7 @@
 * Added support for `VI`/`Virgin Islands`
 * Supports auto-computation of when to use light & dark label colors
 * New `theme_statebins()`
+* Rounded rectangle support!
 * Completely re-designed the interface and will not be providing backwards-compatibility.
 
 # statebins 1.2.2

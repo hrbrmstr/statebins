@@ -38,7 +38,7 @@ packageVersion("statebins")
 ``` r
 # the original wapo data
 
-adat <- suppressMessages(read_csv("http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1"))
+adat <- suppressMessages(read_csv(system.file("extdata", "wapostates.csv", package="statebins")))
 
 mutate(
   adat, 
@@ -83,7 +83,7 @@ statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
 # mortality data (has Puerto Rico)
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
-dat <- suppressMessages(read_csv("http://datadrivensecurity.info/data/deaths.csv"))
+dat <- suppressMessages(read_csv(system.file("extdata", "deaths.csv", package="statebins")))
 
 statebins(dat, value_col = "death_rate", name="Per 100K pop") +
   labs(title="Mortality Rate (2010)") +
@@ -105,7 +105,7 @@ statebins(dat, value_col="fertility_rate", name="Per 100K pop", palette="PuBuGn"
 ``` r
 # manual - perhaps good for elections?
 
-election_2012 <- suppressMessages(read_csv("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv"))
+election_2012 <- suppressMessages(read_csv(system.file("extdata", "election2012.csv", package="statebins")))
 
 mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>% 
   statebins(
@@ -118,6 +118,18 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
 ```
 
 <img src="README_files/figure-gfm/unnamed-chunk-3-6.png" width="672" />
+
+### Rounded rects\!
+
+``` r
+data(USArrests)
+
+USArrests$state <- rownames(USArrests)
+statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
+  theme_statebins(legend_position="right")
+```
+
+<img src="README_files/figure-gfm/unnamed-chunk-4-1.png" width="672" />
 
 ### All the “states”
 
@@ -150,4 +162,4 @@ statebins(us_arrests, value_col="Assault",
   theme_statebins("right")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-4-1.png" width="672" />
+<img src="README_files/figure-gfm/unnamed-chunk-5-1.png" width="672" />
