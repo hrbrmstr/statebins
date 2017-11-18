@@ -26,3 +26,12 @@ Imports:
     ggplot2 (>= 2.2.0),
     scales (>= 0.5.0)
 RoxygenNote: 6.0.1
+Collate: 
+    'aaa.R'
+    'geom-rrect.r'
+    'geom-rtile.R'
+    'gutil.R'
+    'statebins-package.R'
+    'statebins.R'
+    'theme-statebin.R'
+    'util.R'

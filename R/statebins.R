@@ -27,8 +27,10 @@
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
 #' @param state_border_size border size
+#' @param round rounded corners (default: `FALSE`)
 #' @param ggplot2_scale_function ggplot2 scale function to use. Defaults to `scale_fill_distiller`
 #'        since you're likely passing in continuous data when you shouldn't be :-)
+#' @param ... additional parameters to the scale function
 #' @return ggplot2 object
 #' @export
 #' @examples
@@ -41,6 +43,7 @@ statebins <- function(state_data,
                       state_col="state", value_col="value",
                       dark_label = "black", light_label = "white", font_size=3,
                       state_border_col="white", state_border_size=2,
+                      round = FALSE,
                       ggplot2_scale_function=ggplot2::scale_fill_distiller,
                       ...) {
 
@@ -58,9 +61,17 @@ statebins <- function(state_data,
                   sort=TRUE)
 
   gg <- ggplot()
-  gg <- gg + geom_tile(data = st.dat,
-                       aes_string(x = "col", y = "row", fill = value_col),
-                       color = state_border_col, size = state_border_size)
+
+  if (round) {
+    gg <- gg + geom_rtile(data = st.dat,
+                         aes_string(x = "col", y = "row", fill = value_col),
+                         color = state_border_col, size = state_border_size)
+  } else {
+    gg <- gg + geom_tile(data = st.dat,
+                         aes_string(x = "col", y = "row", fill = value_col),
+                         color = state_border_col, size = state_border_size)
+  }
+
   gg <- gg + scale_y_reverse()
   gg <- gg + ggplot2_scale_function(...)
   gg <- gg + coord_equal()
