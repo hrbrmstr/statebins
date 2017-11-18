@@ -1,14 +1,14 @@
-invert <- function(hexColor, darkColor="black", lightColor="white") {
+.sb_invert <- function(hex_color, dark_color="black", light_color="white") {
 
-  hexColor <- gsub("#", "", hexColor)
+  hex_color <- gsub("#", "", hex_color)
 
-  R <- as.integer(paste("0x", substr(hexColor,1,2), sep=""))
-  G <- as.integer(paste("0x", substr(hexColor,3,4), sep=""))
-  B <- as.integer(paste("0x", substr(hexColor,5,6), sep=""))
+  R <- as.integer(paste("0x", substr(hex_color,1,2), sep=""))
+  G <- as.integer(paste("0x", substr(hex_color,3,4), sep=""))
+  B <- as.integer(paste("0x", substr(hex_color,5,6), sep=""))
 
   YIQ <- ((R*299) + (G*587) + (B*114)) / 1000
 
-  return(ifelse(YIQ >= 128, darkColor, lightColor))
+  return(ifelse(YIQ >= 128, dark_color, light_color))
 
 }
 

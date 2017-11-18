@@ -1,82 +1,52 @@
-#' Create a new ggplot-based "statebin" chart for USA states (discrete scale)
+#' Create a new ggplot-based "statebin" chart for USA states/territories
 #'
-#' \code{statebins()} creates "statebin" charts in the style of \url{http://bit.ly/statebins}
+#' Pass in a data frame and get back a square choropleth.
 #'
-#' This version uses discrete \code{RColorBrewer} scales, binned by the "breaks" parameter.
+#' The `state_col` and `value_col` parameters default to `state` and `value`. That means
+#' if you name the columns you want to plot with those names, you can forego passing them
+#' in. Othersise, use `"strings"`.
 #'
-#' The function minimally expects the caller to pass in a data frame that:
+#' A _handy_ feature of this function is that you can specify a `dark_label` color
+#' and a `light_label` color. What does that mean? Well, you also pass in the
+#' color scale function you're going to use and `statebins` will apply it and use
+#' that information to determine what the tile color is and --- if it's "dark" it will
+#' use the `light_label` and if it's "light" it will use the `dark_label` color. That
+#' means the labels will never blend in to the background (as long as you specify
+#' decent label colors).
 #'
-#' \itemize{
-#'   \item has one column of all state abbreviationis (all caps, including \code{DC} &
-#'     \code{PR} or a column of state names (standard capitalization) named \code{state}
-#'   \item has another column of values named \code{value}
-#' }
+#' You can customize the scale function you pass in by using name parameters. All named
+#' parameters not used by `statebins()` itself get passed to the scale function.
 #'
-#' Doing so will create a "statebin" chart with 5 breaks and return a ggplot2 object.
-#'
-#' You can use a different column for the state names and values by changing \code{state_col}
-#' and \code{value_col} accordingly.
-#'
-#' To add a title, change \code{plot_title} to anything but an empty atomic string vector (i.e. \code{""})
-#' and set \code{title_position} to "\code{top}" or "\code{bottom}". Choosing "\code{bottom}"
-#' will cause \code{statebins} to use the X axis title as the title.
-#'
+#' @md
 #' @param state_data data frame of states and values to plot
 #' @param state_col column name in \code{state_data} that has the states. no duplicates
 #'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
-#' @param text_color default "\code{black}". Size 1 for global color across all tiles or
-#'        a vector of colors the same length as the number of states you passed in.
-#'        Use the sort order for the states as they are sorted before being plotted.
+#' @param dark_label,light_label dark/light label colors. The specified color will be used
+#'        when the algorithm determines labels should be inverted.
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
-#' @param breaks a single number (greater than or equal to 2) giving the number of intervals
-#'        into which data values are to be cut.
-#' @param labels labels for the levels \code{breaks}
-#' @param legend_title title for the legend
-#' @param legend_position "\code{none}", "\code{top}", "\code{left}", "\code{right}" or
-#'        "\code{bottom}" (defaults to "\code{top}")
-#' @param palette either "`brewer`" or "`viridis`". Choose `viridis` if you have
-#'        10 or more levels (more than 10 is not recommended). You can choose which
-#'        viridis palette option (e.g. "magma") with `viridis_pal`.
-#' @param brewer_pal which named \code{RColorBrewer} palette to use (defaults to "PuBu");
-#'        used when `palette` is `brewer`.
-#' @param viridis_pal which named \code{viridis} palette option to use (default if `NULL`);
-#'        used when `palette` is `viridis`.
-#' @param plot_title title for the plot
-#' @param title_position where to put the title ("\code{bottom}" or "\code{top}" or ""
-#'        for none); if "\code{bottom}", you get back a grob vs a ggplot object
-#' @return ggplot2 object or grob
+#' @param state_border_size border size
+#' @param ggplot2_scale_function ggplot2 scale function to use. Defaults to `scale_fill_distiller`
+#'        since you're likely passing in continuous data when you shouldn't be :-)
+#' @return ggplot2 object
 #' @export
 #' @examples
-#' \dontrun{
 #' data(USArrests)
+#'
 #' USArrests$state <- rownames(USArrests)
-#' statebins(USArrests, value_col="Assault", text_color="black", font_size=3,
-#'           legend_title = "Assault", legend_position="bottom")
-#' }
-statebins <- function(state_data, state_col="state", value_col="value",
-                     text_color="black", font_size=3,
-                     state_border_col="white",
-                     breaks=5, labels=1:5,
-                     legend_title="Legend", legend_position="top",
-                     palette=c("brewer", "viridis"), viridis_pal=NULL,
-                     brewer_pal="palette",
-                     plot_title="", title_position="bottom") {
-
-  palette <- match.arg(trimws(tolower(palette)), c("brewer", "viridis"))
-
-  # if (breaks <= 0 | breaks > 10) {
-  #   stop("'breaks' must be between 0 & 10")
-  # }
-
-  if (!title_position %in% c("", "top", "bottom")) {
-    stop("'title_position' must be either blank, 'top' or 'bottom'")
-  }
+#' statebins(USArrests, value_col="Assault", name = "Assault") +
+#'   theme_statebins(legend_position="right")
+statebins <- function(state_data,
+                      state_col="state", value_col="value",
+                      dark_label = "black", light_label = "white", font_size=3,
+                      state_border_col="white", state_border_size=2,
+                      ggplot2_scale_function=ggplot2::scale_fill_distiller,
+                      ...) {
 
   state_data <- data.frame(state_data, stringsAsFactors=FALSE)
 
-  if (max(nchar(state_data[,state_col])) == 2) {
+  if (max(nchar(state_data[,state_col])) <= 3) {
     merge.x <- "abbrev"
   } else {
     merge.x <- "state"
@@ -84,45 +54,25 @@ statebins <- function(state_data, state_col="state", value_col="value",
 
   state_data <- validate_states(state_data, state_col, merge.x)
 
-  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE)
+  st.dat <- merge(state_coords, state_data, by.x=merge.x, by.y=state_col, all.y=TRUE,
+                  sort=TRUE)
 
-  st.dat$fill_color <- cut(st.dat[, value_col], breaks=breaks, labels=labels)
-
-  gg <- ggplot(st.dat, aes_string(x="col", y="row", label="abbrev"))
-  gg <- gg + geom_tile(aes_string(fill="fill_color"))
-  gg <- gg + geom_tile(color=state_border_col, aes_string(fill="fill_color"),
-                       size=2, show.legend=FALSE)
-  gg <- gg + geom_text(color=text_color, size=font_size)
+  gg <- ggplot()
+  gg <- gg + geom_tile(data = st.dat,
+                       aes_string(x = "col", y = "row", fill = value_col),
+                       color = state_border_col, size = state_border_size)
   gg <- gg + scale_y_reverse()
-
-  if (palette == "brewer") {
-    gg <- gg + scale_fill_brewer(palette=brewer_pal, name=legend_title, drop=FALSE)
-  } else if (palette == "viridis") {
-    if (is.null(viridis_pal)) viridis_pal <- "D"
-    gg <- gg + scale_fill_viridis(discrete=TRUE, option=viridis_pal, name=legend_title, drop=FALSE)
-  }
-
+  gg <- gg + ggplot2_scale_function(...)
   gg <- gg + coord_equal()
-  gg <- gg + labs(x=NULL, y=NULL, title=NULL)
-  gg <- gg + theme_bw()
-  gg <- gg + theme(legend.position=legend_position)
-  gg <- gg + theme(panel.border=element_blank())
-  gg <- gg + theme(panel.grid=element_blank())
-  gg <- gg + theme(panel.background=element_blank())
-  gg <- gg + theme(axis.ticks=element_blank())
-  gg <- gg + theme(axis.text=element_blank())
+  gg <- gg + labs(x = NULL, y = NULL)
 
-  if (plot_title != "") {
+  gb <- ggplot2::ggplot_build(gg)
 
-    if (title_position == "bottom") {
-      gg <-  gg + labs(x=plot_title)
-      gg <-  gg + theme(axis.text.x=element_text(hjust=0.5, size=ggplot2::rel(1.2), angle=0))
-    } else {
-      gg <- gg + ggtitle(plot_title)
-    }
+  gg <- gg + geom_text(data = st.dat,
+                       aes_string(x = "col", y = "row", label = "abbrev"),
+                       color = .sb_invert(gb$data[[1]]$fill, dark_label, light_label),
+                       size = font_size)
 
-  }
-
-  return(gg)
+  gg
 
 }

@@ -1,5 +1,7 @@
 ---
 output: rmarkdown::github_document
+editor_options: 
+  chunk_output_type: console
 ---
 ```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
 knitr::opts_chunk$set(message=FALSE, warning=FALSE, fig.retina=2)
@@ -14,14 +16,8 @@ Create 'U.S.' Uniform Square State Cartogram Heatmaps
 
 The following functions are implemented:
 
-- `statebins` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses discrete `RColorBrewer` scales, binned by the "breaks" parameter.
-- `statebins_continuous` - creates "statebin" charts in the style of http://bit.ly/statebins - This version uses a continuous scale based on `RColorBrewer` scales (passing in a 6 element `RColorBrewer` palette to `scale_fill_gradientn`).
-- `statebins_manual` - creates "statebin" charts using manually specified colors in a column
-
-## TODO
-
-- The current version is usable, but I think the plot margins and the legends need work
-- Apply algorithm to switch to light-on-dark depending on the background tile color 
+- `statebins`: Creates "statebin" charts in the style of http://bit.ly/statebins 
+- `theme_statebins`: Base statebins theme
 
 ## Installation
 
@@ -41,182 +37,94 @@ library(tidyverse)
 packageVersion("statebins")
 
 # the original wapo data
-cols(
-  fipst = col_character(), stab = col_character(), state = col_character(), workers1994 = col_integer(), workers1995 = col_integer(), workers1996 = col_integer(), workers1997 = col_integer(), workers1998 = col_integer(), workers1999 = col_integer(), workers2000 = col_integer(), workers2001 = col_integer(), workers2002 = col_integer(), workers2003 = col_integer(), workers2004 = col_integer(), workers2005 = col_integer(), workers2006 = col_integer(), workers2007 = col_integer(), workers2008 = col_integer(), workers2009 = col_integer(), workers2010 = col_integer(), workers2011 = col_integer(), workers2012 = col_integer(), workers2013 = col_integer(),
-  share_cut1994 = col_double(), share_cut1995 = col_double(), share_cut1996 = col_double(), share_cut1997 = col_double(), share_cut1998 = col_double(), share_cut1999 = col_double(), share_cut2000 = col_double(), share_cut2001 = col_double(), share_cut2002 = col_double(), share_cut2003 = col_double(), share_cut2004 = col_double(), share_cut2005 = col_double(), share_cut2006 = col_double(), share_cut2007 = col_double(), share_cut2008 = col_double(), share_cut2009 = col_double(), share_cut2010 = col_double(), share_cut2011 = col_double(), share_cut2012 = col_double(), share_cut2013 = col_double(),
-  avgshare = col_double(), avgshare94_00 = col_double(), avgshare01_07 = col_double(), avgshare08_12 = col_double()
-) -> wapo_cols
 
-adat <- read_csv("http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1",
-                 col_types = wapo_cols)
+adat <- suppressMessages(read_csv("http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1"))
 
-gg <- statebins(
-  adat, "state", "avgshare94_00", 
-  breaks = 4, 
-  labels = c("0-1", "1-2", "2-3", "3-4"),
-  legend_title = "Share of workforce with jobs lost or threatened by trade", 
-  font_size = 3, 
-  brewer_pal = "Blues", 
-  text_color = "black", 
-  plot_title = "1994-2000", 
-  title_position = "bottom"
-)
-
-gg
+mutate(
+  adat, 
+  share = cut(avgshare94_00, breaks = 4, labels = c("0-1", "1-2", "2-3", "3-4"))
+) %>% 
+  statebins(
+    value_col = "share", 
+    ggplot2_scale_function = scale_fill_brewer,
+    name = "Share of workforce with jobs lost or threatened by trade"
+  ) +
+  labs(title = "1994-2000") +
+  theme_statebins()
 
 # continuous scale, legend on top
 
-gg2 <- statebins_continuous(
-  adat, "state", "avgshare01_07",
-  legend_title="Share of workforce with jobs lost or threatened by trade", legend_position="top",
-  brewer_pal="OrRd", text_color="black", font_size=3, 
-  plot_title="2001-2007", title_position="bottom"
-)
+statebins(
+  adat, value_col = "avgshare01_07",
+  name = "Share of workforce with jobs lost or threatened by trade",
+  palette = "OrRd", direction = 1
+) +
+  labs(x="2001-2007") +
+  theme_statebins(legend_position="top")
 
-gg2
 
 # continuous scale, no legend
 
-gg3 <- statebins_continuous(
-  adat, "state", "avgshare08_12",
-  legend_title="States", legend_position="none",
-  brewer_pal="Purples", text_color="black", font_size=3, 
-  plot_title="2008-2012", title_position="bottom"
-)
+statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
+  labs(x="2008-2010") +
+  theme_statebins(legend_position = "none") 
 
-gg3
 
-# mortality (only to show PR and using a data.table)
+# mortality data (has Puerto Rico)
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
-cols(
-  state = col_character(),
-  births = col_integer(),
-  fertility_rate = col_double(),
-  deaths = col_integer(),
-  death_rate = col_double()
-) -> deaths_cols
+dat <- suppressMessages(read_csv("http://datadrivensecurity.info/data/deaths.csv"))
 
-dat <- read_csv("http://datadrivensecurity.info/data/deaths.csv", col_types=deaths_cols)
-statebins_continuous(dat, "state", "death_rate", legend_title="Per 100K pop",
-                     plot_title="Mortality Rate (2010)")
+statebins(dat, value_col = "death_rate", name="Per 100K pop") +
+  labs(title="Mortality Rate (2010)") +
+  theme_statebins()
 
-# fertility (only to show tbl_dt)
+# fertility data
 
-statebins_continuous(dat, "state", "fertility_rate", legend_title="Per 100K pop", 
-                     plot_title="Fertility Rate (2010)", brewer_pal="PuBuGn")
+statebins(dat, value_col="fertility_rate", name="Per 100K pop", palette="PuBuGn") +
+  labs(title="Fertility Rate (2010)") +
+  theme_statebins()
 
 # manual - perhaps good for elections?
 
-library(httr)
-library(dplyr)
+election_2012 <- suppressMessages(read_csv("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv"))
 
-election_2012 <- GET("https://raw.githubusercontent.com/hrbrmstr/statebins/master/tmp/election2012.csv")
-
-read.csv(
-  textConnection(content(election_2012, as="text")), 
-  header=TRUE, stringsAsFactors=FALSE
-) %>% 
-  mutate(color=ifelse(is.na(Obama), "#2166ac", "#b2182b")) %>% 
-  select(state, color) -> results
-
-statebins_manual(
-  results,
-  font_size=4, text_color = "white", 
-  labels=c("Romney", "Obama"), legend_position="right", legend_title="Winner"
-)
-
-# or, more like the one in the WaPo article; i might be picking the wrong columns here. it's just for an example
-
-sb <- function(col, title) {
+mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>% 
   statebins(
-    adat, "state", col, brewer_pal="Blues", text_color="black",
-    legend_position="none", font_size=3, plot_title=title, 
-    breaks=4, labels=1:4
-  )
-}
+    font_size=4, dark_label = "white", light_label = "white",
+    ggplot2_scale_function = scale_fill_manual,
+    name = "Winner",
+    values = c(Romney = "#2166ac", Obama = "#b2182b")
+  ) +
+  theme_statebins()
 ```
 
-```{r eval=FALSE}
-# cheating and using <table> to arrange them below and also making a WaPo-like legend, 
-# since mucking with grid graphics margins/padding was not an option time-wise at the moment
+### All the "states"
 
-sb("avgshare94_00", "1994-2000")
-sb("avgshare01_07", "2001-2007")
-sb("avgshare08_12", "2008-2012")
+`statebins` now has PR, VI & NYC (by name or abbreviation) so you can use them, too:
+
+```{r}
+library(statebins)
+library(tidyverse)
+library(viridis)
+
+data(USArrests)
+
+# make up some data for the example
+
+rownames_to_column(USArrests, "state") %>%
+  bind_rows(
+    data_frame(
+      state = c("Virgin Islands", "Puerto Rico", "New York City"),
+      Murder = rep(mean(max(USArrests$Murder),3)),
+      Assault = rep(mean(max(USArrests$Assault),3)),
+      Rape = rep(mean(max(USArrests$Rape),3)),
+      UrbanPop = c(93, 95, 100)
+    )
+  ) -> us_arrests
+
+statebins(us_arrests, value_col="Assault",
+          ggplot2_scale_function = viridis::scale_fill_viridis) +
+  labs(title="USArrests + made up data") +
+  theme_statebins("right")
 ```
-
-<!-- uncomment the following and add backticks where appropriate and remove the reference to -->
-<!-- the static image when the rmarkdown output is HTML and this will work fine. github does not render the markdown properly -->
-<!-- 
-<span style="font-size:17px; color:#333;">Share of workforce with jobs lost or threatened by trade</span><br/>
-
-<table style="width:200px" cellpadding=0, cellspacing=0><tr style="line-height:10px">
-<td width="25%" style="background:#EFF3FF;">&nbsp;</td>
-<td width="25%" style="background:#BDD7E7;">&nbsp;</td>
-<td width="25%" style="background:#6BAED6;">&nbsp;</td>
-<td width="25%" style="background:#2171B5;">&nbsp;</td></tr>
-<tr><td colspan=2 align="left" style="font-size:14px">Smallest share</td><td colspan=2 align="right" style="font-size:14px">Largest</td></tr>
-</table>
-
-<table width="100%" cellpadding="0" cellspacing="0">
-<tr><td width="50%">
-
-{r f1994, echo=FALSE, fig.width=6, fig.height=5}
-sb("avgshare94_00", "1994-2000")
-
-</td><td width="50%">
-
-{r f2001, echo=FALSE, fig.width=6, fig.height=5, results='asis'}
-sb("avgshare01_07", "2001-2007")
-
-</td></tr><tr><td width="50%">
-
-{r f2008, echo=FALSE, fig.width=6, fig.height=5, results='asis'}
-sb("avgshare08_12", "2008-2012")
-
-</td><td width="50%"> &nbsp; </td></tr></table>
-
--->
-
-<center>![img](./tmp/statebins-composite.png)</center>
-
-And, we'll throw in a gratuitous animation for good measure:
-
-```{r eval=FALSE}
-library(magick)
-# data set from StatsAmerica - http://www.statsamerica.org/profiles/sip_index.html
-
-# median household income from the ACS survey
-miacs <- read.csv("http://datadrivensecurity.info/data/median-income-acs.csv", 
-                  header=TRUE, stringsAsFactors=FALSE)
-
-# generate frames based on year
-purrr::map(unique(miacs$year), function(year) {
-  
-  cat(".")
-  
-  fig <- magick::image_graph(res=144)
-  
-  rng <- floor(range(miacs[miacs$year==year,]$mh_inc))
-  
-  statebins(
-    miacs[miacs$year==year,], "state", "mh_inc",
-    legend_title="States", legend_position="none",
-    brewer_pal="Greens", text_color="black", font_size=3,
-    plot_title=sprintf("Median Household Income (ACS) %d\n$%s - $%s", year, 
-                       scales::comma(rng[1]), scales::comma(rng[2])), 
-    title_position="top"
-  ) -> ggtmp
-  
-  print(ggtmp)
-  
-  dev.off()
-  
-  fig
-  
-}) %>% image_join() %>% 
-  image_animate(fps=2, loop=1) 
-```
-
-<center>![img](./tmp/household.gif)</embed></center>

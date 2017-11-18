@@ -4,12 +4,11 @@
 #' @name statebins-package
 #' @docType package
 #' @author Bob Rudis (bob@@rud.is)
-#' @import RColorBrewer viridis
 #' @importFrom scales alpha
 #' @importFrom ggplot2 ggplot geom_tile scale_fill_manual guides geom_tile ggplotGrob
 #' @importFrom ggplot2 geom_point geom_text scale_color_manual guides theme labs
 #' @importFrom ggplot2 scale_x_continuous scale_y_continuous coord_equal theme_bw
-#' @importFrom ggplot2 aes guide_legend element_rect element_blank element_text
-#' @importFrom ggplot2 aes_string scale_y_reverse scale_fill_gradientn
+#' @importFrom ggplot2 aes element_rect element_blank element_text
+#' @importFrom ggplot2 aes_string aes_
 #' @importFrom ggplot2 scale_fill_brewer ggtitle rel
 NULL
