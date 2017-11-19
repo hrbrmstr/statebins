@@ -3,7 +3,12 @@ Type: Package
 Title: Create 'U.S.' Uniform Square State Cartogram Heatmaps
 Version: 1.3.0
 Date: 2017-11-14
-Author: Bob Rudis (bob@rud.is)
+Authors@R: c(
+    person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre"), 
+           comment = c(ORCID = "0000-0001-5670-2640")),
+    person("Harold", "Gil", email = "hgil@marionhealth.org", role = "ctb",
+           comment = "fix for show.guide")
+  )
 Maintainer: Bob Rudis <bob@rud.is>
 Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' States
     and are based on work by the 'Washington Post' graphics department in their report
