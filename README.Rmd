@@ -25,6 +25,10 @@ The following functions are implemented:
 devtools::install_github("hrbrmstr/statebins")
 ```
 
+## NOTE
+
+Due to a number of things, this is dependent on the _development_ version of ggplot2 and now identifies that in the `DESCRIPTION` metadata, _including_ a `Remotes:` field (which will be removed when this & ggplot2 hit CRAN).
+
 ## Usage
 
 All of the following examples use the [WaPo data](http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/states.csv?cache=1). It looks like the columns they use are scaled data and I didn't take the time to figure out what they did, so the final figure just mimics their output (including the non-annotated legend).

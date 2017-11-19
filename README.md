@@ -17,6 +17,13 @@ The following functions are implemented:
 devtools::install_github("hrbrmstr/statebins")
 ```
 
+## NOTE
+
+Due to a number of things, this is dependent on the *development*
+version of ggplot2 and now identifies that in the `DESCRIPTION`
+metadata, *including* a `Remotes:` field (which will be removed when
+this & ggplot2 hit CRAN).
+
 ## Usage
 
 All of the following examples use the [WaPo
