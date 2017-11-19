@@ -40,7 +40,7 @@ library(tidyverse)
 packageVersion("statebins")
 ```
 
-    ## [1] '1.3.0'
+    ## [1] '1.3.1'
 
 ### The original wapo data
 
@@ -129,6 +129,10 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
 
 ### Rounded rects\!
 
+You can pass in a `grid::units()` call for the `radius` parameter.
+
+Slight curves:
+
 ``` r
 data(USArrests)
 
@@ -138,6 +142,16 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
 ```
 
 <img src="README_files/figure-gfm/rounded-1.png" width="672" />
+
+Circles\!
+
+``` r
+statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE, 
+          radius=grid::unit(16, "pt"), palette="Reds", direction=1) +
+  theme_statebins(legend_position="right")
+```
+
+<img src="README_files/figure-gfm/rounded2-1.png" width="672" />
 
 ### All the “states”
 
