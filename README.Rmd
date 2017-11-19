@@ -116,11 +116,23 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
 
 ### Rounded rects!
 
+You can pass in a `grid::units()` call for the `radius` parameter.
+
+Slight curves:
+
 ```{r rounded}
 data(USArrests)
 
 USArrests$state <- rownames(USArrests)
 statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
+  theme_statebins(legend_position="right")
+```
+
+Circles!
+
+```{r rounded2} 
+statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE, 
+          radius=grid::unit(16, "pt"), palette="Reds", direction=1) +
   theme_statebins(legend_position="right")
 ```
 

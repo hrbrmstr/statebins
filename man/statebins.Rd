@@ -7,6 +7,7 @@
 statebins(state_data, state_col = "state", value_col = "value",
   dark_label = "black", light_label = "white", font_size = 3,
   state_border_col = "white", state_border_size = 2, round = FALSE,
+  radius = grid::unit(6, "pt"),
   ggplot2_scale_function = ggplot2::scale_fill_distiller, ...)
 }
 \arguments{
@@ -27,6 +28,9 @@ when the algorithm determines labels should be inverted.}
 \item{state_border_size}{border size}
 
 \item{round}{rounded corners (default: \code{FALSE})}
+
+\item{radius}{if \code{round} is \code{TRUE} then use \code{grid::unit} to specify the corner radius.
+Default is \code{grid::unit(6, "pt")} if using rounded corners.}
 
 \item{ggplot2_scale_function}{ggplot2 scale function to use. Defaults to \code{scale_fill_distiller}
 since you're likely passing in continuous data when you shouldn't be :-)}

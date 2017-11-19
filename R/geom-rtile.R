@@ -1,10 +1,11 @@
 geom_rtile <- function(mapping = NULL, data = NULL,
                       stat = "identity", position = "identity",
+                      radius = grid::unit(6, "pt"),
                       ...,
                       na.rm = FALSE,
                       show.legend = NA,
                       inherit.aes = TRUE) {
-  layer(
+  ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = stat,
@@ -13,6 +14,7 @@ geom_rtile <- function(mapping = NULL, data = NULL,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
     params = list(
+      radius = radius,
       na.rm = na.rm,
       ...
     )
@@ -20,6 +22,7 @@ geom_rtile <- function(mapping = NULL, data = NULL,
 }
 
 GeomRtile <- ggplot2::ggproto("GeomRtile", GeomRrect,
+
   extra_params = c("na.rm", "width", "height"),
 
   setup_data = function(data, params) {
@@ -32,10 +35,12 @@ GeomRtile <- ggplot2::ggproto("GeomRtile", GeomRrect,
     )
   },
 
-  default_aes = aes(fill = "grey20", colour = NA, size = 0.1, linetype = 1,
-    alpha = NA),
+  default_aes = ggplot2::aes(
+    fill = "grey20", colour = NA, size = 0.1, linetype = 1, alpha = NA
+  ),
 
   required_aes = c("x", "y"),
 
   draw_key = ggplot2::draw_key_polygon
+
 )

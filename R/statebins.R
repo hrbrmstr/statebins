@@ -28,6 +28,8 @@
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
 #' @param state_border_size border size
 #' @param round rounded corners (default: `FALSE`)
+#' @param radius if `round` is `TRUE` then use `grid::unit` to specify the corner radius.
+#'        Default is `grid::unit(6, "pt")` if using rounded corners.
 #' @param ggplot2_scale_function ggplot2 scale function to use. Defaults to `scale_fill_distiller`
 #'        since you're likely passing in continuous data when you shouldn't be :-)
 #' @param ... additional parameters to the scale function
@@ -43,7 +45,7 @@ statebins <- function(state_data,
                       state_col="state", value_col="value",
                       dark_label = "black", light_label = "white", font_size=3,
                       state_border_col="white", state_border_size=2,
-                      round = FALSE,
+                      round = FALSE, radius = grid::unit(6, "pt"),
                       ggplot2_scale_function=ggplot2::scale_fill_distiller,
                       ...) {
 
@@ -63,7 +65,7 @@ statebins <- function(state_data,
   gg <- ggplot()
 
   if (round) {
-    gg <- gg + geom_rtile(data = st.dat,
+    gg <- gg + geom_rtile(data = st.dat, radius = radius,
                          aes_string(x = "col", y = "row", fill = value_col),
                          color = state_border_col, size = state_border_size)
   } else {
