@@ -31,3 +31,5 @@ validate_states <- function(state_data, state_col, merge.x) {
   return(state_data)
 
 }
+
+"%||%" <- function(a, b) { if (!is.null(a)) a else b }
