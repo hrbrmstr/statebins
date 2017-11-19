@@ -23,8 +23,8 @@ GeomRtile <- ggplot2::ggproto("GeomRtile", GeomRrect,
   extra_params = c("na.rm", "width", "height"),
 
   setup_data = function(data, params) {
-    data$width <- data$width %||% params$width %||% resolution(data$x, FALSE)
-    data$height <- data$height %||% params$height %||% resolution(data$y, FALSE)
+    data$width <- data$width %||% params$width %||% ggplot2::resolution(data$x, FALSE)
+    data$height <- data$height %||% params$height %||% ggplot2::resolution(data$y, FALSE)
 
     transform(data,
       xmin = x - width / 2,  xmax = x + width / 2,  width = NULL,
