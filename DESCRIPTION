@@ -46,4 +46,3 @@ Collate:
     'statebins.R'
     'theme-statebin.R'
     'util.R'
-Remotes: tidyverse/ggplot2
