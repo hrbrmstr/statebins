@@ -28,3 +28,7 @@ state_coords <- structure(list(abbrev = c("AL", "AK", "AZ", "AR", "CA", "CO",
                           class = "data.frame", row.names = c(NA, -54L))
 
 state_coords <- state_coords[order(state_coords$state),]
+
+b_state_coords <- state_coords
+colnames(b_state_coords) <- c("abbrev", "state", "x", "y")
+b_state_coords$y <- -b_state_coords$y

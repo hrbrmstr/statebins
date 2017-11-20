@@ -17,6 +17,7 @@ Create 'U.S.' Uniform Square State Cartogram Heatmaps
 The following functions are implemented:
 
 - `statebins`: Creates "statebin" charts in the style of http://bit.ly/statebins 
+- `geom_statebins`: A statebins Geom (WIP!)
 - `theme_statebins`: Base statebins theme
 
 ## Installation
@@ -35,6 +36,8 @@ All of the following examples use the [WaPo data](http://www.washingtonpost.com/
 
 ```{r setup}
 library(statebins)
+library(cdcfluview)
+library(hrbrthemes)
 library(tidyverse)
 
 # current verison
@@ -134,6 +137,24 @@ Circles!
 statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE, 
           radius=grid::unit(16, "pt"), palette="Reds", direction=1) +
   theme_statebins(legend_position="right")
+```
+
+### Geom
+
+```{r sb_facet, fig.width=17, fig.height=10}
+flu <- ili_weekly_activity_indicators(2017)
+
+ggplot(flu, aes(state=statename, fill=activity_level)) +
+  geom_statebins() +
+  coord_equal() +
+  viridis::scale_fill_viridis(
+    name = "ILI Activity Level  ", limits=c(0,10), breaks=0:10, option = "magma", direction = -1
+  ) +
+  facet_wrap(~weekend) +
+  labs(title="2017-18 Flu Season ILI Activity Level") +
+  theme_statebins(base_family = font_ps) +
+  theme(plot.title=element_text(size=16, hjust=0)) +
+  theme(plot.margin = margin(30,30,30,30))
 ```
 
 ### All the "states"
