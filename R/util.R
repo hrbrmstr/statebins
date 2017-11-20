@@ -13,7 +13,7 @@
 }
 
 # sanity checks for state values
-validate_states <- function(state_data, state_col, merge.x) {
+validate_states <- function(state_data, state_col, merge.x, ignore_dups=FALSE) {
 
   good_states <- state_data[,state_col] %in% state_coords[,merge.x]
   if (any(!good_states)) {
@@ -22,10 +22,12 @@ validate_states <- function(state_data, state_col, merge.x) {
     warning("Found invalid state values: ", invalid)
   }
 
-  dups <- duplicated(state_data[,state_col])
-  if (any(dups)) {
-    state_data <- state_data[which(!dups),]
-    warning("Removing duplicate state rows")
+  if (!ignore_dups) {
+    dups <- duplicated(state_data[,state_col])
+    if (any(dups)) {
+      state_data <- state_data[which(!dups),]
+      warning("Removing duplicate state rows")
+    }
   }
 
   return(state_data)

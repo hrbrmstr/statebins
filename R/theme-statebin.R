@@ -10,9 +10,11 @@ theme_statebins <- function(legend_position="bottom",
                             base_size = 11, base_family = "",
                             base_line_size = base_size/22,
                             base_rect_size = base_size/22) {
+
   gg <- theme_bw(base_family = base_family, base_size = base_size,
                  base_line_size = base_line_size, base_rect_size = base_rect_size)
   gg <- gg + theme(panel.border=element_blank())
+  gg <- gg + theme(strip.background = element_rect(color="#2b2b2b", fill="white"))
   gg <- gg + theme(panel.grid=element_blank())
   gg <- gg + theme(panel.background=element_blank())
   gg <- gg + theme(axis.ticks=element_blank())
@@ -21,4 +23,5 @@ theme_statebins <- function(legend_position="bottom",
   gg <- gg + theme(axis.title.x=element_text(hjust=0.5))
   gg <- gg + theme(legend.position=legend_position)
   gg
+
 }
