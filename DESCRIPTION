@@ -7,7 +7,11 @@ Authors@R: c(
     person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0001-5670-2640")),
     person("Harold", "Gil", email = "hgil@marionhealth.org", role = "ctb",
-           comment = "fix for show.guide")
+           comment = "fix for show.guide"),
+    person("Brian", "Adams", email = "btadams478@gmail.com", role = "ctb",
+           comment = "theme testing & feedback"),
+    person("Thomas", "Wood", role = "ctb",
+           comment = "Significant suggestions & testing that made new features possible")
   )
 Maintainer: Bob Rudis <bob@rud.is>
 Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' States
@@ -28,7 +32,7 @@ Suggests:
 Depends:
     R (>= 3.2.0),
 Imports:
-    ggplot2 (>= 2.2.1.9000),
+    ggplot2 (>= 2.2.1),
     scales (>= 0.5.0),
     grid
 RoxygenNote: 6.0.1
