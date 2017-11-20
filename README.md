@@ -9,6 +9,7 @@ The following functions are implemented:
 
   - `statebins`: Creates “statebin” charts in the style of
     <http://bit.ly/statebins>
+  - `geom_statebins`: A statebins Geom (WIP\!)
   - `theme_statebins`: Base statebins theme
 
 ## Installation
@@ -34,13 +35,15 @@ output (including the non-annotated legend).
 
 ``` r
 library(statebins)
+library(cdcfluview)
+library(hrbrthemes)
 library(tidyverse)
 
 # current verison
 packageVersion("statebins")
 ```
 
-    ## [1] '1.3.1'
+    ## [1] '2.0.0'
 
 ### The original wapo data
 
@@ -152,6 +155,26 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE,
 ```
 
 <img src="README_files/figure-gfm/rounded2-1.png" width="672" />
+
+### Geom
+
+``` r
+flu <- ili_weekly_activity_indicators(2017)
+
+ggplot(flu, aes(state=statename, fill=activity_level)) +
+  geom_statebins() +
+  coord_equal() +
+  viridis::scale_fill_viridis(
+    name = "ILI Activity Level  ", limits=c(0,10), breaks=0:10, option = "magma", direction = -1
+  ) +
+  facet_wrap(~weekend) +
+  labs(title="2017-18 Flu Season ILI Activity Level") +
+  theme_statebins(base_family = font_ps) +
+  theme(plot.title=element_text(size=16, hjust=0)) +
+  theme(plot.margin = margin(30,30,30,30))
+```
+
+<img src="README_files/figure-gfm/sb_facet-1.png" width="1632" />
 
 ### All the “states”
 

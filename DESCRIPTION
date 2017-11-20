@@ -1,7 +1,7 @@
 Package: statebins
 Type: Package
 Title: Create 'U.S.' Uniform Square State Cartogram Heatmaps
-Version: 1.3.1
+Version: 2.0.0
 Date: 2017-11-14
 Authors@R: c(
     person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre"), 
@@ -32,10 +32,11 @@ Imports:
     scales (>= 0.5.0),
     grid
 RoxygenNote: 6.0.1
-Collate: 
+Collate:
     'aaa.R'
     'geom-rrect.r'
     'geom-rtile.R'
+    'geom-statebins.r'
     'gutil.R'
     'statebins-package.R'
     'statebins.R'
