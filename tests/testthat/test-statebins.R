@@ -28,8 +28,7 @@ test_that("we can do something", {
 
   expect_equal(length(gb$plot$facet), 3)
 
-  statebins(USArrests, value_col="Assault", name = "Assault") +
-    theme_statebins(legend_position="right") -> gg
+  statebins(USArrests, value_col="Assault", name = "Assault") -> gg
 
   gb <- ggplot_build(gg)
 
