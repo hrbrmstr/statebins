@@ -28,7 +28,8 @@ License: MIT + file LICENSE
 Suggests:
     testthat,
     viridis,
-    RColorBrewer
+    RColorBrewer,
+    cdcfluview
 Depends:
     R (>= 3.2.0),
 Imports:
