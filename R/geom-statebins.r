@@ -105,7 +105,7 @@ GeomStatebins <- ggplot2::ggproto("GeomStatebins", ggplot2::Geom,
       ymin = y - height / 2, ymax = y + height / 2, height = NULL
     ) -> xdat
 
-    saveRDS(xdat, "/tmp/setupdata.rds")
+    saveRDS(xdat, "tmp/setupdata.rds")
 
     xdat
 
