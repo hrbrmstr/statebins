@@ -2,25 +2,37 @@ context("basic functionality")
 test_that("we can do something", {
 
   require(ggplot2)
-
-  flu <- cdcfluview::ili_weekly_activity_indicators(2017)
-
-  ggplot(flu, aes(state=statename, fill=activity_level)) +
-    geom_statebins() +
-    coord_equal() +
-    ggplot2::facet_wrap(~weekend) +
-    labs(title="2017-18 Flu Season ILI Activity Level") +
-    theme_statebins() -> gg
-
-  gb <- ggplot_build(gg)
+  require(statebins)
 
   data(USArrests)
 
   USArrests$state <- rownames(USArrests)
 
+  a1 <- USArrests
+  a2 <- USArrests
+  a3 <- USArrests
+
+  a1$f <- 1
+  a2$f <- 2
+  a3$f <- 3
+
+  a4 <- rbind.data.frame(rbind.data.frame(a1, a2), a3)
+
+  ggplot(a4, aes(state=state, fill=Assault)) +
+    geom_statebins() +
+    coord_equal() +
+    ggplot2::facet_wrap(~f) +
+    theme_statebins() -> gg
+
+  gb <- ggplot_build(gg)
+
+  expect_equal(length(gb$plot$facet), 3)
+
   statebins(USArrests, value_col="Assault", name = "Assault") +
     theme_statebins(legend_position="right") -> gg
 
   gb <- ggplot_build(gg)
+
+  expect_equal(length(gb$plot$facet), 2)
 
 })
