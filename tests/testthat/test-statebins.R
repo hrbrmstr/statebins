@@ -31,6 +31,5 @@ test_that("we can do something", {
 
   gb <- ggplot_build(gg)
 
-  expect_equal(length(gb$plot$facet), 2)
 
 })
