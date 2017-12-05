@@ -8,6 +8,8 @@ knitr::opts_chunk$set(message=FALSE, warning=FALSE, fig.retina=2)
 options(width=120)
 ```
 
+[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
+
 # statebins
 
 Create 'U.S.' Uniform Square State Cartogram Heatmaps
