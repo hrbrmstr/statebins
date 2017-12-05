@@ -21,8 +21,7 @@ test_that("we can do something", {
   ggplot(a4, aes(state=state, fill=Assault)) +
     geom_statebins() +
     coord_equal() +
-    ggplot2::facet_wrap(~f) +
-    theme_statebins() -> gg
+    ggplot2::facet_wrap(~f) -> gg
 
   gb <- ggplot_build(gg)
 
