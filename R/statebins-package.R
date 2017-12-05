@@ -1,4 +1,4 @@
-#' statebins is an alternative to choropleth maps for US States
+#' statebins is an alternative to choropleth maps for U.S. States
 #'
 #' @md
 #' @name statebins-package
@@ -10,6 +10,6 @@
 #' @importFrom ggplot2 geom_point geom_text scale_color_manual guides theme labs
 #' @importFrom ggplot2 scale_x_continuous scale_y_continuous coord_equal theme_bw
 #' @importFrom ggplot2 aes element_rect element_blank element_text resolution
-#' @importFrom ggplot2 aes_string aes_ scale_y_reverse layer GeomRect
+#' @importFrom ggplot2 aes_string aes_ scale_y_reverse layer GeomRect margin %+replace%
 #' @importFrom ggplot2 scale_fill_brewer ggtitle rel ggproto draw_key_polygon Geom Stat
 NULL

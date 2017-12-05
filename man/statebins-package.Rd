@@ -3,9 +3,9 @@
 \docType{package}
 \name{statebins-package}
 \alias{statebins-package}
-\title{statebins is an alternative to choropleth maps for US States}
+\title{statebins is an alternative to choropleth maps for U.S. States}
 \description{
-statebins is an alternative to choropleth maps for US States
+statebins is an alternative to choropleth maps for U.S. States
 }
 \author{
 Bob Rudis (bob@rud.is)
