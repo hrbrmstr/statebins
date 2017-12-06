@@ -83,6 +83,7 @@ statebins <- function(state_data,
 
   gg <- gg + geom_text(data = st.dat,
                        aes_string(x = "col", y = "row", label = "abbrev"),
+                       angle = 0,
                        color = .sb_invert(gb$data[[1]]$fill, dark_label, light_label),
                        size = font_size)
 

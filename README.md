@@ -1,4 +1,18 @@
-[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
+
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Build
+Status](https://travis-ci.org/search/search.svg?branch=master)](https://travis-ci.org/search/search)
+[![minimal R
+version](https://img.shields.io/badge/R%3E%3D-3.2.0-6666ff.svg)](https://cran.r-project.org/)
+[![packageversion](https://img.shields.io/badge/Package%20version-2.0.0-orange.svg?style=flat-square)](commits/master)
+![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/statebins)
+[![](http://cranlogs.r-pkg.org/badges/statebins)](http://cran.rstudio.com/web/packages/statebins/index.html)
+[![Travis-CI Build
+Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/statebins?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/statebins)
 
 # statebins
 
@@ -49,7 +63,7 @@ packageVersion("statebins")
 ### The original wapo data
 
 ``` r
-adat <- suppressMessages(read_csv(system.file("extdata", "wapostates.csv", package="statebins")))
+adat <- read_csv(system.file("extdata", "wapostates.csv", package="statebins"))
 
 mutate(
   adat, 
@@ -64,21 +78,23 @@ mutate(
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/original-1.png" width="672" />
+![](README_files/figure-gfm/original-1.png)<!-- -->
 
 ### Continuous scale, legend on top
 
 ``` r
 statebins(
-  adat, value_col = "avgshare01_07",
+  adat, 
+  value_col = "avgshare01_07",
   name = "Share of workforce with jobs lost or threatened by trade",
-  palette = "OrRd", direction = 1
+  palette = "OrRd", 
+  direction = 1
 ) +
-  labs(x="2001-2007") +
+  labs(x="2001-2007") + 
   theme_statebins(legend_position="top")
 ```
 
-<img src="README_files/figure-gfm/continuous-1.png" width="672" />
+![](README_files/figure-gfm/continuous-1.png)<!-- -->
 
 ### Continuous scale, no legend
 
@@ -88,21 +104,21 @@ statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
   theme_statebins(legend_position = "none") 
 ```
 
-<img src="README_files/figure-gfm/continuous_noleg-1.png" width="672" />
+![](README_files/figure-gfm/continuous_noleg-1.png)<!-- -->
 
 ### Mortality data (has Puerto Rico)
 
 ``` r
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
-dat <- suppressMessages(read_csv(system.file("extdata", "deaths.csv", package="statebins")))
+dat <- read_csv(system.file("extdata", "deaths.csv", package="statebins"))
 
 statebins(dat, value_col = "death_rate", name="Per 100K pop") +
   labs(title="Mortality Rate (2010)") +
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/mort-1.png" width="672" />
+![](README_files/figure-gfm/mort-1.png)<!-- -->
 
 ### Fertility data
 
@@ -112,7 +128,7 @@ statebins(dat, value_col="fertility_rate", name="Per 100K pop", palette="PuBuGn"
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/fert-1.png" width="672" />
+![](README_files/figure-gfm/fert-1.png)<!-- -->
 
 ### Manual - perhaps good for elections?
 
@@ -129,7 +145,7 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
   theme_statebins()
 ```
 
-<img src="README_files/figure-gfm/manual-1.png" width="672" />
+![](README_files/figure-gfm/manual-1.png)<!-- -->
 
 ### Rounded rects\!
 
@@ -145,7 +161,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
   theme_statebins(legend_position="right")
 ```
 
-<img src="README_files/figure-gfm/rounded-1.png" width="672" />
+![](README_files/figure-gfm/rounded-1.png)<!-- -->
 
 Circles\!
 
@@ -155,7 +171,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE,
   theme_statebins(legend_position="right")
 ```
 
-<img src="README_files/figure-gfm/rounded2-1.png" width="672" />
+![](README_files/figure-gfm/rounded2-1.png)<!-- -->
 
 ### Geom
 
@@ -175,7 +191,7 @@ ggplot(flu, aes(state=statename, fill=activity_level)) +
   theme(plot.margin = margin(30,30,30,30))
 ```
 
-<img src="README_files/figure-gfm/sb_facet-1.png" width="1632" />
+![](README_files/figure-gfm/sb_facet-1.png)<!-- -->
 
 ### All the “states”
 
@@ -208,4 +224,4 @@ statebins(us_arrests, value_col="Assault",
   theme_statebins("right")
 ```
 
-<img src="README_files/figure-gfm/all-1.png" width="672" />
+![](README_files/figure-gfm/all-1.png)<!-- -->

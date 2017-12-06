@@ -3,12 +3,19 @@ output: rmarkdown::github_document
 editor_options: 
   chunk_output_type: console
 ---
-```{r ugh, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
-knitr::opts_chunk$set(message=FALSE, warning=FALSE, fig.retina=2)
-options(width=120)
-```
 
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Build Status](https://travis-ci.org/search/search.svg?branch=master)](https://travis-ci.org/search/search)
+[![minimal R version](https://img.shields.io/badge/R%3E%3D-3.2.0-6666ff.svg)](https://cran.r-project.org/)
+[![packageversion](https://img.shields.io/badge/Package%20version-2.0.0-orange.svg?style=flat-square)](commits/master)
+![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/statebins)
+[![](http://cranlogs.r-pkg.org/badges/statebins)](http://cran.rstudio.com/web/packages/statebins/index.html)
 [![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/statebins?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/statebins)
+
+```{r include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE)
+```
 
 # statebins
 
@@ -49,7 +56,7 @@ packageVersion("statebins")
 ### The original wapo data
 
 ```{r original}
-adat <- suppressMessages(read_csv(system.file("extdata", "wapostates.csv", package="statebins")))
+adat <- read_csv(system.file("extdata", "wapostates.csv", package="statebins"))
 
 mutate(
   adat, 
@@ -68,11 +75,13 @@ mutate(
 
 ```{r continuous}
 statebins(
-  adat, value_col = "avgshare01_07",
+  adat, 
+  value_col = "avgshare01_07",
   name = "Share of workforce with jobs lost or threatened by trade",
-  palette = "OrRd", direction = 1
+  palette = "OrRd", 
+  direction = 1
 ) +
-  labs(x="2001-2007") +
+  labs(x="2001-2007") + 
   theme_statebins(legend_position="top")
 ```
 
@@ -89,7 +98,7 @@ statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
 ```{r mort}
 # from: http://www.cdc.gov/nchs/fastats/state-and-territorial-data.htm
 
-dat <- suppressMessages(read_csv(system.file("extdata", "deaths.csv", package="statebins")))
+dat <- read_csv(system.file("extdata", "deaths.csv", package="statebins"))
 
 statebins(dat, value_col = "death_rate", name="Per 100K pop") +
   labs(title="Mortality Rate (2010)") +
