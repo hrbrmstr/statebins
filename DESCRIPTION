@@ -10,6 +10,8 @@ Authors@R: c(
            comment = "fix for show.guide"),
     person("Brian", "Adams", email = "btadams478@gmail.com", role = "ctb",
            comment = "theme testing & feedback"),
+    person("Harold", "Gil", role = "ctb",
+           comment = "facet/geom testing & test data fix"),
     person("Thomas", "Wood", role = "ctb",
            comment = "Significant suggestions & testing that made new features possible")
   )
