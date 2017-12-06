@@ -31,5 +31,4 @@ test_that("we can do something", {
 
   gb <- ggplot_build(gg)
 
-
 })
