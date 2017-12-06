@@ -27,10 +27,11 @@ Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' 
 URL: https://github.com/hrbrmstr/statebins
 BugReports: https://github.com/hrbrmstr/statebins/issues
 License: MIT + file LICENSE
-Suggests:
+Suggests: 
     testthat,
     viridis,
-    RColorBrewer
+    RColorBrewer,
+    covr
 Depends:
     R (>= 3.2.0),
 Imports:

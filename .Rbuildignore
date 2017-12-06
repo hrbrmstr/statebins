@@ -13,3 +13,5 @@
 ^README.gfm-ascii_identifiers_files$
 ^README.gfm-ascii_identifiers_files/$
 ^README.gfm-ascii_identifiers_files/.*$
+^appveyor\.yml$
+^codecov\.yml$
