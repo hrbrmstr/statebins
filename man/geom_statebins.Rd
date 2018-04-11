@@ -5,7 +5,7 @@
 \alias{geom_statebins}
 \alias{GeomStatebins}
 \title{A statebins Geom}
-\format{An object of class \code{GeomStatebins} (inherits from \code{Geom}, \code{ggproto}, \code{gg}) of length 7.}
+\format{An object of class \code{GeomStatebins} (inherits from \code{Geom}, \code{ggproto}) of length 7.}
 \usage{
 geom_statebins(mapping = NULL, data = NULL, border_col = "white",
   border_size = 2, lbl_size = 3, dark_lbl = "black",
