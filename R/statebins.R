@@ -43,10 +43,10 @@
 #'   theme_statebins(legend_position="right")
 statebins <- function(state_data,
                       state_col="state", value_col="value",
-                      dark_label = "black", light_label = "white", na_label = "white",
-                      font_size=3,
+                      dark_label="black", light_label="white",
+                      na_label="white", font_size=3,
                       state_border_col="white", state_border_size=2,
-                      round = FALSE, radius = grid::unit(6, "pt"),
+                      round=FALSE, radius=grid::unit(6, "pt"),
                       ggplot2_scale_function=ggplot2::scale_fill_distiller,
                       ...) {
 

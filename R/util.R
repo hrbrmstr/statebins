@@ -1,4 +1,5 @@
-.sb_invert <- function(hex_color, dark_color="black", light_color="white", na_color = "white") {
+.sb_invert <- function(hex_color, dark_color="black", light_color="white",
+                       na_color="white") {
 
   hex_color <- gsub("#", "", hex_color)
 
@@ -14,7 +15,6 @@
         YIQ >= 128, dark_color, light_color)
       )
     )
-
 }
 
 # sanity checks for state values
