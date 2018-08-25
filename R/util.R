@@ -1,4 +1,5 @@
-.sb_invert <- function(hex_color, dark_color="black", light_color="white") {
+.sb_invert <- function(hex_color, dark_color="black", light_color="white",
+                       na_color="white") {
 
   hex_color <- gsub("#", "", hex_color)
 
@@ -8,8 +9,12 @@
 
   YIQ <- ((R*299) + (G*587) + (B*114)) / 1000
 
-  return(ifelse(YIQ >= 128, dark_color, light_color))
-
+  return(
+    ifelse(is.na(YIQ), na_color,
+      ifelse(
+        YIQ >= 128, dark_color, light_color)
+      )
+    )
 }
 
 # sanity checks for state values

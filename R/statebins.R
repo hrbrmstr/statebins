@@ -22,7 +22,7 @@
 #' @param state_col column name in \code{state_data} that has the states. no duplicates
 #'        and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")
 #' @param value_col column name in \code{state_data} that holds the values to be plotted
-#' @param dark_label,light_label dark/light label colors. The specified color will be used
+#' @param dark_label,light_label,na_label dark/light/NA label colors. The specified color will be used
 #'        when the algorithm determines labels should be inverted.
 #' @param font_size font size (default = \code{3})
 #' @param state_border_col default "\code{white}" - this creates the "spaces" between boxes
@@ -43,9 +43,10 @@
 #'   theme_statebins(legend_position="right")
 statebins <- function(state_data,
                       state_col="state", value_col="value",
-                      dark_label = "black", light_label = "white", font_size=3,
+                      dark_label="black", light_label="white",
+                      na_label="white", font_size=3,
                       state_border_col="white", state_border_size=2,
-                      round = FALSE, radius = grid::unit(6, "pt"),
+                      round=FALSE, radius=grid::unit(6, "pt"),
                       ggplot2_scale_function=ggplot2::scale_fill_distiller,
                       ...) {
 
@@ -84,7 +85,7 @@ statebins <- function(state_data,
   gg <- gg + geom_text(data = st.dat,
                        aes_string(x = "col", y = "row", label = "abbrev"),
                        angle = 0,
-                       color = .sb_invert(gb$data[[1]]$fill, dark_label, light_label),
+                       color = .sb_invert(gb$data[[1]]$fill, dark_label, light_label, na_label),
                        size = font_size)
 
   gg
