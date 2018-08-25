@@ -27,6 +27,7 @@ Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' 
 URL: https://github.com/hrbrmstr/statebins
 BugReports: https://github.com/hrbrmstr/statebins/issues
 License: MIT + file LICENSE
+Encoding: UTF-8
 Suggests: 
     testthat,
     viridis,
@@ -41,6 +42,9 @@ Imports:
 RoxygenNote: 6.0.1.9000
 Collate:
     'aaa.R'
+    'geom-oscar.R'
+    'geom-otile.R'
+    'oscar-grob.R'
     'geom-rrect.r'
     'geom-rtile.R'
     'geom-statebins.r'

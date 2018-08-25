@@ -3,9 +3,9 @@
 
   hex_color <- gsub("#", "", hex_color)
 
-  R <- as.integer(paste("0x", substr(hex_color,1,2), sep=""))
-  G <- as.integer(paste("0x", substr(hex_color,3,4), sep=""))
-  B <- as.integer(paste("0x", substr(hex_color,5,6), sep=""))
+  R <- suppressWarnings(as.integer(paste("0x", substr(hex_color,1,2), sep="")))
+  G <- suppressWarnings(as.integer(paste("0x", substr(hex_color,3,4), sep="")))
+  B <- suppressWarnings(as.integer(paste("0x", substr(hex_color,5,6), sep="")))
 
   YIQ <- ((R*299) + (G*587) + (B*114)) / 1000
 
