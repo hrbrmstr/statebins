@@ -30,7 +30,7 @@
 #' @param border_col border color of the state squares, default "`white`"
 #' @param border_size thickness of the square state borders
 #' @param lbl_size font size (relative) of the label text
-#' @param dark_lbl,light_lbl,na_lbl colors to be uses when the label should be dark, light, or NA.
+#' @param dark_lbl,light_lbl colrs to be uses when the label should be dark or light.
 #'        The function automagically computes when this should be.
 #' @param radius the corner radius
 #' @param na.rm If `FALSE`, the default, missing values are removed with
@@ -72,7 +72,7 @@
 geom_statebins <- function(
   mapping = NULL, data = NULL,
   border_col = "white", border_size = 2,
-  lbl_size = 3, dark_lbl = "black", light_lbl = "white", na_lbl = "white",
+  lbl_size = 3, dark_lbl = "black", light_lbl = "white",
   radius = grid::unit(6, "pt"),
   ...,
   na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
@@ -147,7 +147,6 @@ GeomStatebins <- ggplot2::ggproto("GeomStatebins", ggplot2::Geom,
   draw_panel = function(self, data, panel_params, coord,
                         border_col = "white", border_size = 2,
                         lbl_size = 3, dark_lbl = "black", light_lbl = "white",
-                        na_lbl = "white",
                         radius = grid::unit(6, "pt")) {
 
     tile_data <- data
@@ -159,7 +158,7 @@ GeomStatebins <- ggplot2::ggproto("GeomStatebins", ggplot2::Geom,
     text_data$label <- data$abbrev
     text_data$fill <- NA
     text_data$size <-  lbl_size
-    text_data$colour <- .sb_invert(data$fill, dark_lbl, light_lbl, na_lbl)
+    text_data$colour <- .sb_invert(data$fill, dark_lbl, light_lbl)
 
     coord <- coord_equal()
 
