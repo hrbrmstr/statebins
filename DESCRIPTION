@@ -11,7 +11,9 @@ Authors@R: c(
     person("Brian", "Adams", email = "btadams478@gmail.com", role = "ctb",
            comment = "theme testing & feedback"),
     person("Thomas", "Wood", role = "ctb",
-           comment = "Significant suggestions & testing that made new features possible")
+           comment = "Significant suggestions & testing that made new features possible"),
+    person("Mathew", "Kiang", role = "ctb",
+           comment = "Minor fix for NA handling")
   )
 Maintainer: Bob Rudis <bob@rud.is>
 Description: Cartogram heatmaps are an alternative to choropleth maps for 'USA' States
@@ -36,7 +38,7 @@ Imports:
     ggplot2 (>= 2.2.1),
     scales (>= 0.5.0),
     grid
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Collate:
     'aaa.R'
     'geom-rrect.r'

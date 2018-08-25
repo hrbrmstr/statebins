@@ -5,9 +5,9 @@
 \title{Create a new ggplot-based "statebin" chart for USA states/territories}
 \usage{
 statebins(state_data, state_col = "state", value_col = "value",
-  dark_label = "black", light_label = "white", font_size = 3,
-  state_border_col = "white", state_border_size = 2, round = FALSE,
-  radius = grid::unit(6, "pt"),
+  dark_label = "black", light_label = "white", na_label = "white",
+  font_size = 3, state_border_col = "white", state_border_size = 2,
+  round = FALSE, radius = grid::unit(6, "pt"),
   ggplot2_scale_function = ggplot2::scale_fill_distiller, ...)
 }
 \arguments{
@@ -18,7 +18,7 @@ and can be names (e.g. "\code{Maine}") or abbreviatons (e.g. "\code{ME}")}
 
 \item{value_col}{column name in \code{state_data} that holds the values to be plotted}
 
-\item{dark_label, light_label}{dark/light label colors. The specified color will be used
+\item{dark_label, light_label, na_label}{dark/light/NA label colors. The specified color will be used
 when the algorithm determines labels should be inverted.}
 
 \item{font_size}{font size (default = \code{3})}
