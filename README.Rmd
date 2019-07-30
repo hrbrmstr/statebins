@@ -4,40 +4,31 @@ editor_options:
   chunk_output_type: console
 ---
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Build Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
-[![minimal R version](https://img.shields.io/badge/R%3E%3D-3.2.0-6666ff.svg)](https://cran.r-project.org/)
-[![packageversion](https://img.shields.io/badge/Package%20version-2.0.0-orange.svg?style=flat-square)](commits/master)
-![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/statebins)
-[![](http://cranlogs.r-pkg.org/badges/statebins)](http://cran.rstudio.com/web/packages/statebins/index.html)
-[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/statebins?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/statebins)
-
-```{r include=FALSE}
-knitr::opts_chunk$set(message=FALSE, warning=FALSE)
+```{r pkg-knitr-opts, include=FALSE}
+hrbrpkghelpr::global_opts()
 ```
 
-# statebins
+```{r badges, results='asis', echo=FALSE, cache=FALSE}
+hrbrpkghelpr::stinking_badges()
+```
 
-Create 'U.S.' Uniform Square State Cartogram Heatmaps
+```{r description, results='asis', echo=FALSE, cache=FALSE}
+hrbrpkghelpr::yank_title_and_description()
+```
 
-## What's in the tin?
+## What's Inside The Tin
 
 The following functions are implemented:
 
-- `statebins`: Creates "statebin" charts in the style of http://bit.ly/statebins 
-- `geom_statebins`: A statebins Geom (WIP!)
-- `theme_statebins`: Base statebins theme
+```{r ingredients, results='asis', echo=FALSE, cache=FALSE}
+hrbrpkghelpr::describe_ingredients()
+```
 
 ## Installation
 
-```{r install, eval=FALSE}
-devtools::install_github("hrbrmstr/statebins")
+```{r install-ex, results='asis', echo=FALSE, cache=FALSE}
+hrbrpkghelpr::install_block()
 ```
-
-## NOTE
-
-Due to a number of things, this is dependent on the _development_ version of ggplot2 and now identifies that in the `DESCRIPTION` metadata, _including_ a `Remotes:` field (which will be removed when this & ggplot2 hit CRAN).
 
 ## Usage
 
