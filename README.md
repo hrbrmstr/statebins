@@ -1,44 +1,64 @@
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
-developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Build
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Signed
+by](https://img.shields.io/badge/Keybase-Verified-brightgreen.svg)](https://keybase.io/hrbrmstr)
+![Signed commit
+%](https://img.shields.io/badge/Signed_Commits-100%25-lightgrey.svg)
+[![Linux build
 Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
-[![minimal R
-version](https://img.shields.io/badge/R%3E%3D-3.2.0-6666ff.svg)](https://cran.r-project.org/)
-[![packageversion](https://img.shields.io/badge/Package%20version-2.0.0-orange.svg?style=flat-square)](commits/master)
-![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/statebins)
-[![](http://cranlogs.r-pkg.org/badges/statebins)](http://cran.rstudio.com/web/packages/statebins/index.html)
-[![Travis-CI Build
-Status](https://travis-ci.org/hrbrmstr/statebins.svg?branch=master)](https://travis-ci.org/hrbrmstr/statebins)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/statebins?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/statebins)
+[![Windows build
+status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/statebins?svg=true)](https://ci.appveyor.com/project/hrbrmstr/statebins)
+[![Coverage
+Status](https://codecov.io/gh/hrbrmstr/statebins/branch/master/graph/badge.svg)](https://codecov.io/gh/hrbrmstr/statebins)
+[![cran
+checks](https://cranchecks.info/badges/worst/statebins)](https://cranchecks.info/pkgs/statebins)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/statebins)](https://www.r-pkg.org/pkg/statebins)
+![Minimal R
+Version](https://img.shields.io/badge/R%3E%3D-3.2.0-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 # statebins
 
 Create ‘U.S.’ Uniform Square State Cartogram Heatmaps
 
-## What’s in the tin?
+## Description
+
+Cartogram heatmaps are an alternative to choropleth maps for ‘USA’
+States and are based on work by the ‘Washington Post’ graphics
+department in their report on “The states most threatened by trade”
+<http://www.washingtonpost.com/wp-srv/special/business/states-most-threatened-by-trade/>.
+“State bins” preserve as much of the geographic placement of the states
+as possible but has the look and feel of a traditional heatmap.
+Functions are provided that allow for use of a binned, discrete scale, a
+continuous scale or manually specified colors depending on what is
+needed for the underlying data.
+
+## What’s Inside The Tin
 
 The following functions are implemented:
 
-  - `statebins`: Creates “statebin” charts in the style of
-    <http://bit.ly/statebins>
-  - `geom_statebins`: A statebins Geom (WIP\!)
+  - `geom_statebins`: A statebins Geom
   - `theme_statebins`: Base statebins theme
 
 ## Installation
 
 ``` r
-devtools::install_github("hrbrmstr/statebins")
+install.packages("statebins", repos = "https://cinc.rud.is")
+# or
+remotes::install_git("https://git.rud.is/hrbrmstr/statebins.git")
+# or
+remotes::install_gitlab("hrbrmstr/statebins")
+# or
+remotes::install_bitbucket("hrbrmstr/statebins")
+# or
+remotes::install_github("hrbrmstr/statebins")
 ```
 
-## NOTE
-
-Due to a number of things, this is dependent on the *development*
-version of ggplot2 and now identifies that in the `DESCRIPTION`
-metadata, *including* a `Remotes:` field (which will be removed when
-this & ggplot2 hit CRAN).
+NOTE: To use the ‘remotes’ install options you will need to have the
+[{remotes} package](https://github.com/r-lib/remotes) installed.
 
 ## Usage
 
@@ -56,9 +76,8 @@ library(tidyverse)
 
 # current verison
 packageVersion("statebins")
+## [1] '2.0.0'
 ```
-
-    ## [1] '2.0.0'
 
 ### The original wapo data
 
@@ -78,7 +97,7 @@ mutate(
   theme_statebins()
 ```
 
-![](README_files/figure-gfm/original-1.png)<!-- -->
+<img src="man/figures/README-original-1.png" width="672" />
 
 ### Continuous scale, legend on top
 
@@ -94,7 +113,7 @@ statebins(
   theme_statebins(legend_position="top")
 ```
 
-![](README_files/figure-gfm/continuous-1.png)<!-- -->
+<img src="man/figures/README-continuous-1.png" width="672" />
 
 ### Continuous scale, no legend
 
@@ -104,7 +123,7 @@ statebins(adat, value_col = "avgshare08_12", palette = "Purples") +
   theme_statebins(legend_position = "none") 
 ```
 
-![](README_files/figure-gfm/continuous_noleg-1.png)<!-- -->
+<img src="man/figures/README-continuous_noleg-1.png" width="672" />
 
 ### Mortality data (has Puerto Rico)
 
@@ -118,7 +137,7 @@ statebins(dat, value_col = "death_rate", name="Per 100K pop") +
   theme_statebins()
 ```
 
-![](README_files/figure-gfm/mort-1.png)<!-- -->
+<img src="man/figures/README-mort-1.png" width="672" />
 
 ### Fertility data
 
@@ -128,7 +147,7 @@ statebins(dat, value_col="fertility_rate", name="Per 100K pop", palette="PuBuGn"
   theme_statebins()
 ```
 
-![](README_files/figure-gfm/fert-1.png)<!-- -->
+<img src="man/figures/README-fert-1.png" width="672" />
 
 ### Manual - perhaps good for elections?
 
@@ -145,7 +164,7 @@ mutate(election_2012, value = ifelse(is.na(Obama), "Romney", "Obama")) %>%
   theme_statebins()
 ```
 
-![](README_files/figure-gfm/manual-1.png)<!-- -->
+<img src="man/figures/README-manual-1.png" width="672" />
 
 ### Rounded rects\!
 
@@ -161,7 +180,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE) +
   theme_statebins(legend_position="right")
 ```
 
-![](README_files/figure-gfm/rounded-1.png)<!-- -->
+<img src="man/figures/README-rounded-1.png" width="672" />
 
 Circles\!
 
@@ -171,7 +190,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE,
   theme_statebins(legend_position="right")
 ```
 
-![](README_files/figure-gfm/rounded2-1.png)<!-- -->
+<img src="man/figures/README-rounded2-1.png" width="672" />
 
 ### Geom
 
@@ -191,7 +210,7 @@ ggplot(flu, aes(state=statename, fill=activity_level)) +
   theme(plot.margin = margin(30,30,30,30))
 ```
 
-![](README_files/figure-gfm/sb_facet-1.png)<!-- -->
+<img src="man/figures/README-sb_facet-1.png" width="1632" />
 
 ### All the “states”
 
@@ -224,4 +243,4 @@ statebins(us_arrests, value_col="Assault",
   theme_statebins("right")
 ```
 
-![](README_files/figure-gfm/all-1.png)<!-- -->
+<img src="man/figures/README-all-1.png" width="672" />
