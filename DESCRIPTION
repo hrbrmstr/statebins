@@ -39,7 +39,7 @@ Imports:
     ggplot2 (>= 2.2.1),
     scales (>= 0.5.0),
     grid
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1
 Collate:
     'aaa.R'
     'geom-oscar.R'
