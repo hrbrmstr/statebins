@@ -50,6 +50,8 @@ install.packages("statebins", repos = "https://cinc.rud.is")
 # or
 remotes::install_git("https://git.rud.is/hrbrmstr/statebins.git")
 # or
+remotes::install_git("https://git.sr.ht/~hrbrmstr/statebins")
+# or
 remotes::install_gitlab("hrbrmstr/statebins")
 # or
 remotes::install_bitbucket("hrbrmstr/statebins")
