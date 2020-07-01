@@ -150,7 +150,6 @@ GeomStatebins <- ggplot2::ggproto("GeomStatebins", ggplot2::Geom,
                         radius = grid::unit(6, "pt")) {
 
     tile_data <- data
-    tile_data$size <- 2
     tile_data$colour <- border_col
     tile_data$size <- border_size
 
