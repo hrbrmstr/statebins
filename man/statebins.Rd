@@ -4,11 +4,21 @@
 \alias{statebins}
 \title{Create a new ggplot-based "statebin" chart for USA states/territories}
 \usage{
-statebins(state_data, state_col = "state", value_col = "value",
-  dark_label = "black", light_label = "white", na_label = "white",
-  font_size = 3, state_border_col = "white", state_border_size = 2,
-  round = FALSE, radius = grid::unit(6, "pt"),
-  ggplot2_scale_function = ggplot2::scale_fill_distiller, ...)
+statebins(
+  state_data,
+  state_col = "state",
+  value_col = "value",
+  dark_label = "black",
+  light_label = "white",
+  na_label = "white",
+  font_size = 3,
+  state_border_col = "white",
+  state_border_size = 2,
+  round = FALSE,
+  radius = grid::unit(6, "pt"),
+  ggplot2_scale_function = ggplot2::scale_fill_distiller,
+  ...
+)
 }
 \arguments{
 \item{state_data}{data frame of states and values to plot}

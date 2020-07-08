@@ -1,3 +1,6 @@
+# statebins 1.4.0
+* New `state_tbl` dataset to make it easier to complete partial state data data frames
+
 # statebins 1.3.0
 * Added support for `VI`/`Virgin Islands`
 * Supports auto-computation of when to use light & dark label colors

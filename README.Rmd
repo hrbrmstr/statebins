@@ -18,11 +18,13 @@ hrbrpkghelpr::yank_title_and_description()
 
 ## What's Inside The Tin
 
-The following functions are implemented:
+The following functions are implemented/datasets included:
 
 ```{r ingredients, results='asis', echo=FALSE, cache=FALSE}
 hrbrpkghelpr::describe_ingredients()
 ```
+ 
+- `statebins`: (the original sole function in the package) Create a new ggplot-based "statebin" chart for USA states/territories
 
 ## Installation
 
@@ -143,7 +145,7 @@ statebins(USArrests, value_col="Assault", name = "Assault", round=TRUE,
 
 ### Geom
 
-```{r sb_facet, fig.width=17, fig.height=10}
+```{r sb_facet, fig.width=20, fig.height=15}
 flu <- ili_weekly_activity_indicators(2017)
 
 ggplot(flu, aes(state=statename, fill=activity_level)) +

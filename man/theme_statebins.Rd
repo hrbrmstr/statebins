@@ -4,8 +4,7 @@
 \alias{theme_statebins}
 \title{Base statebins theme}
 \usage{
-theme_statebins(legend_position = "bottom", base_size = 11,
-  base_family = "")
+theme_statebins(legend_position = "bottom", base_size = 11, base_family = "")
 }
 \arguments{
 \item{legend_position}{fills in \code{legend.position}}
